@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Gerenciamento de Vagas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* ===== FUNDO COM IMAGEM ===== */
+.background{
+    position: fixed;
+    inset: 0;
+    background-image: url('images/estacionamento.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+/* ===== OVERLAY ESCURO ===== */
+.overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 23, 54, 0.85);
+    z-index: 1;
+}
+
+/* ===== DESATIVA FUNDO ANTIGO ===== */
+.hero-bg-animation{
+    display: none;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+    position: relative;
+    z-index: 2;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    padding: 30px;
+    border-radius: 10px;
+    color: white;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* ===== SELECT ===== */
+label{
+    font-size:14px;
+}
+
+select{
+    width:100%;
+    padding:10px;
+    border-radius:4px;
+    border:none;
+    margin-top:8px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media(max-width: 500px){
+    .container{
+        width: 90%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NOVO FUNDO -->
+<div class="background"></div>
+<div class="overlay"></div>
+
+<!-- FUNDO ANTIGO (DESATIVADO) -->
+<div class="hero-bg-animation">
+<div class="floating-shape shape-1"></div>
+<div class="floating-shape shape-2"></div>
+<div class="floating-shape shape-3"></div>
+</div>
+
+<div class="container">
+
+<h2>Gerenciamento de Vagas</h2>
+
+<label>Filtrar por Empresa:</label>
+<select>
+<option>Todas</option>
+<option>Empresa A</option>
+<option>Empresa B</option>
+</select>
+
+</div>
+</body>

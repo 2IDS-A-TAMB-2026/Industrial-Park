@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logar como</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', system-ui;
+}
+
+body,html{
+  height:100%;
+}
+
+.container{
+  position:relative;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+}
+
+.background{
+  position:absolute;
+  inset:0;
+  background-image:url('images/estacionamento.jpg');
+  background-size:cover;
+  background-position:center;
+  z-index:0;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(2,23,54,0.85);
+  z-index:1;
+}
+
+.content{
+  position:relative;
+  z-index:2;
+  width:400px;
+  text-align:center;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:30px;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  text-align:center;
+  background:transparent;
+  border:2px solid white;
+  color:white;
+  font-weight:bold;
+  border-radius:25px;
+  text-decoration:none;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background:white;
+  color:#003c96;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="background"></div>
+  <div class="overlay"></div>
+
+  <div class="content">
+    <h1>logar como</h1>
+
+    <a href="02.LoginUserComum.html" class="btn">usuario comum</a>
+    <a href="06.LoginAdmin.html" class="btn">administrador</a>
+    <a href="10.LoginSuperAdmin.html" class="btn">super administrador</a>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento de Sensores IoT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        /* ===== FUNDO COM IMAGEM ===== */
+        .background{
+            position: fixed;
+            inset: 0;
+            background-image: url('images/estacionamento.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        /* ===== OVERLAY ESCURO ===== */
+        .overlay{
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 23, 54, 0.85);
+            z-index: 1;
+        }
+
+        /* ===== DESATIVA FUNDO ANTIGO ===== */
+        .hero-bg-animation{
+            display: none;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container{
+            position: relative;
+            z-index: 2;
+            margin: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 500px;
+            max-height: 90vh;
+            overflow: auto;
+            padding: 30px 40px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        h2, h3{
+            text-align:center;
+            margin-bottom:15px;
+        }
+
+        /* ===== TABELA ===== */
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-bottom:20px;
+        }
+
+        th, td{
+            border:1px solid rgba(255,255,255,0.2);
+            padding:8px;
+            text-align:center;
+            font-size:14px;
+        }
+
+        th{
+            background:#12263a;
+            color:white;
+        }
+
+        /* ===== INPUTS ===== */
+        label{
+            font-size:14px;
+        }
+
+        input, select{
+            display:block;
+            width:100%;
+            padding:10px;
+            border-radius:4px;
+            border:none;
+            margin-top:5px;
+            margin-bottom:10px;
+        }
+
+        /* ===== BOTÕES ===== */
+        button{
+            width:100%;
+            padding:12px;
+            background: transparent;
+            border:2px solid white;
+            color:white;
+            font-weight:bold;
+            cursor:pointer;
+            border-radius:4px;
+            transition:0.3s;
+            margin-top:5px;
+        }
+
+        button:hover{
+            background:white;
+            color:#003c96;
+        }
+
+        .fechar{
+            border:2px solid #ff4d4d;
+            color:#ff4d4d;
+        }
+
+        .fechar:hover{
+            background:#ff4d4d;
+            color:white;
+        }
+
+        @media(max-width: 600px){
+            .container{
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NOVO FUNDO -->
+<div class="background"></div>
+<div class="overlay"></div>
+
+<!-- FUNDO ANTIGO (DESATIVADO) -->
+<div class="hero-bg-animation">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+</div>
+
+<div class="container">
+
+    <h2>Gerenciamento de Sensores IoT</h2>
+
+    <table>
+        <tr>
+            <th>Id do sensor</th>
+            <th>Vaga Vinculada</th>
+            <th>Status</th>
+            <th>Última Comunicação</th>
+        </tr>
+
+        <tbody>
+            <tr>
+                <td>SEN-001</td>
+                <td>Vaga 12</td>
+                <td>Ativo</td>
+                <td>24/02/2026 14:32</td>
+            </tr>
+
+            <tr>
+                <td>SEN-002</td>
+                <td>Vaga 08</td>
+                <td>Inativo</td>
+                <td>24/02/2026 13:10</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Cadastrar Sensor</h3>
+
+    <label>ID do Sensor</label>
+    <input type="text" name="id_sensor" required>
+
+    <label>Vaga Vinculada</label>
+    <select name="vaga" required>
+        <option>Selecione uma vaga</option>
+        <option>Vaga 01</option>
+        <option>Vaga 02</option>
+        <option>Vaga 03</option>
+    </select>
+
+    <label>Status do Sensor</label>
+    <select name="status">
+        <option>Ativo</option>
+        <option>Inativo</option>
+    </select>
+
+    <button type="submit">Salvar Sensor</button>
+    <button type="button" class="fechar">Cancelar</button>
+
+</div>
+
+</body>
+</html>

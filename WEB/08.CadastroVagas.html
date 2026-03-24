@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Cadastro de Vagas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        /* ===== FUNDO COM IMAGEM ===== */
+        .background{
+            position: fixed;
+            inset: 0;
+            background-image: url('images/estacionamento.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        /* ===== OVERLAY ESCURO ===== */
+        .overlay{
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 23, 54, 0.85);
+            z-index: 1;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container{
+            position: relative;
+            z-index: 2;
+            margin: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 340px;
+            padding: 30px 40px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        h2{
+            text-align:center;
+            margin-bottom:20px;
+            font-size: 28px;
+        }
+
+        label{
+            font-size:14px;
+        }
+
+        input, select{
+            display:block;
+            padding:10px;
+            width:100%;
+            border-radius:4px;
+            border:none;
+            margin-top:5px;
+            margin-bottom:10px;
+        }
+
+        .erro{
+            color:#ff4d4d;
+            font-size:12px;
+            display:block;
+            margin-bottom:8px;
+        }
+
+        .bordaVermelha{
+            border:2px solid red !important;
+        }
+
+        .bordaVerde{
+            border:2px solid limegreen !important;
+        }
+
+        input[type="submit"]{
+            width:100%;
+            padding:12px;
+            background: transparent;
+            border:2px solid white;
+            color:white;
+            font-weight:bold;
+            cursor:pointer;
+            border-radius:4px;
+            transition:0.3s;
+        }
+
+        input[type="submit"]:hover{
+            background:white;
+            color:#003c96;
+        }
+
+        @media(max-width: 500px){
+            .container{
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- FUNDO -->
+<div class="background"></div>
+<div class="overlay"></div>
+
+<div class="container">
+
+<h2>Cadastro de Vagas</h2>
+
+<form id="formVaga">
+
+    <label for="codigo">Código da vaga:</label>
+    <input type="text" id="codigo" maxlength="3" placeholder="EX: V01">
+    <span id="erroCodigo" class="erro"></span>
+
+    <label for="setor">Setor da Vaga:</label>
+    <input type="text" id="setor" maxlength="10" placeholder="EX: Setor A">
+    <span id="erroSetor" class="erro"></span>
+
+    <label for="status">Status Inicial:</label>
+    <select id="status">
+        <option value="">Selecione</option>
+        <option value="Livre">Livre</option>
+        <option value="Ocupada">Ocupada</option>
+        <option value="Indisponível">Indisponível</option>
+    </select>
+    <span id="erroStatus" class="erro"></span>
+
+    <label for="sensor">Sensores IoT:</label>
+    <select id="sensor">
+        <option value="">Nenhum sensor</option>
+        <option value="S01">Sensor 1 (Ativo)</option>
+        <option value="S02">Sensor 2 (Ativo)</option>
+        <option value="S03">Sensor 3 (Ativo)</option>
+    </select>
+    <span id="erroSensor" class="erro"></span>
+
+    <input type="submit" value="Cadastrar Vaga">
+
+</form>
+
+</div>
+
+<script src="08.CadastroVagas.js"></script>
+
+</body>
+</html>

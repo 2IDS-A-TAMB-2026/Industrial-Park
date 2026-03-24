@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Tela de Gerenciamento</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: Arial;
+    background: linear-gradient(120deg,#001529,#003366);
+}
+
+.container{
+    background:#fff;
+    padding:30px;
+    border-radius:10px;
+    width:420px;
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+}
+
+input{
+    width:100%;
+    padding:8px;
+    border-radius:20px;
+    margin-top:5px;
+}
+
+input[type="submit"]{
+    background:linear-gradient(90deg,#3a0ca3,#00a8e8);
+    color:#fff;
+    border:none;
+    margin-top:10px;
+}
+
+table{
+    width:100%;
+    margin-top:15px;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:5px;
+    text-align:center;
+}
+
+th{
+    background:#003366;
+    color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Login</h2>
+
+<form>
+
+<label>Nome da empresa:</label>
+<input type="text" placeholder="Digite o nome"><br>
+
+<label>Senha:</label>
+<input type="password" placeholder="Digite sua senha"><br>
+
+<input type="submit" value="Entrar">
+
+<table>
+<tr>
+<th>ID</th>
+<th>Vaga</th>
+<th>Status</th>
+<th>Data</th>
+</tr>
+
+<tr>
+<td>SEN-001</td>
+<td>Vaga 12</td>
+<td>Ativo</td>
+<td>24/02</td>
+</tr>
+
+<tr>
+<td>SEN-002</td>
+<td>Vaga 08</td>
+<td>Inativo</td>
+<td>24/02</td>
+</tr>
+
+</table>
+
+</form>
+</div>
+
+</body>
+</html>

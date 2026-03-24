@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+    }
+
+    .container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 50px;
+      color: white;
+      overflow: hidden;
+    }
+
+    /* IMAGEM DE FUNDO */
+    .background {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/estacionamento.jpg'); /* TROQUE AQUI */
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    /* OVERLAY COLORIDO */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(2, 23, 54, 0.85); /* COR + OPACIDADE */
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 400px;
+    }
+
+    .content h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .content h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .form button {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: 0.3s;
+    }
+
+    .form button:hover {
+      background: white;
+      color: #003c96;
+    }
+
+    .right {
+      position: relative;
+      z-index: 2;
+      max-width: 40%;
+    }
+
+    .right img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .footer-text {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .erro {
+        color: #ff4d4d;
+        font-size: 12px;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+        .bordaVermelha {
+        border: 2px solid red !important;
+    }
+
+        .bordaVerde {
+        border: 2px solid limegreen !important;
+    }
+
+    @media(max-width: 900px) {
+      .container {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .right {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="background"></div>
+    <div class="overlay"></div>
+
+    <div class="content">
+      <h1>Quer mais controle sobre seu estacionamento?</h1>
+      <h2>Cadastre-se aqui</h2>
+
+    <form class="form" id="formCadastro">
+        <input type="text" placeholder="Nome completo" ib="NomeCompleto">
+        <span id="erroNome" class="erro"></span>
+
+        <input type="email" placeholder="Email" ib="Email">
+        <span id="erroEmail" class="erro"></span>
+
+        <input type="date" ib="DataNasc">
+        <span id="erroData" class="erro"></span>
+
+        <input type="text" placeholder="CPF" ib="cpf">
+        <span id="erroCpf" class="erro"></span>
+
+        <input type="password" placeholder="Senha" ib="Senha">
+        <span id="erroSenha" class="erro"></span>
+
+        <input type="password" placeholder="Confirmar senha" ib="ComfSenha">
+        <span id="erroConfirmar" class="erro"></span>
+
+        <button type="submit" ib="Cadastro">Cadastrar</button>
+
+    </form>
+
+      <div class="footer-text">Você pode controlar seu estacionamento!</div>
+    </div>
+
+  </div>
+
+  <script src="01.CadastroUserComum.js"></script>
+
+</body>
+</html>
+
