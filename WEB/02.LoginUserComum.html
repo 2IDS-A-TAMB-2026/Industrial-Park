@@ -10,120 +10,145 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Segoe UI', system-ui;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-body,html{
-  height:100%;
-}
-
-.container{
-  position:relative;
+body{
   height:100vh;
   display:flex;
+  justify-content:center;
   align-items:center;
-  justify-content:center; /* CENTRALIZA TUDO */
-  color:white;
+  background:#ffffff;
 }
 
-.background{
-  position:absolute;
-  inset:0;
-  background-image:url('images/estacionamento.jpg');
-  background-size:cover;
-  background-position:center;
-  z-index:0;
+/* CONTAINER */
+.container{
+  width:900px;
+  max-width:100%;
+  height:550px;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  display:flex;
 }
 
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(2,23,54,0.85);
-  z-index:1;
+/* LADO ESQUERDO */
+.left{
+  width:50%;
+  background:#027db7;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  color:#fff;
+  text-align:center;
 }
 
+/* LOGO */
+.logo{
+  width:150px;
+  margin-bottom:20px;
+  border-radius:10px;
+}
+
+/* TEXTO */
+.left h1{
+  font-size:18px;
+}
+
+/* LADO DIREITO */
 .content{
-  position:relative;
-  z-index:2;
-  width:350px; /* TAMANHO FIXO PRA CENTRALIZAR BONITO */
-  text-align:center; /* CENTRALIZA TEXTO */
+  width:50%;
+  background:#f5f5f5;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+  animation:slide 0.6s ease;
 }
 
-.content h1{
-  font-size:28px;
-  margin-bottom:10px;
+@keyframes slide{
+  from{
+    transform:translateX(50px);
+    opacity:0;
+  }
+  to{
+    transform:translateX(0);
+    opacity:1;
+  }
 }
 
 .content h2{
-  font-size:32px;
-  margin-bottom:20px;
+  color:#251494;
+  margin-bottom:15px;
+}
+
+/* FORM */
+.form{
+  width:100%;
 }
 
 .form input{
   width:100%;
   padding:10px;
-  margin-bottom:10px;
+  margin:5px 0;
   border:none;
-  border-radius:4px;
-}
-
-.btn{
-  display:block;
-  width:100%;
-  padding:12px;
-  text-align:center;
-  background:transparent;
-  border:2px solid white;
-  color:white;
-  font-weight:bold;
-  border-radius:4px;
-  text-decoration:none;
-  transition:0.3s;
-}
-
-.btn:hover{
-  background:white;
-  color:#003c96;
+  border-radius:5px;
+  background:#e0e0e0;
 }
 
 .form button{
   width:100%;
-  padding:12px;
-  background:transparent;
-  border:2px solid white;
-  color:white;
-  font-weight:bold;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:20px;
+  background:#251494;
+  color:#fff;
   cursor:pointer;
-  border-radius:4px;
   transition:0.3s;
 }
 
 .form button:hover{
-  background:white;
-  color:#003c96;
+  background:#0d5fbd;
 }
 
+/* ERRO */
 .erro{
-  color:#ff4d4d;
   font-size:12px;
-  display:block;
-  margin-bottom:8px;
+  color:red;
 }
 
+/* LINKS */
 .links{
   margin-top:15px;
   font-size:13px;
+  text-align:center;
 }
 
 .links a{
-  color:white;
+  color:#251494;
   text-decoration:none;
 }
 
 .links a:hover{
   text-decoration:underline;
+  color: #0d5fbd;
 }
 
+/* RESPONSIVO */
+@media (max-width:768px){
+  .container{
+    flex-direction:column;
+    height:auto;
+  }
+
+  .left, .content{
+    width:100%;
+  }
+}
 </style>
 </head>
 
@@ -131,11 +156,14 @@ body,html{
 
 <div class="container">
 
-  <div class="background"></div>
-  <div class="overlay"></div>
+  <!-- LADO ESQUERDO -->
+  <div class="left">
+    <img src="IndustrialPark.jpg" class="logo">
+    <h1>Bem-vindo de volta!<br>Gerencie seu estacionamento com facilidade</h1>
+  </div>
 
+  <!-- LADO DIREITO -->
   <div class="content">
-    <h1>Bem-vindo de volta</h1>
     <h2>Faça seu login</h2>
 
     <form class="form" id="formLogin">
@@ -146,7 +174,7 @@ body,html{
       <input type="password" id="senha" placeholder="Senha">
       <span id="erroSenha" class="erro"></span>
 
-     <button type="submit">Entrar</button>
+      <button type="submit">Entrar</button>
 
       <div class="links">
         <a href="03.RecuperaçãoSenhaEmail.html">Esqueci minha senha</a><br><br>
@@ -154,7 +182,6 @@ body,html{
       </div>
 
     </form>
-
   </div>
 
 </div>
