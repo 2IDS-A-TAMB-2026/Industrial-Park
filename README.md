@@ -1,14 +1,16 @@
 # Industrial Park 
 <img src="https://github.com/2IDS-A-TAMB-2026/Industrial-Park/blob/main/WEB/images/LogoModoEscuro.png" width="400px">
+
 ## Equipe
+
 | Nome                              | Função                 |
 | --------------------------------- | -------------------- |
-| Anthony Barbosa Azevedo           | Front-End Developer  |
-| Louis Miguel Dias Valentim        | Front-End Developer  |
-| Maria Eduarda Nicoliello da Silva | Front-End Developer  |
-| Ana Lara Ventura Galdino          | Back-End Developer   |
-| Julia Savella Rosa                | Back-End Developer   |
-| Yasmin Francischelli              | Full Stack Developer |
+| Anthony Barbosa Azevedo           | Front-End Developer   <img src="">  |
+| Louis Miguel Dias Valentim        | Front-End Developer   <img src="">  |
+| Maria Eduarda Nicoliello da Silva | Front-End Developer   <img src="">  |
+| Ana Lara Ventura Galdino          | Back-End Developer   <img src="">   |
+| Julia Savella Rosa                | Back-End Developer   <img src="">   |
+| Yasmin Francischelli              | Full Stack Developer    <img src="">|
 
 
 ## Problema de Negócio
@@ -92,11 +94,11 @@
 
 ### Paleta de Cores
 
-* Azul Noturno (#001529)
-* Azul Cobalto (#003366)
-* Azul Elétrico (#00A3FF)
-* Branco (#FFFFFF)
-* Cinza (#E6E9EF)
+* Azul Noturno (#0B0535)
+* Azul Cobalto (#160C5A)
+* Azul Elétrico (#3DC3FF)
+* Branco Puro (#FFFFFF)
+* Cinza Gelo (#C0C0C0)
 
 ### Tipografia
 
@@ -249,9 +251,13 @@
 ## Diagramas
 
 * MER
+* <img src="">
 * DER
+* <img src="">
 * Diagrama de Classe
+* <img src="">
 * Diagrama de Fluxo
+* <img src="">
 
 # Industrial Park
 
@@ -262,12 +268,12 @@
 ## Team
 | Name                              | Role                 |
 | --------------------------------- | -------------------- |
-| Anthony Barbosa Azevedo           | Front-End Developer  |
-| Louis Miguel Dias Valentim        | Front-End Developer  |
-| Maria Eduarda Nicoliello da Silva | Front-End Developer  |
-| Ana Lara Ventura Galdino          | Back-End Developer   |
-| Julia Savella Rosa                | Back-End Developer   |
-| Yasmin Francischelli              | Full Stack Developer |
+| Anthony Barbosa Azevedo           | Front-End Developer  <img src=""> |
+| Louis Miguel Dias Valentim        | Front-End Developer  <img src=""> |
+| Maria Eduarda Nicoliello da Silva | Front-End Developer  <img src=""> |
+| Ana Lara Ventura Galdino          | Back-End Developer   <img src=""> |
+| Julia Savella Rosa                | Back-End Developer  <img src=""> |
+| Yasmin Francischelli              | Full Stack Developer  <img src=""> |
 
 
 ## Business Problem
@@ -351,11 +357,11 @@
 
 ### Color Palette
 
-* Midnight Blue (#001529)
-* Cobalt Blue (#003366)
-* Electric Blue (#00A3FF)
-* White (#FFFFFF)
-* Gray (#E6E9EF)
+* Midnight Blue (#0B0535)
+* Cobalt Blue (#160C5A)
+* Electric Blue (#3DC3FF)
+* Pure White (#FFFFFF)
+* Ice Gray (#C0C0C0)
 
 ### Typography
 
@@ -508,6 +514,10 @@
 ## Diagrams
 
 * ER Model (MER)
+* * <img src="">
 * ER Diagram (DER)
+* * <img src="">
 * Class Diagram
+* * <img src="">
 * Flow Diagram
+* * <img src="">
