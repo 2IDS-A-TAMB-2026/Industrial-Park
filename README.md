@@ -1,21 +1,15 @@
 # Industrial Park 
 <img src="https://github.com/2IDS-A-TAMB-2026/Industrial-Park/blob/main/WEB/images/LogoModoEscuro.png" width="400px">
 ## Equipe
+| Nome                              | Função                 |
+| --------------------------------- | -------------------- |
+| Anthony Barbosa Azevedo           | Front-End Developer  |
+| Louis Miguel Dias Valentim        | Front-End Developer  |
+| Maria Eduarda Nicoliello da Silva | Front-End Developer  |
+| Ana Lara Ventura Galdino          | Back-End Developer   |
+| Julia Savella Rosa                | Back-End Developer   |
+| Yasmin Francischelli              | Full Stack Developer |
 
-* Anthony Barbosa Azevedo – Front-End
-
-* Louis Miguel Dias Valentim – Front-End
-
-* Maria Eduarda Nicoliello da Silva – Front-End
-
-* Ana Lara Ventura Galdino – Back-End
-
-* Julia Savella Rosa – Back-End
-
-* Yasmin Francischelli – Fullstack
-
-* Última atualização: 10/03/2026
----
 
 ## Problema de Negócio
 
@@ -266,22 +260,15 @@
 <img src="https://github.com/2IDS-A-TAMB-2026/Industrial-Park/blob/main/WEB/images/LogoModoEscuro.png" width="400px">
 
 ## Team
+| Name                              | Role                 |
+| --------------------------------- | -------------------- |
+| Anthony Barbosa Azevedo           | Front-End Developer  |
+| Louis Miguel Dias Valentim        | Front-End Developer  |
+| Maria Eduarda Nicoliello da Silva | Front-End Developer  |
+| Ana Lara Ventura Galdino          | Back-End Developer   |
+| Julia Savella Rosa                | Back-End Developer   |
+| Yasmin Francischelli              | Full Stack Developer |
 
-* Anthony Barbosa Azevedo – Front-End
-
-* Louis Miguel Dias Valentim – Front-End
-
-* Maria Eduarda Nicoliello da Silva – Front-End
-
-* Ana Lara Ventura Galdino – Back-End
-
-* Julia Savella Rosa – Back-End
-
-* Yasmin Francischelli – Fullstack
-
-* Last update: 03/10/2026
-
----
 
 ## Business Problem
 
