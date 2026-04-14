@@ -261,8 +261,6 @@
 
 # Industrial Park
 
-# Industrial Park
-
 <img src="https://github.com/2IDS-A-TAMB-2026/Industrial-Park/blob/main/WEB/images/LogoModoEscuro.png" width="400px">
 
 ## Team
