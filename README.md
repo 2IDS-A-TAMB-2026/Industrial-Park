@@ -258,3 +258,490 @@
 * DER
 * Diagrama de Classe
 * Diagrama de Fluxo
+
+# Industrial Park
+
+Industrial Park
+<img src="https://github.com/2IDS-A-TAMB-2026/Industrial-Park/blob/main/WEB/images/LogoModoEscuro.png" width="400px">
+Team
+
+
+Anthony Barbosa Azevedo – Front-End
+
+
+Louis Miguel Dias Valentim – Front-End
+
+
+Maria Eduarda Nicoliello da Silva – Front-End
+
+
+Ana Lara Ventura Galdino – Back-End
+
+
+Julia Savella Rosa – Back-End
+
+
+Yasmin Francischelli – Fullstack
+
+
+Last update: 03/10/2026
+
+
+
+Business Problem
+
+
+Lack of parking space control
+
+
+Disorganization in industrial parking lots
+
+
+Time wasted searching for parking spots
+
+
+Internal traffic congestion
+
+
+Safety risks
+
+
+Lack of flow monitoring
+
+
+
+Project Scope
+
+
+Smart parking system
+
+
+Real-time monitoring
+
+
+Parking space control and organization
+
+
+Use of IoT and automation
+
+
+Focus on industrial environments
+
+
+Used by authorized employees
+
+
+
+Document History
+
+
+1.0 (01/27/2026) – Document creation
+
+
+1.1 (02/10/2026) – Requirements correction
+
+
+1.2 (03/03/2026) – ERD inclusion
+
+
+2.0 – (not filled)
+
+
+
+Objectives
+
+
+Improve parking efficiency
+
+
+Reduce time spent searching for spaces
+
+
+Decrease congestion
+
+
+Optimize space usage
+
+
+Improve user experience
+
+
+Reduce pollutant emissions
+
+
+
+Target Audience
+
+
+Companies with large fleets
+
+
+Business condominiums
+
+
+Technology parks
+
+
+Industrial environments
+
+
+
+Stakeholders
+Primary
+
+
+Executives and managers
+
+
+Operations managers
+
+
+IT team
+
+
+Employees
+
+
+Gatekeepers / Security staff
+
+
+Secondary
+
+
+Technology suppliers
+
+
+Maintenance companies
+
+
+Industries
+
+
+Industrial parks
+
+
+Investors
+
+
+
+Visual Identity
+Symbolism
+
+
+Hexagon represents structural efficiency
+
+
+Waves represent sensors and IoT
+
+
+Letter “P” with a car represents parking
+
+
+Color Palette
+
+
+Midnight Blue (#001529)
+
+
+Cobalt Blue (#003366)
+
+
+Electric Blue (#00A3FF)
+
+
+White (#FFFFFF)
+
+
+Gray (#E6E9EF)
+
+
+Typography
+
+
+Montserrat
+
+
+Arial
+
+
+Uppercase (Caps Lock)
+
+
+
+Web Functional Requirements
+User
+
+
+RFW01 – Registration
+
+
+RFW02 – Login
+
+
+RFW03 – Password recovery
+
+
+RFW04 – Dashboard
+
+
+RFW05 – Profile
+
+
+Administrator
+
+
+RFW06 – Login
+
+
+RFW07 – Dashboard
+
+
+RFW08 – Parking space registration
+
+
+RFW09 – IoT sensors
+
+
+Super Administrator
+
+
+RFW10 – Login
+
+
+RFW11 – Global dashboard
+
+
+RFW12 – Administrator registration
+
+
+RFW13 – Gatekeeper registration
+
+
+RFW16 – Company management
+
+
+RFW17 – Parking space management
+
+
+RFW18 – IoT monitoring
+
+
+Gatekeeper
+
+
+RFW14 – Login
+
+
+RFW15 – Dashboard
+
+
+General
+
+
+RFW19 – Home screen
+
+
+
+Web Non-Functional Requirements
+
+
+RNFW01 – Performance
+
+
+RNFW02 – Usability
+
+
+RNFW03 – Data validation
+
+
+RNFW04 – Availability
+
+
+RNFW05 – Responsiveness
+
+
+RNFW06 – Scalability
+
+
+
+Mobile Functional Requirements
+
+
+RFM01 – Registration
+
+
+RFM02 – Login
+
+
+RFM03 – Password recovery
+
+
+RFM04 – Dashboard
+
+
+RFM05 – Profile
+
+
+
+Mobile Non-Functional Requirements
+
+
+RNFM01 – Performance
+
+
+RNFM02 – Usability
+
+
+RNFM03 – Consistency with web
+
+
+RNFM04 – Validation
+
+
+RNFM05 – Availability
+
+
+RNFM06 – Scalability
+
+
+
+IoT Requirements
+Functional
+
+
+RF-IOT01 – Parking space detection
+
+
+RFIOT02 – Data collection
+
+
+RFIOT03 – API transmission
+
+
+RFIOT04 – Real-time updates
+
+
+RFIOT05 – Indicator LEDs
+
+
+Non-Functional
+
+
+RNF-IOT01 – Response time
+
+
+RNF-IOT02 – Reliability
+
+
+RNF-IOT03 – Availability
+
+
+RNF-IOT04 – Scalability
+
+
+RNF-IOT05 – Maintenance
+
+
+
+Technologies
+Front-end
+
+
+HTML
+
+
+CSS
+
+
+JavaScript
+
+
+Flutter
+
+
+Back-end
+
+
+PHP
+
+
+MySQL
+
+
+
+IoT Materials
+
+
+Ultrasonic sensor (4)
+
+
+ESP32 (1)
+
+
+Breadboard (1)
+
+
+Jumper wires (25)
+
+
+USB power supply / Power bank (1)
+
+
+LEDs (8)
+
+
+220Ω resistors (8)
+
+
+
+Sprints
+Web
+
+
+Sprint 1 – Registrations and logins
+
+
+Sprint 2 – Dashboards and profile
+
+
+Sprint 3 – Management features
+
+
+Mobile
+
+
+Sprint 1 – Registration and login
+
+
+Sprint 2 – Dashboard
+
+
+Sprint 3 – Profile and home screen
+
+
+IoT
+
+
+Sprint 1 – Sensors and data collection
+
+
+Sprint 2 – API and integration
+
+
+Sprint 3 – LEDs and finalization
+
+
+
+Diagrams
+
+
+ER Model (MER)
+
+
+ER Diagram (DER)
+
+
+Class Diagram
+
+
+Flow Diagram
