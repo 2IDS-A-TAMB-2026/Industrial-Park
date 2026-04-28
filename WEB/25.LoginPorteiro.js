@@ -1,4 +1,4 @@
-const form = document.getElementById("formLoginSuperAdmin");
+const form = document.getElementById("formLogin");
 
 form.addEventListener("submit", function(e){
     e.preventDefault();
@@ -15,22 +15,21 @@ form.addEventListener("submit", function(e){
     erroEmail.textContent = "";
     erroSenha.textContent = "";
 
-    // remove bordas anteriores
     email.classList.remove("bordaVermelha","bordaVerde");
     senha.classList.remove("bordaVermelha","bordaVerde");
 
     // ===== EMAIL =====
     if(email.value.trim() === ""){
-        erroEmail.textContent = "Digite o e-mail administrativo";
+        erroEmail.textContent = "Digite o e-mail";
         email.classList.add("bordaVermelha");
         valido = false;
-    }
-    else if(!validarEmail(email.value)){
+
+    } else if(!email.value.includes("@") || !email.value.includes(".")){
         erroEmail.textContent = "E-mail inválido";
         email.classList.add("bordaVermelha");
         valido = false;
-    }
-    else {
+
+    } else {
         email.classList.add("bordaVerde");
     }
 
@@ -39,39 +38,21 @@ form.addEventListener("submit", function(e){
         erroSenha.textContent = "Digite a senha";
         senha.classList.add("bordaVermelha");
         valido = false;
-    }
-    else if(senha.value.length < 6){
+
+    } else if(senha.value.length < 6){
         erroSenha.textContent = "Mínimo de 6 caracteres";
         senha.classList.add("bordaVermelha");
         valido = false;
-    }
-    else {
+
+    } else {
         senha.classList.add("bordaVerde");
     }
 
-    // ===== LOGIN ADMIN (FAKE) =====
-    const emailSuperAdmin = "superadmin@gmail.com";
-    const senhaSuperAdmin = "123456";
-
+    // ===== SUCESSO =====
     if(valido){
-        if(email.value === emailSuperAdmin && senha.value === senhaSuperAdmin){
-            alert("Login realizado com sucesso!");
+        alert("Login do porteiro realizado com sucesso!");
 
-            email.classList.add("bordaVerde");
-            senha.classList.add("bordaVerde");
-
-            window.location.href = "11.DashboardGlobalSuperAdmin.html";
-        } else {
-            erroSenha.textContent = "E-mail ou senha incorretos";
-
-            email.classList.add("bordaVermelha");
-            senha.classList.add("bordaVermelha");
-        }
+        // redirecionamento do porteiro
+        window.location.href = "15.DashboardPorteiro.html";
     }
 });
-
-// função validar email
-function validarEmail(email){
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-}

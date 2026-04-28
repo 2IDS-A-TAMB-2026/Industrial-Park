@@ -14,7 +14,7 @@ const erroEmail = document.getElementById("erroEmail");
 const erroEmpresa = document.getElementById("erroEmpresa");
 const erroData = document.getElementById("erroData");
 const erroSenha = document.getElementById("erroSenha");
-const erroConfirmarsenha = document.getElementById("erroConfirmarsenha");
+const erroConfirmar = document.getElementById("erroConfirmar");
 
 // Máscara CPF
 cpfInput.addEventListener("input", function(){
@@ -36,13 +36,13 @@ cpfInput.addEventListener("input", function(){
 form.addEventListener("submit", function(event){
     event.preventDefault();
 
-    let formValidado = true;
+    let valido = true;
 
     // Nome
     if(nomeInput.value.trim() === ""){
         erroNome.innerText = "O nome é obrigatório";
         nomeInput.classList.add("bordaVermelha");
-        formValidado = false;
+        valido = false;
     } else {
         erroNome.innerText = "";
         nomeInput.classList.remove("bordaVermelha");
@@ -53,7 +53,7 @@ form.addEventListener("submit", function(event){
     if(cpfInput.value.replace(/\D/g, "").length !== 11){
         erroCpf.innerText = "CPF inválido";
         cpfInput.classList.add("bordaVermelha");
-        formValidado = false;
+        valido = false;
     } else {
         erroCpf.innerText = "";
         cpfInput.classList.remove("bordaVermelha");
@@ -64,7 +64,7 @@ form.addEventListener("submit", function(event){
     if(emailInput.value.trim() === ""){
         erroEmail.innerText = "O email é obrigatório";
         emailInput.classList.add("bordaVermelha");
-        formValidado = false;
+        valido = false;
     } else {
         erroEmail.innerText = "";
         emailInput.classList.remove("bordaVermelha");
@@ -75,7 +75,7 @@ form.addEventListener("submit", function(event){
     if(empresaInput.value === ""){
         erroEmpresa.innerText = "Selecione uma empresa";
         empresaInput.classList.add("bordaVermelha");
-        formValidado = false;
+        valido = false;
     } else {
         erroEmpresa.innerText = "";
         empresaInput.classList.remove("bordaVermelha");
@@ -86,7 +86,7 @@ form.addEventListener("submit", function(event){
     if(dataInput.value === ""){
         erroData.innerText = "A data é obrigatória";
         dataInput.classList.add("bordaVermelha");
-        formValidado = false;
+        valido = false;
     } else {
         erroData.innerText = "";
         dataInput.classList.remove("bordaVermelha");
@@ -97,7 +97,7 @@ form.addEventListener("submit", function(event){
     if(senhaInput.value.length < 6){
         erroSenha.innerText = "A senha deve ter no mínimo 6 caracteres";
         senhaInput.classList.add("bordaVermelha");
-        formValidado = false;
+        valido = false;
     } else {
         erroSenha.innerText = "";
         senhaInput.classList.remove("bordaVermelha");
@@ -105,20 +105,26 @@ form.addEventListener("submit", function(event){
     }
 
     // Confirmar senha
-    if(confirmarSenhaInput.value !== senhaInput.value || confirmarSenhaInput.value === ""){
-        erroConfirmarsenha.innerText = "As senhas não coincidem";
+    if(confirmarSenhaInput.value === ""){
+        erroConfirmar.innerText = "Confirme sua senha";
         confirmarSenhaInput.classList.add("bordaVermelha");
-        formValidado = false;
+        confirmarSenhaInput.classList.remove("bordaVerde");
+        valido = false;
+
+    } else if(confirmarSenhaInput.value !== senhaInput.value){
+        erroConfirmar.innerText = "As senhas não coincidem";
+        confirmarSenhaInput.classList.add("bordaVermelha");
+        confirmarSenhaInput.classList.remove("bordaVerde");
+        valido = false;
+
     } else {
-        erroConfirmarsenha.innerText = "";
+        erroConfirmar.innerText = "";
         confirmarSenhaInput.classList.remove("bordaVermelha");
         confirmarSenhaInput.classList.add("bordaVerde");
     }
 
-    if(formValidado){
-        alert("Dados coletados com sucesso!");
-        window.location.reload();
-    } else {
-        alert("Erro ao cadastrar! Verifique os campos.");
+    if (valido) {
+      alert("Cadastro realizado com sucesso!");
+      window.location.href = "02.LoginUserComum.html";
     }
 });

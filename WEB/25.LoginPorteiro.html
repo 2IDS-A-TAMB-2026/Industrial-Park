@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recuperação de Senha</title>
+<title>Login</title>
 
-<!-- FONTE -->
+<!-- FONTE IGUAL -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -13,7 +13,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body{
@@ -54,8 +54,8 @@ body{
 }
 
 .left h1{
-  font-size:26px;
-  margin-bottom:10px;
+  font-size:28px;
+  opacity:0.9;
 }
 
 /* LADO DIREITO */
@@ -102,7 +102,7 @@ body{
   margin-bottom:10px;
 }
 
-/* INPUT */
+/* INPUTS */
 .form input{
   width:80%;
   padding:12px;
@@ -123,13 +123,14 @@ body{
   box-shadow:0 0 0 2px #0b132b33;
 }
 
-/* ERRO */
+/* ERRO (corrigido) */
 .erro{
   font-size:12px;
   color:#d90429;
   width:80%;
   text-align:left;
   min-height:18px;
+  line-height:1.2;
 }
 
 .bordaVermelha{
@@ -160,10 +161,11 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* LINK */
+/* LINKS */
 .links{
   margin-top:15px;
   font-size:13px;
+  text-align:center;
 }
 
 .links a{
@@ -173,6 +175,28 @@ body{
 
 .links a:hover{
   text-decoration:underline;
+}
+.cadastro{
+  margin-top:10px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background: linear-gradient(135deg, #3fb4d4, #5bc0eb);
+  color:#0b132b;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 5px 15px rgba(63,180,212,0.3);
+}
+
+.cadastro:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 10px 25px rgba(63,180,212,0.5);
+}
+
+.cadastro:active{
+  transform:scale(0.97);
 }
 
 /* RESPONSIVO */
@@ -193,28 +217,38 @@ body{
 
 <div class="container">
 
-  <!-- ESQUERDA -->
+  <!-- LADO ESQUERDO -->
   <div class="left">
     <img src="images/LogoModoEscuro.png" class="logo">
-    <h1>Esqueceu sua senha?</h1>
-    <p>Não se preocupe! Vamos te ajudar a recuperar o acesso.</p>
+    <h1>Bem-vindo, Porteiro!</h1>
+    <p>Controle o acesso ao estacionamento com segurança</p>
+    <h3>Não possui cadastro?</h3>
+    <a href="21.CadastroPorteiro.html">
+    <button class="cadastro">Cadastrar porteiro</button>
+    </a>
   </div>
 
-  <!-- DIREITA -->
+  <!-- LADO DIREITO -->
   <div class="content">
-    <h2>Recuperação de Senha</h2>
+    <h2>Faça seu login</h2>
 
-    <form class="form" id="formRecuperar">
+    <form class="form" id="formLogin">
 
       <div class="campo">
-        <input type="email" id="email" placeholder="Digite seu e-mail cadastrado">
+        <input type="email" id="email" placeholder="Email">
         <span id="erroEmail" class="erro"></span>
       </div>
 
-      <button type="submit">Enviar Solicitação</button>
+      <div class="campo">
+        <input type="password" id="senha" placeholder="Senha">
+        <span id="erroSenha" class="erro"></span>
+      </div>
+
+      <button type="submit">Entrar</button>
 
       <div class="links">
-        <a href="02.LoginUserComum.html">Voltar para Login</a>
+        <a href="03.RecuperaçãoSenhaEmail.html">Esqueci minha senha</a><br><br>
+        
       </div>
 
     </form>
@@ -222,7 +256,7 @@ body{
 
 </div>
 
-<script src="03.RecuperaçãoSenhaEmail.js"></script>
+<script src="25.LoginPorteiro.js"></script>
 
 </body>
 </html>

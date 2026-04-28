@@ -5,12 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login</title>
 
+<!-- FONTE IGUAL -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body{
@@ -18,7 +21,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#ffffff;
+  background-color:#1A2742;
 }
 
 /* CONTAINER */
@@ -26,41 +29,39 @@ body{
   width:900px;
   max-width:100%;
   height:550px;
-  border-radius:10px;
+  border-radius:15px;
   overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
   display:flex;
 }
 
 /* LADO ESQUERDO */
 .left{
   width:50%;
-  background:#027db7;
+  background:#0b132b;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   padding:20px;
-  color:#fff;
+  color:#eaeaea;
   text-align:center;
 }
 
-/* LOGO */
 .logo{
-  width:150px;
+  width:90px;
   margin-bottom:20px;
-  border-radius:10px;
 }
 
-/* TEXTO */
 .left h1{
-  font-size:18px;
+  font-size:28px;
+  opacity:0.9;
 }
 
 /* LADO DIREITO */
 .content{
   width:50%;
-  background:#f5f5f5;
+  background:#e9ecef;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -81,44 +82,83 @@ body{
 }
 
 .content h2{
-  color:#251494;
-  margin-bottom:15px;
+  color:#0b132b;
+  margin-bottom:20px;
 }
 
 /* FORM */
 .form{
   width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
+.campo{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+/* INPUTS */
 .form input{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
+  width:80%;
+  padding:12px;
   border:none;
-  border-radius:5px;
-  background:#e0e0e0;
+  border-radius:10px;
+  background:#ffffff;
+  color:#0b132b;
+  outline:none;
+  transition:0.3s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
+.form input::placeholder{
+  color:#6c757d;
+}
+
+.form input:focus{
+  box-shadow:0 0 0 2px #0b132b33;
+}
+
+/* ERRO (corrigido) */
+.erro{
+  font-size:12px;
+  color:#d90429;
+  width:80%;
+  text-align:left;
+  min-height:18px;
+  line-height:1.2;
+}
+
+.bordaVermelha{
+  border:2px solid red !important;
+}
+
+.bordaVerde{
+  border:2px solid limegreen !important;
+}
+
+/* BOTÃO */
 .form button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
+  width:80%;
+  padding:12px;
+  margin-top:15px;
   border:none;
-  border-radius:20px;
-  background:#251494;
-  color:#fff;
+  border-radius:25px;
+  background:#0b132b;
+  color:#ffffff;
+  font-weight:500;
   cursor:pointer;
   transition:0.3s;
 }
 
 .form button:hover{
-  background:#0d5fbd;
-}
-
-/* ERRO */
-.erro{
-  font-size:12px;
-  color:red;
+  transform:scale(1.03);
+  background:#1c2541;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
 /* LINKS */
@@ -129,13 +169,34 @@ body{
 }
 
 .links a{
-  color:#251494;
+  color:#0b132b;
   text-decoration:none;
 }
 
 .links a:hover{
   text-decoration:underline;
-  color: #0d5fbd;
+}
+.cadastro{
+  margin-top:10px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background: linear-gradient(135deg, #3fb4d4, #5bc0eb);
+  color:#0b132b;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 5px 15px rgba(63,180,212,0.3);
+}
+
+.cadastro:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 10px 25px rgba(63,180,212,0.5);
+}
+
+.cadastro:active{
+  transform:scale(0.97);
 }
 
 /* RESPONSIVO */
@@ -158,8 +219,14 @@ body{
 
   <!-- LADO ESQUERDO -->
   <div class="left">
-    <img src="IndustrialPark.jpg" class="logo">
-    <h1>Bem-vindo de volta!<br>Gerencie seu estacionamento com facilidade</h1>
+    <img src="images/LogoModoEscuro.png" class="logo">
+    <h1>Bem-vindo de volta!</h1>
+    <p>Gerencie seu estacionamento com facilidade!</p>
+    <br><br><br><br>
+    <h3>Ainda não possui uma conta?</h3>
+    <a href="01.CadastroUserComum.html">
+      <button class="cadastro">Criar conta</button>
+    </a>
   </div>
 
   <!-- LADO DIREITO -->
@@ -168,17 +235,21 @@ body{
 
     <form class="form" id="formLogin">
 
-      <input type="email" id="email" placeholder="Email">
-      <span id="erroEmail" class="erro"></span>
+      <div class="campo">
+        <input type="email" id="email" placeholder="Email">
+        <span id="erroEmail" class="erro"></span>
+      </div>
 
-      <input type="password" id="senha" placeholder="Senha">
-      <span id="erroSenha" class="erro"></span>
+      <div class="campo">
+        <input type="password" id="senha" placeholder="Senha">
+        <span id="erroSenha" class="erro"></span>
+      </div>
 
       <button type="submit">Entrar</button>
 
       <div class="links">
         <a href="03.RecuperaçãoSenhaEmail.html">Esqueci minha senha</a><br><br>
-        <a href="01.CadastroUserComum.html">Ainda não possui uma conta? Criar conta</a>
+        
       </div>
 
     </form>

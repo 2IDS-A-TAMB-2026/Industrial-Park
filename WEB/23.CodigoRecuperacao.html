@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recuperação de Senha</title>
+<title>Código de Verificação</title>
 
-<!-- FONTE -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -24,7 +23,6 @@ body{
   background-color:#1A2742;
 }
 
-/* CONTAINER */
 .container{
   width:900px;
   max-width:100%;
@@ -35,7 +33,6 @@ body{
   display:flex;
 }
 
-/* LADO ESQUERDO */
 .left{
   width:50%;
   background:#0b132b;
@@ -54,11 +51,10 @@ body{
 }
 
 .left h1{
-  font-size:26px;
-  margin-bottom:10px;
+  font-size:28px;
+  opacity:0.9;
 }
 
-/* LADO DIREITO */
 .content{
   width:50%;
   background:#e9ecef;
@@ -68,6 +64,7 @@ body{
   align-items:center;
   padding:30px;
   animation:slide 0.6s ease;
+  text-align:center;
 }
 
 @keyframes slide{
@@ -86,7 +83,6 @@ body{
   margin-bottom:20px;
 }
 
-/* FORM */
 .form{
   width:100%;
   display:flex;
@@ -94,15 +90,28 @@ body{
   align-items:center;
 }
 
-.campo{
-  width:100%;
+.inputs-codigo{
   display:flex;
-  flex-direction:column;
-  align-items:center;
-  margin-bottom:10px;
+  gap:10px;
+  justify-content:center;
 }
 
-/* INPUT */
+.inputs-codigo input{
+  width:45px;
+  height:55px;
+  text-align:center;
+  font-size:20px;
+  border-radius:8px;
+  border:2px solid #ccc;
+  outline:none;
+  transition:0.3s;
+}
+
+.inputs-codigo input:focus{
+  border-color:#0b132b;
+  box-shadow:0 0 5px #0b132b55;
+}
+
 .form input{
   width:80%;
   padding:12px;
@@ -115,15 +124,10 @@ body{
   box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-.form input::placeholder{
-  color:#6c757d;
-}
-
 .form input:focus{
   box-shadow:0 0 0 2px #0b132b33;
 }
 
-/* ERRO */
 .erro{
   font-size:12px;
   color:#d90429;
@@ -140,27 +144,17 @@ body{
   border:2px solid limegreen !important;
 }
 
-/* BOTÃO */
 .form button{
   width:80%;
   padding:12px;
-  margin-top:15px;
+  margin-top:10px;
   border:none;
   border-radius:25px;
   background:#0b132b;
   color:#ffffff;
-  font-weight:500;
   cursor:pointer;
-  transition:0.3s;
 }
 
-.form button:hover{
-  transform:scale(1.03);
-  background:#1c2541;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* LINK */
 .links{
   margin-top:15px;
   font-size:13px;
@@ -175,7 +169,6 @@ body{
   text-decoration:underline;
 }
 
-/* RESPONSIVO */
 @media (max-width:768px){
   .container{
     flex-direction:column;
@@ -193,25 +186,30 @@ body{
 
 <div class="container">
 
-  <!-- ESQUERDA -->
   <div class="left">
     <img src="images/LogoModoEscuro.png" class="logo">
-    <h1>Esqueceu sua senha?</h1>
-    <p>Não se preocupe! Vamos te ajudar a recuperar o acesso.</p>
+    <h1>Verifique seu e-mail</h1>
+    <p>Digite o código enviado</p>
   </div>
 
-  <!-- DIREITA -->
   <div class="content">
-    <h2>Recuperação de Senha</h2>
+    <h2>Código de Verificação</h2>
 
-    <form class="form" id="formRecuperar">
+    <form class="form" id="formCodigo">
 
-      <div class="campo">
-        <input type="email" id="email" placeholder="Digite seu e-mail cadastrado">
-        <span id="erroEmail" class="erro"></span>
-      </div>
+  <div class="campo codigo-box">
+  <div class="inputs-codigo">
+    <input type="text" maxlength="1" class="digito">
+    <input type="text" maxlength="1" class="digito">
+    <input type="text" maxlength="1" class="digito">
+    <input type="text" maxlength="1" class="digito">
+    <input type="text" maxlength="1" class="digito">
+    <input type="text" maxlength="1" class="digito">
+  </div>
+  <span id="erroCodigo" class="erro"></span>
+</div>
 
-      <button type="submit">Enviar Solicitação</button>
+  <button type="submit">Validar Código</button>
 
       <div class="links">
         <a href="02.LoginUserComum.html">Voltar para Login</a>
@@ -222,7 +220,7 @@ body{
 
 </div>
 
-<script src="03.RecuperaçãoSenhaEmail.js"></script>
+<script src="23.CodigoRecuperacao.js"></script>
 
 </body>
 </html>

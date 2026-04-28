@@ -2,36 +2,48 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+
+<!-- POPPINS -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <title>Perfil do Usuário</title>
 
 <style>
 :root {
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --accent-blue: #76a9fa;
-    --accent-blue-dark: #4f83f7;
-    --accent-glow: rgba(118, 169, 250, 0.3);
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.8);
+    --primary: #4CC9F0;
+    --primary-dark: #3AB0D6;
+    --bg1: #0A0F1C;
+    --bg2: #0F1A35;
+    --glass: rgba(18, 28, 58, 0.6);
+    --border: rgba(255,255,255,0.05);
+    --text2: #A9B4D0;
+}
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins', sans-serif;
 }
 
 body{
-margin:0;
-font-family:'Segoe UI', system-ui, sans-serif;
-background: linear-gradient(135deg, #0a0a0f, #16213e);
-color:var(--text-primary);
+background: linear-gradient(135deg, var(--bg1), var(--bg2));
+color:#fff;
 }
 
+/* LAYOUT */
 .layout{
 display:flex;
 max-width:1200px;
 margin:40px auto;
-gap:20px;
+gap:25px;
+padding:0 20px;
 }
 
-/* MENU LATERAL */
+/* SIDEBAR */
 .sidebar{
-width:220px;
+width:230px;
 position:sticky;
 top:20px;
 height:fit-content;
@@ -39,81 +51,104 @@ height:fit-content;
 
 .sidebar a{
 display:block;
-padding:10px 15px;
-margin-bottom:8px;
+padding:12px 15px;
+margin-bottom:10px;
 border-radius:12px;
 text-decoration:none;
-color:var(--text-secondary);
-border:1px solid transparent;
+color:var(--text2);
 transition:0.3s;
 }
 
 .sidebar a:hover{
-color:var(--accent-blue);
-border-color:var(--accent-blue);
-background:rgba(118,169,250,0.1);
+background: rgba(76,201,240,0.15);
+color:#fff;
 }
 
 .sidebar a.active{
-color:var(--accent-blue);
-border-color:var(--accent-blue);
-background:rgba(118,169,250,0.2);
+background: rgba(76,201,240,0.25);
+color:#fff;
+box-shadow: 0 0 10px rgba(76,201,240,0.4);
 }
 
+/* MAIN */
 .main{
 flex:1;
 }
 
-.section{
-margin-bottom:30px;
-}
-
+/* CARD */
 .card{
-background:var(--glass-bg);
-border:1px solid var(--glass-border);
-backdrop-filter:blur(20px);
-border-radius:20px;
+background: var(--glass);
+border:1px solid var(--border);
+backdrop-filter:blur(12px);
+border-radius:18px;
 padding:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+margin-bottom:25px;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+transition:0.3s;
 }
 
-h2,h3{margin-top:0}
+.card:hover{
+transform:translateY(-3px);
+box-shadow:0 0 25px rgba(76,201,240,0.2);
+}
 
+h2{
+margin-bottom:15px;
+color:var(--primary);
+}
+
+/* INPUT */
 .label{
 font-size:13px;
-color:var(--text-secondary);
+color:var(--text2);
 }
 
 .input{
 width:100%;
 padding:10px;
 border-radius:10px;
-border:1px solid var(--glass-border);
+border:1px solid var(--border);
 background:rgba(255,255,255,0.05);
 color:white;
 margin-top:5px;
 margin-bottom:10px;
+transition:0.3s;
 }
 
 .input:focus{
 outline:none;
-border-color:var(--accent-blue);
-box-shadow:0 0 10px var(--accent-glow);
+border-color:var(--primary);
+box-shadow:0 0 10px rgba(76,201,240,0.6);
 }
 
+/* BOTÃO */
 .button{
 padding:10px;
 width:100%;
 border:none;
-border-radius:20px;
-background:linear-gradient(135deg,var(--accent-blue),var(--accent-blue-dark));
-color:white;
+border-radius:25px;
+background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+color:#0A0F1C;
+font-weight:600;
 cursor:pointer;
-margin-top:10px;
+transition:0.3s;
 }
 
-.list{padding-left:18px}
+.button:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(76,201,240,0.6);
+}
 
+/* LISTA */
+.list{
+padding-left:18px;
+color:#B8C2D9;
+}
+
+/* FOTO */
+img{
+box-shadow:0 0 10px rgba(76,201,240,0.4);
+}
 </style>
 </head>
 
@@ -135,13 +170,12 @@ margin-top:10px;
 <!-- CONTEÚDO -->
 <div class="main">
 
-<div id="perfil" class="section card">
+<div id="perfil" class="card">
 <h2>Informações Pessoais</h2>
 
-<!-- FOTO -->
 <div style="display:flex;align-items:center;gap:20px;margin-bottom:15px;">
-  <img id="previewFoto" src="https://via.placeholder.com/80" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--glass-border);">
-  <input type="file" id="inputFoto" accept="image/*">
+  <img id="previewFoto" src="https://via.placeholder.com/80" style="width:80px;height:80px;border-radius:50%;object-fit:cover;">
+  <input type="file">
 </div>
 
 <label class="label">Nome</label>
@@ -154,10 +188,10 @@ margin-top:10px;
 <input class="input" type="password" placeholder="Nova senha">
 
 <button class="button" onclick="mostrarMensagem(this)">Salvar</button>
-<p class="msg-sucesso" style="display:none;color:var(--accent-blue);margin-top:10px;">Alteração feita com sucesso</p>
+<p style="display:none;color:#4CC9F0;margin-top:10px;">Alteração feita com sucesso</p>
 </div>
 
-<div id="veiculos" class="section card">
+<div id="veiculos" class="card">
 <h2>Meus Veículos</h2>
 <ul class="list">
 <li>ABC-1234 • Caminhão</li>
@@ -166,15 +200,8 @@ margin-top:10px;
 <button class="button">+ Adicionar veículo</button>
 </div>
 
-<div id="reservas" class="section card">
-<h2>Reservas</h2>
-<ul class="list">
-<li>Hoje 14:00 - Doca 3</li>
-<li>Amanhã 09:00 - Pátio B</li>
-</ul>
-</div>
 
-<div id="atividade" class="section card">
+<div id="atividade" class="card">
 <h2>Atividade Recente</h2>
 <ul class="list">
 <li>Entrada: 08:12</li>
@@ -182,44 +209,31 @@ margin-top:10px;
 </ul>
 </div>
 
-<div id="notificacoes" class="section card">
+<div id="notificacoes" class="card">
 <h2>Notificações</h2>
 
-<label style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-  <input type="checkbox" checked>
-  Receber notificações por e-mail
-</label>
+<label><input type="checkbox" checked> E-mail</label><br>
+<label><input type="checkbox"> SMS</label><br>
+<label><input type="checkbox" checked> Sistema</label>
 
-<label style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-  <input type="checkbox">
-  Receber notificações por SMS
-</label>
-
-<label style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-  <input type="checkbox" checked>
-  Receber notificações pelo sistema
-</label>
-
-<button class="button">Salvar preferências</button>
+<button class="button">Salvar</button>
 </div>
 
-<div id="seguranca" class="section card">
+<div id="seguranca" class="card">
 <h2>Segurança</h2>
 <p>2FA: Desativado</p>
 <button class="button">Ativar</button>
 </div>
 
-<div id="config" class="section card">
+<div id="config" class="card">
 <h2>Configurações</h2>
 <p>Idioma: PT-BR</p>
 </div>
 
 </div>
-
 </div>
 
 <script>
-// scroll suave
 document.querySelectorAll('.sidebar a').forEach(link => {
   link.addEventListener('click', function(e){
     e.preventDefault();
@@ -227,33 +241,10 @@ document.querySelectorAll('.sidebar a').forEach(link => {
   });
 });
 
-// active menu
-const sections = document.querySelectorAll('.section');
-const links = document.querySelectorAll('.sidebar a');
-
-window.addEventListener('scroll', () => {
-  let current = '';
-
-  sections.forEach(section => {
-    const top = section.offsetTop - 100;
-    if(scrollY >= top){
-      current = section.getAttribute('id');
-    }
-  });
-
-  links.forEach(link => {
-    link.classList.remove('active');
-    if(link.getAttribute('href') === '#' + current){
-      link.classList.add('active');
-    }
-  });
-});
 function mostrarMensagem(btn){
   const msg = btn.nextElementSibling;
   msg.style.display = 'block';
-  setTimeout(()=>{
-    msg.style.display = 'none';
-  },3000);
+  setTimeout(()=> msg.style.display = 'none',3000);
 }
 </script>
 

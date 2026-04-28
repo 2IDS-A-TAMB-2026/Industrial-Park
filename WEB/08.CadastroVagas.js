@@ -9,6 +9,9 @@ const erroCodigo = document.getElementById("erroCodigo");
 const erroSetor = document.getElementById("erroSetor");
 const erroStatus = document.getElementById("erroStatus");
 
+// NOVO
+const container = document.getElementById("vagasContainer");
+
 // Simulação de banco
 let vagasCadastradas = ["V01", "V02"];
 
@@ -18,6 +21,9 @@ form.addEventListener("submit", function(event){
     let formValido = true;
 
     const codigo = codigoInput.value.trim();
+    const setor = setorInput.value.trim();
+    const status = statusInput.value;
+    const sensor = sensorInput.value;
 
     // Código obrigatório
     if(codigo === ""){
@@ -25,13 +31,11 @@ form.addEventListener("submit", function(event){
         codigoInput.classList.add("bordaVermelha");
         formValido = false;
     }
-    // Formato V01
     else if(!/^V\d{2}$/.test(codigo)){
         erroCodigo.innerText = "Formato inválido. Use Ex: V01";
         codigoInput.classList.add("bordaVermelha");
         formValido = false;
     }
-    // Duplicidade
     else if(vagasCadastradas.includes(codigo)){
         erroCodigo.innerText = "Código já cadastrado";
         codigoInput.classList.add("bordaVermelha");
@@ -43,8 +47,8 @@ form.addEventListener("submit", function(event){
         codigoInput.classList.add("bordaVerde");
     }
 
-    // Setor obrigatório
-    if(setorInput.value.trim().length < 1){
+    // Setor
+    if(setor.length < 1){
         erroSetor.innerText = "O setor é obrigatório";
         setorInput.classList.add("bordaVermelha");
         formValido = false;
@@ -54,8 +58,8 @@ form.addEventListener("submit", function(event){
         setorInput.classList.add("bordaVerde");
     }
 
-    // Status obrigatório
-    if(statusInput.value === ""){
+    // Status
+    if(status === ""){
         erroStatus.innerText = "Selecione um status";
         statusInput.classList.add("bordaVermelha");
         formValido = false;
@@ -65,13 +69,33 @@ form.addEventListener("submit", function(event){
         statusInput.classList.add("bordaVerde");
     }
 
+    // ✅ SE TUDO OK
     if(formValido){
 
         vagasCadastradas.push(codigo);
 
-        alert("Vaga cadastrada com sucesso!");
+        // 🔥 CRIAR CARD DA VAGA
+        const div = document.createElement("div");
 
-        console.log("Mapa atualizado automaticamente.");
+        let statusClass = status.toLowerCase();
+        if(status === "Indisponível") statusClass = "indisponivel";
+
+        div.className = `vaga-item ${statusClass}`;
+
+        div.innerHTML = `
+            <div>
+                <strong>${codigo}</strong> | ${setor}<br>
+                Sensor: ${sensor || "Nenhum"}
+            </div>
+
+            <div>
+                ${status}
+            </div>
+        `;
+
+        container.appendChild(div);
+
+        alert("Vaga cadastrada com sucesso!");
 
         form.reset();
 

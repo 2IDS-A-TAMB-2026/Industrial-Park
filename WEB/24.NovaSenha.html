@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recuperação de Senha</title>
+<title>Nova Senha</title>
 
-<!-- FONTE -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -24,7 +23,6 @@ body{
   background-color:#1A2742;
 }
 
-/* CONTAINER */
 .container{
   width:900px;
   max-width:100%;
@@ -35,7 +33,6 @@ body{
   display:flex;
 }
 
-/* LADO ESQUERDO */
 .left{
   width:50%;
   background:#0b132b;
@@ -54,11 +51,9 @@ body{
 }
 
 .left h1{
-  font-size:26px;
-  margin-bottom:10px;
+  font-size:28px;
 }
 
-/* LADO DIREITO */
 .content{
   width:50%;
   background:#e9ecef;
@@ -70,23 +65,11 @@ body{
   animation:slide 0.6s ease;
 }
 
-@keyframes slide{
-  from{
-    transform:translateX(50px);
-    opacity:0;
-  }
-  to{
-    transform:translateX(0);
-    opacity:1;
-  }
-}
-
 .content h2{
   color:#0b132b;
   margin-bottom:20px;
 }
 
-/* FORM */
 .form{
   width:100%;
   display:flex;
@@ -102,7 +85,6 @@ body{
   margin-bottom:10px;
 }
 
-/* INPUT */
 .form input{
   width:80%;
   padding:12px;
@@ -115,21 +97,10 @@ body{
   box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-.form input::placeholder{
-  color:#6c757d;
-}
-
-.form input:focus{
-  box-shadow:0 0 0 2px #0b132b33;
-}
-
-/* ERRO */
 .erro{
   font-size:12px;
   color:#d90429;
   width:80%;
-  text-align:left;
-  min-height:18px;
 }
 
 .bordaVermelha{
@@ -140,7 +111,6 @@ body{
   border:2px solid limegreen !important;
 }
 
-/* BOTÃO */
 .form button{
   width:80%;
   padding:12px;
@@ -149,9 +119,7 @@ body{
   border-radius:25px;
   background:#0b132b;
   color:#ffffff;
-  font-weight:500;
   cursor:pointer;
-  transition:0.3s;
 }
 
 .form button:hover{
@@ -160,22 +128,6 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* LINK */
-.links{
-  margin-top:15px;
-  font-size:13px;
-}
-
-.links a{
-  color:#0b132b;
-  text-decoration:none;
-}
-
-.links a:hover{
-  text-decoration:underline;
-}
-
-/* RESPONSIVO */
 @media (max-width:768px){
   .container{
     flex-direction:column;
@@ -193,36 +145,34 @@ body{
 
 <div class="container">
 
-  <!-- ESQUERDA -->
   <div class="left">
     <img src="images/LogoModoEscuro.png" class="logo">
-    <h1>Esqueceu sua senha?</h1>
-    <p>Não se preocupe! Vamos te ajudar a recuperar o acesso.</p>
+    <h1>Nova Senha</h1>
+    <p>Crie uma senha segura</p>
   </div>
 
-  <!-- DIREITA -->
   <div class="content">
-    <h2>Recuperação de Senha</h2>
+    <h2>Redefinir Senha</h2>
 
-    <form class="form" id="formRecuperar">
+    <form class="form" id="formSenha">
 
       <div class="campo">
-        <input type="email" id="email" placeholder="Digite seu e-mail cadastrado">
-        <span id="erroEmail" class="erro"></span>
-      </div>
+  <input type="password" id="senha" placeholder="Nova senha">
+</div>
 
-      <button type="submit">Enviar Solicitação</button>
+<div class="campo">
+  <input type="password" id="confirmar" placeholder="Confirmar senha">
+  <span id="erroSenha" class="erro"></span>
+</div>
 
-      <div class="links">
-        <a href="02.LoginUserComum.html">Voltar para Login</a>
-      </div>
+      <button type="submit">Salvar</button>
 
     </form>
   </div>
 
 </div>
 
-<script src="03.RecuperaçãoSenhaEmail.js"></script>
+<script src="24.NovaSenha.js"></script>
 
 </body>
 </html>

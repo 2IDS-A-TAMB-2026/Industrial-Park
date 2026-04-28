@@ -15,21 +15,51 @@ form.addEventListener("submit", function(e){
     erroEmail.textContent = "";
     erroSenha.textContent = "";
 
+
+    email.classList.remove("bordaVermelha","bordaVerde");
+    senha.classList.remove("bordaVermelha","bordaVerde");
+
     // ===== EMAIL =====
     if(email.value.trim() === ""){
-        erroEmail.textContent = "Digite seu e-mail";
+        erroEmail.textContent = "Digite o e-mail";
+        email.classList.add("bordaVermelha");
+        email.classList.remove("bordaVerde");
         valido = false;
+    }
+    else if(!email.value){
+        erroEmail.textContent = "E-mail inválido";
+        email.classList.add("bordaVermelha");
+        email.classList.remove("bordaVerde");
+        valido = false;
+    }
+    else {
+        email.classList.add("bordaVerde");
     }
 
     // ===== SENHA =====
     if(senha.value.trim() === ""){
-        erroSenha.textContent = "Digite sua senha";
+        erroSenha.textContent = "Digite a senha";
+        senha.classList.add("bordaVermelha");
+        senha.classList.remove("bordaVerde");
         valido = false;
     }
-
-    // ===== SE ESTIVER OK =====
-    if(valido){
-        // AQUI ELE VAI PRA OUTRA TELA
-        window.location.href = "19.TelaInicial.html";
+    else if(senha.value.length < 6){
+        erroSenha.textContent = "Mínimo de 6 caracteres";
+        senha.classList.add("bordaVermelha");
+        senha.classList.remove("bordaVerde");
+        valido = false;
     }
+    else {
+        senha.classList.add("bordaVerde");
+    }
+
+    // ===== REDIRECIONA =====
+    if(valido){
+    senha.classList.add("bordaVerde");
+    email.classList.add("bordaVerde");
+
+    alert("Login realizado com sucesso!");
+
+    window.location.href = "04.DashBoardUser.html";
+}
 });

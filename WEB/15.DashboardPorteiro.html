@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- POPPINS -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<title>Dashboard</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  display:flex;
+  background: linear-gradient(135deg, #0A0F1C, #0F1A35);
+  color:#fff;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  height:100vh;
+  background: rgba(18,28,58,0.9);
+  backdrop-filter: blur(12px);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border-right:1px solid rgba(255,255,255,0.05);
+}
+
+.logo{
+  font-size:20px;
+  font-weight:600;
+  color:#4CC9F0;
+  margin-bottom:30px;
+}
+
+.user h3{font-size:16px;}
+.user p{font-size:13px;color:#A9B4D0;}
+
+.menu a{
+  display:block;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:10px;
+  text-decoration:none;
+  color:#B8C2D9;
+  transition:0.3s;
+}
+
+.menu a:hover{
+  background: rgba(76,201,240,0.2);
+  color:#fff;
+}
+
+.logout{
+  padding:12px;
+  text-align:center;
+  background: linear-gradient(135deg,#4CC9F0,#3AB0D6);
+  color:#0A0F1C;
+  border-radius:25px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:30px;
+}
+
+/* GRID */
+.container{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+/* CARDS */
+.card{
+  background: rgba(18,28,58,0.6);
+  backdrop-filter: blur(12px);
+  border-radius:16px;
+  padding:30px;
+}
+
+.card h2{
+  font-size:18px;
+  color:#A9B4D0;
+}
+
+.value{
+  font-size:28px;
+  color:#4CC9F0;
+  font-weight:600;
+}
+
+.span-2{grid-column:span 2;}
+.span-4{grid-column:span 2;}
+
+/* VAGAS */
+.parking-grid{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:15px;
+}
+
+.spot{
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+  font-size:14px;
+  min-height:70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.spot i{
+  font-size: 22px;
+}
+
+/* 🔥 NEON */
+.spot.free{
+  background:#4ade80;
+  color:#052e16;
+  box-shadow:0 0 12px rgba(74,222,128,0.8);
+}
+
+.spot.occupied{
+  background:#f87171;
+  color:#450a0a;
+  box-shadow:0 0 12px rgba(248,113,113,0.8);
+}
+
+.spot:hover{
+  transform:scale(1.05);
+}
+
+canvas{
+  height:250px !important;
+}
+
+/* ===================== */
+/* 📱 RESPONSIVIDADE */
+/* ===================== */
+
+/* Tablet */
+@media (max-width: 1024px){
+  .container{
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .sidebar{
+    width: 200px;
+  }
+
+  .parking-grid{
+    grid-template-columns: repeat(6,1fr);
+  }
+}
+
+/* Celular */
+@media (max-width: 768px){
+
+  body{
+    flex-direction: column;
+  }
+
+  .sidebar{
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .menu{
+    display: flex;
+    gap:10px;
+  }
+
+  .menu a{
+    margin:0;
+    padding:8px;
+    font-size:12px;
+  }
+
+  .main{
+    padding:15px;
+  }
+
+  .container{
+    grid-template-columns: 1fr;
+  }
+
+  .span-2,
+  .span-4{
+    grid-column: span 1;
+  }
+
+  .parking-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+}
+
+  .card{
+    padding:15px;
+  }
+
+  .value{
+    font-size:22px;
+  }
+}
+
+/* Celular pequeno */
+@media (max-width: 480px){
+
+  .logo{
+    font-size:16px;
+  }
+
+  .user h3{
+    font-size:14px;
+  }
+
+  .user p{
+    font-size:11px;
+  }
+
+  .parking-grid{
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  canvas{
+    height:200px !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <div>
+    <div class="logo">
+      <i class="fa-solid fa-square-parking"></i> Industrial Park
+    </div>
+
+    <div class="user">
+      <h3>João</h3>
+      <p>Perfil: Porteiro</p>
+      <br>
+    </div>
+
+    <div class="menu">
+      <a href="19.TelaInicial.html"><i class="fa-solid fa-house"></i> Início</a>
+    </div>
+  </div>
+  <a href="20.ConfirmaçãoLogout.html" class="logout">
+  <i class="fa-solid fa-right-from-bracket"></i> Logout
+</a>
+</div>
+
+<div class="main">
+<div class="container">
+
+  <div class="card">
+    <h2>Total de Vagas</h2>
+    <div class="value">32</div>
+  </div>
+
+  <div class="card">
+    <h2>Vagas Livres</h2>
+    <div class="value" id="freeCount">0</div>
+  </div>
+
+  <div class="card">
+    <h2>Vagas Ocupadas</h2>
+    <div class="value" id="occupiedCount">0</div>
+  </div>
+
+  <div class="card">
+    <h2>Taxa de Ocupação</h2>
+    <div class="value" id="rate">0%</div>
+  </div>
+
+  <div class="card span-4">
+    <h2>Estacionamento</h2>
+    <br>
+    <div class="parking-grid" id="parkingGrid"></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const spots = [
+  'free','occupied','free','free','occupied','free','occupied','free',
+  'free','free','occupied','free','occupied','free','free','occupied'
+];
+
+let free = 0;
+let occupied = 0;
+const grid = document.getElementById('parkingGrid');
+
+spots.forEach((status,i)=>{
+  const div = document.createElement('div');
+  div.className = `spot ${status}`;
+  div.innerHTML = `<i class="fa-solid fa-car"></i><br>A${(i+1).toString().padStart(2,'0')}`;
+
+  if(status==='free') free++;
+  else occupied++;
+
+  grid.appendChild(div);
+});
+
+freeCount.innerText = free;
+occupiedCount.innerText = occupied;
+rate.innerText = Math.round((occupied/(free+occupied))*100)+'%';
+
+</script>
+
+</body>
+</html>

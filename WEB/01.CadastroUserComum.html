@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadastro</title>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -28,14 +22,14 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background: linear-gradient(135deg, #0b132b, #1c2541);
+  background-color: #1A2742;
 }
 
 /* CONTAINER */
 .container{
   width:900px;
   max-width:100%;
-  height:550px;
+ /* height:550px;*/
   border-radius:15px;
   overflow:hidden;
   box-shadow:0 20px 40px rgba(0,0,0,0.5);
@@ -56,7 +50,7 @@ body{
 }
 
 .left h1{
-  font-size:18px;
+  font-size:35px;
   opacity:0.9;
 }
 
@@ -147,13 +141,48 @@ body{
   text-align:left;
 }
 
+.bordaVermelha{
+  border:2px solid red !important;
+}
+
+.bordaVerde{
+  border:2px solid limegreen !important;
+}
+
 /* RODAPÉ */
 .footer-text{
   margin-top:15px;
   font-size:12px;
   color:#495057;
 }
+.logoCadastro{
+  width: 90px;
+}
 
+#Login{
+  margin-top:10px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  color:#0b132b;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 5px 15px rgba(63,180,212,0.3);
+}
+
+/* HOVER */
+#Login:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 10px 25px rgba(63,180,212,0.5);
+}
+
+/* CLICK */
+#Login:active{
+  transform:scale(0.97);
+  box-shadow:0 3px 10px rgba(63,180,212,0.3);
+}
 /* RESPONSIVO */
 @media (max-width:768px){
   .container{
@@ -174,7 +203,18 @@ body{
 
   <!-- LADO ESQUERDO -->
   <div class="left">
-    <h1>Quer mais controle sobre seu estacionamento?</h1>
+    <img src="images/LogoModoEscuro.png" class="logoCadastro">
+    <br>
+    <h1>Bem Vindo!</h1>
+    <p>Quer mais controle sobre seu estacionamento?</p>
+    <br>
+    <br>
+    <br>
+    <h3>Já tem uma conta?</h3>
+    <a href="02.LoginUserComum.html">
+      <button id="Login">Entrar</button>
+    </a>
+    
   </div>
 
   <!-- LADO DIREITO -->

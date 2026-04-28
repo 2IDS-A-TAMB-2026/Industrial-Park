@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <title>Homepage</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Segoe UI',sans-serif;
+  font-family:'Poppins', sans-serif;
 }
 
 body{
@@ -112,7 +113,7 @@ nav a:hover{color:#FFFFFF;}
 }
 
 .card{
-  background: rgba(255,255,255,0.04);
+  background: rgb(31, 34, 59);
   padding:30px;
   border-radius:16px;
   backdrop-filter: blur(12px);
@@ -214,7 +215,137 @@ footer{
 .logoModoEscuro{
   width: 50px;
 }
+#Login{
+  background: linear-gradient(135deg, #4CC9F0, #3AB0D6);
+  color: #0A0F1C !important;
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.empresasFIC {
+    padding: 40px 20px;
+    text-align: center;
+}
 
+.empresasFIC h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+/* GRID SIMPLES */
+.empresasFIC .grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+/* LOGOS */
+.empresasFIC .empresa img {
+    width: 220px;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+/* HOVER LEVE */
+.empresasFIC .empresa img:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+/* efeito ao passar o mouse */
+#Login:hover{
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(76, 201, 240, 0.6);
+  color: #0A0F1C;
+}
+/* ===== MODO CLARO ===== */
+body.light{
+  background: linear-gradient(135deg, #f5f7fb, #e4e9f7);
+  color:#0A0F1C;
+}
+
+body.light header{
+  background: rgba(255,255,255,0.7);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+}
+
+body.light nav a{
+  color:#333;
+}
+
+body.light nav a:hover{
+  color:#000;
+}
+
+body.light .card{
+  background:#ffffff;
+}
+
+body.light .card p{
+  color:#555;
+}
+
+body.light .hero-content h2,
+body.light .hero-content p{
+  color:#555;
+}
+
+body.light footer{
+  background:#eaeef6;
+  color:#555;
+}
+
+/* BOTÃO */
+#themeBtn{
+  cursor:pointer;
+  font-size:20px;
+  color:#fff;
+  margin-left:10px;
+}
+
+body.light #themeBtn{
+  color:#0A0F1C;
+}
+
+/* TRANSIÇÃO SUAVE */
+body, header, .card, footer{
+  transition:0.3s;
+}
+.hero-content h1{
+  color: white;
+}
+
+.laranja{
+  color:#4CC9F0;
+}
+/* ===== AJUSTE OVERLAY (NÃO SUMIR TEXTO) ===== */
+body.light .overlay{
+  background: linear-gradient(to right, #f5f7fb 45%, rgba(245,247,251,0.6) 70%, transparent);
+}
+
+/* ===== FADE NAS IMAGENS ===== */
+img{
+  transition: opacity 0.5s ease, transform 0.3s ease;
+}
+
+.img-fade{
+  opacity:0;
+  transform:scale(0.98);
+}
+body.light .hero-content h1{
+  color: #0b1b43; /* muda aqui */
+}
+
+/* ===== MELHOR VISIBILIDADE DO TÍTULO ===== */
+.hero-content h1{
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+body.light .hero-content h1{
+  text-shadow: none;
+}
 /* RESPONSIVO */
 @media(max-width:900px){
   .hero-img{display:none;}
@@ -238,12 +369,12 @@ footer{
 <body>
 
 <header>
-  <img src="images/LogoModoEscuro.png" class="logoModoEscuro">
+  <img src="images/LogoModoEscuro.png" 
+     data-light="images/LogoModoClaro.png"
+     class="logoModoEscuro">
   <nav>
-    <a href="#">Início</a>
-    <a href="#">Perfil</a>
-    <a href="#">Dashboard</a>
-    <a href="#">Contato</a>
+    <a href="02.LoginUserComum.html" id="Login">Entrar</a>
+    <i class="fa-solid fa-moon" id="themeBtn"></i>
   </nav>
 </header>
 
@@ -263,7 +394,8 @@ footer{
 
   <div class="card">
     <h2>Quem somos</h2>
-    <p>Somos uma equipe de estudantes do SENAI apaixonados por tecnologia e inovação, dedicada ao desenvolvimento de soluções inteligentes para o setor industrial. Nosso foco é criar sistemas de estacionamento automatizado que utilizam IoT para otimizar o uso de vagas, reduzir o tempo de busca e melhorar a organização de espaços.
+    <p>Somos uma equipe de estudantes do SENAI apaixonados por tecnologia e inovação, dedicada ao desenvolvimento de soluções inteligentes para o setor industrial.<br><br>
+       Nosso foco é criar sistemas de estacionamento automatizado que utilizam IoT para otimizar o uso de vagas, reduzir o tempo de busca e melhorar a organização de espaços.
 
 Unimos conhecimento técnico e criatividade para transformar ideias em soluções eficientes, acessíveis e modernas. Mais do que um projeto, somos um time comprometido em construir tecnologias que facilitam o dia a dia e contribuem para um futuro mais inteligente.
 </p>
@@ -276,12 +408,13 @@ Unimos conhecimento técnico e criatividade para transformar ideias em soluçõe
 
       <div class="desafio-texto">
         <p>
-          Falta de controle<br>
-          Congestionamento<br>
-          Gestão de visitantes<br>
-          Segurança
+          <i class="fa-solid fa-gears"></i>  Falta de controle e organização nos processos<br>
+          <i class="fa-solid fa-truck"></i>  Congestionamentos que impactam a eficiência e o fluxo<Br>
+          <i class="fa-solid fa-face-smile"></i>  Dificuldades na gestão de visitantes e acessos<br>
+          <i class="fa-solid fa-helmet-safety"></i>  Questões de segurança que comprometem a tranquilidade
         </p>
       </div>
+      
 
       <div class="carousel">
         <img src="images/congestionamento.jpg" class="active">
@@ -294,7 +427,8 @@ Unimos conhecimento técnico e criatividade para transformar ideias em soluçõe
 
   <div class="card">
     <h2>Ideal para</h2>
-    <p>Indústrias, centros logísticos e grandes empresas.</p>
+    <p>Ideal para
+    Indústrias, centros logísticos e empresas de grande porte que precisam de controle eficiente de acesso,<br> organização de fluxos, gestão otimizada de visitantes e maior segurança nas operações diárias.</p>
   </div>
 
 </section>
@@ -313,16 +447,35 @@ Assim, o usuário pode visualizar rapidamente as vagas disponíveis e estacionar
   </div>
 </section>
 
+<section class="empresasFIC">
+  <h2>Algumas empresas que usam nosso serviço! </h2>
+  <br><br>
+  <div class="grid">
+    <div class="empresa">
+      <img src="images/TechMotion.png" data-light="images/TechMotionClaro.png">
+    </div>
+
+    <div class="empresa">
+      <img src="images/Movex.png" data-light="images/MovexClaro.png">
+    </div>
+
+    <div class="empresa">
+      <img src="images/GlobalPark.png" data-light="images/GlobalParkClaro.png">
+    </div>
+  </div>
+</section>
+
+
 <section class="integrantes">
   <h2>Integrantes</h2>
   <br><br>
   <div class="grid">
-    <div class="membro"><img src="images/AnaLara.jpeg"></div>
-    <div class="membro"><img src="images/p2.jpg"></div>
-    <div class="membro"><img src="images/p3.jpg"></div>
-    <div class="membro"><img src="images/p4.jpg"></div>
-    <div class="membro"><img src="images/p5.jpg"></div>
-    <div class="membro"><img src="images/p6.jpg"></div>
+    <div class="membro"><img src="images/AnaLara.png"></div>
+    <div class="membro"><img src="images/louis.png"></div>
+    <div class="membro"><img src="images/duda.png"></div>
+    <div class="membro"><img src="images/anthony.png"></div>
+    <div class="membro"><img src="images/julia.png"></div>
+    <div class="membro"><img src="images/Yasmin.png"></div>
   </div>
 </section>
 
@@ -339,6 +492,75 @@ setInterval(() => {
   index = (index + 1) % images.length;
   images[index].classList.add("active");
 }, 3000);
+
+
+// ===== MODO CLARO / ESCURO =====
+const btn = document.getElementById("themeBtn");
+
+// carregar preferência salva
+if(localStorage.getItem("theme") === "light"){
+  if(localStorage.getItem("theme") === "light"){
+  document.body.classList.add("light");
+  btn.classList.replace("fa-moon", "fa-sun");
+  trocarImagens("light"); // ADICIONA
+} else {
+  trocarImagens("dark"); // ADICIONA
+}
+}
+
+// clique
+btn.addEventListener("click", () => {
+  document.body.classList.toggle("light");
+
+if(document.body.classList.contains("light")){
+  btn.classList.replace("fa-moon", "fa-sun");
+  localStorage.setItem("theme", "light");
+  trocarImagens("light"); // ADICIONA ISSO
+} else {
+  btn.classList.replace("fa-sun", "fa-moon");
+  localStorage.setItem("theme", "dark");
+  trocarImagens("dark"); // ADICIONA ISSO
+}
+});
+
+
+// ===== TROCA DE IMAGENS COM FADE =====
+function trocarImagens(modo){
+  const imagens = document.querySelectorAll("img");
+
+  imagens.forEach(img => {
+
+    // IGNORA carousel e integrantes
+    if(img.closest(".carousel") || img.closest(".integrantes")){
+      return;
+    }
+
+    // salva imagem original
+    if(!img.getAttribute("data-dark")){
+      img.setAttribute("data-dark", img.src);
+    }
+
+    const lightSrc = img.getAttribute("data-light");
+
+    let novaSrc = modo === "light"
+      ? lightSrc
+      : img.getAttribute("data-dark");
+
+    if(novaSrc && img.src !== novaSrc){
+
+      img.classList.add("img-fade");
+
+      setTimeout(() => {
+        img.src = novaSrc;
+
+        img.onload = () => {
+          img.classList.remove("img-fade");
+        };
+
+      }, 200);
+    }
+  });
+}
 </script>
 
 </body>
