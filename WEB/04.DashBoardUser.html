@@ -83,7 +83,7 @@ body{
 /* GRID */
 .container{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:20px;
 }
 
@@ -92,11 +92,11 @@ body{
   background: rgba(18,28,58,0.6);
   backdrop-filter: blur(12px);
   border-radius:16px;
-  padding:20px;
+  padding:30px;
 }
 
 .card h2{
-  font-size:14px;
+  font-size:18px;
   color:#A9B4D0;
 }
 
@@ -107,21 +107,28 @@ body{
 }
 
 .span-2{grid-column:span 2;}
-.span-4{grid-column:span 4;}
+.span-4{grid-column:span 2;}
 
 /* VAGAS */
 .parking-grid{
   display:grid;
   grid-template-columns:repeat(8,1fr);
-  gap:10px;
+  gap:15px;
 }
 
 .spot{
-  padding:12px;
+  padding:20px;
   border-radius:10px;
   text-align:center;
-  font-size:13px;
-  transition:0.2s;
+  font-size:14px;
+  min-height:70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.spot i{
+  font-size: 22px;
 }
 
 /* 🔥 NEON */
@@ -144,6 +151,7 @@ body{
 canvas{
   height:250px !important;
 }
+
 /* ===================== */
 /* 📱 RESPONSIVIDADE */
 /* ===================== */
@@ -203,8 +211,10 @@ canvas{
   }
 
   .parking-grid{
-    grid-template-columns: repeat(4,1fr);
-  }
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+}
 
   .card{
     padding:15px;
@@ -250,19 +260,18 @@ canvas{
     </div>
 
     <div class="user">
-      <h3>Ana Lara</h3>
-      <p>Perfil: Usuário</p>
+      <h3>Pedro</h3>
+      <p>Perfil: Usuário Comum</p>
       <br>
     </div>
 
     <div class="menu">
-      <a href="19.TelaInicial.html"><i class="fa-solid fa-house"></i> Início</a>
-      <a href="05.PerfilUserComum.html"><i class="fa-solid fa-user"></i> Perfil</a>
-      <a href="lo"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      
     </div>
   </div>
-
-  <a href="#" class="logout">Sair com segurança</a>
+  <a href="#" class="logout" onclick="logout(event)">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  </a>
 </div>
 
 <div class="main">
@@ -270,7 +279,7 @@ canvas{
 
   <div class="card">
     <h2>Total de Vagas</h2>
-    <div class="value">32</div>
+    <div class="value">16</div>
   </div>
 
   <div class="card">
@@ -290,22 +299,41 @@ canvas{
 
   <div class="card span-4">
     <h2>Estacionamento</h2>
+    <br>
     <div class="parking-grid" id="parkingGrid"></div>
   </div>
 
-  <div class="card span-2">
-    <h2>Uso por Dia</h2>
-    <canvas id="barChart"></canvas>
-  </div>
-
-  <div class="card span-2">
-    <h2>Fluxo</h2>
-    <canvas id="lineChart"></canvas>
-  </div>
-
 </div>
 </div>
+<script>
+function logout(e){
+  e.preventDefault(); // impede ir direto pro link
 
+  Swal.fire({
+    title: "Deseja fazer logout?",
+    text: "Você será desconectado do sistema",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#4CC9F0",
+    cancelButtonColor: "#f87171",
+    confirmButtonText: "Sim, sair",
+    cancelButtonText: "Cancelar"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Logout realizado!",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false
+      }).then(() => {
+        // REDIRECIONA DE VERDADE
+        window.location.href = "02.LoginUserComum.html";
+      });
+    }
+  });
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 const spots = [
   'free','occupied','free','free','occupied','free','occupied','free',
@@ -331,21 +359,6 @@ freeCount.innerText = free;
 occupiedCount.innerText = occupied;
 rate.innerText = Math.round((occupied/(free+occupied))*100)+'%';
 
-new Chart(barChart,{
-  type:'bar',
-  data:{
-    labels:['Seg','Ter','Qua','Qui','Sex'],
-    datasets:[{data:[12,19,10,15,8], backgroundColor:'#4CC9F0'}]
-  }
-});
-
-new Chart(lineChart,{
-  type:'line',
-  data:{
-    labels:['08h','10h','12h','14h','16h'],
-    datasets:[{data:[5,12,8,14,6], borderColor:'#4CC9F0'}]
-  }
-});
 </script>
 
 </body>

@@ -15,7 +15,6 @@ form.addEventListener("submit", function(e){
     erroEmail.textContent = "";
     erroSenha.textContent = "";
 
-
     email.classList.remove("bordaVermelha","bordaVerde");
     senha.classList.remove("bordaVermelha","bordaVerde");
 
@@ -23,13 +22,11 @@ form.addEventListener("submit", function(e){
     if(email.value.trim() === ""){
         erroEmail.textContent = "Digite o e-mail";
         email.classList.add("bordaVermelha");
-        email.classList.remove("bordaVerde");
         valido = false;
     }
-    else if(!email.value){
+    else if(!validarEmail(email.value)){
         erroEmail.textContent = "E-mail inválido";
         email.classList.add("bordaVermelha");
-        email.classList.remove("bordaVerde");
         valido = false;
     }
     else {
@@ -40,13 +37,11 @@ form.addEventListener("submit", function(e){
     if(senha.value.trim() === ""){
         erroSenha.textContent = "Digite a senha";
         senha.classList.add("bordaVermelha");
-        senha.classList.remove("bordaVerde");
         valido = false;
     }
     else if(senha.value.length < 6){
         erroSenha.textContent = "Mínimo de 6 caracteres";
         senha.classList.add("bordaVermelha");
-        senha.classList.remove("bordaVerde");
         valido = false;
     }
     else {
@@ -55,11 +50,24 @@ form.addEventListener("submit", function(e){
 
     // ===== REDIRECIONA =====
     if(valido){
-    senha.classList.add("bordaVerde");
-    email.classList.add("bordaVerde");
 
-    alert("Login realizado com sucesso!");
+        Swal.fire({
+            title: "Login realizado!",
+            text: "Entrando no sistema...",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+            scrollbarPadding: false,
+            heightAuto: false // 🔥 evita mexer no layout
+        }).then(() => {
+            window.location.href = "04.DashBoardUser.html";
+        });
 
-    window.location.href = "04.DashBoardUser.html";
-}
+    }
 });
+
+// função validar email
+function validarEmail(email){
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}

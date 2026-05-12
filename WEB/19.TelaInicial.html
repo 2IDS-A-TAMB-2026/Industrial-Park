@@ -346,6 +346,78 @@ body.light .hero-content h1{
 body.light .hero-content h1{
   text-shadow: none;
 }
+/* ADICIONA ISSO NO FINAL DO SEU CSS */
+
+/* ===== MELHORIAS VISUAIS ===== */
+
+/* Cards mais premium */
+.card{
+  transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* Botão hero melhor */
+.hero-content button{
+  transition: 0.3s;
+  box-shadow: 0 10px 25px rgba(76,201,240,0.3);
+}
+
+.hero-content button:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(76,201,240,0.5);
+}
+
+/* Ícones mais bonitos */
+i{
+  color:#4CC9F0;
+  margin-right:8px;
+}
+
+/* Carrossel com fade suave */
+.carousel{
+  position:relative;
+}
+
+.carousel img{
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:0;
+  transition: opacity 0.8s ease;
+}
+
+.carousel img.active{
+  opacity:1;
+  position:relative;
+}
+
+/* Integrantes hover */
+.membro img{
+  transition:0.3s;
+}
+
+.membro:hover img{
+  transform: scale(1.1);
+  box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* Header com mais presença */
+header{
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* Separação leve */
+.section{
+  border-top:1px solid rgba(255,255,255,0.05);
+  padding-top:60px;
+}
+
 /* RESPONSIVO */
 @media(max-width:900px){
   .hero-img{display:none;}
@@ -394,8 +466,11 @@ body.light .hero-content h1{
 
   <div class="card">
     <h2>Quem somos</h2>
-    <p>Somos uma equipe de estudantes do SENAI apaixonados por tecnologia e inovação, dedicada ao desenvolvimento de soluções inteligentes para o setor industrial.<br><br>
-       Nosso foco é criar sistemas de estacionamento automatizado que utilizam IoT para otimizar o uso de vagas, reduzir o tempo de busca e melhorar a organização de espaços.
+    <p>Somos um time de estudantes do SENAI que gosta de transformar ideias em soluções reais. Trabalhamos com tecnologia e inovação para desenvolver projetos que fazem sentido no dia a dia — sem complicação. <br><br>
+
+Nosso principal foco é criar sistemas de estacionamento automatizado com uso de IoT, tornando a busca por vagas mais rápida, prática e organizada. A gente combina conhecimento técnico com criatividade para construir soluções funcionais, acessíveis e pensadas para resolver problemas de verdade. <br><br>
+
+Mais do que um projeto, somos pessoas aprendendo, testando e evoluindo enquanto criamos tecnologia que realmente pode ser usada. <br><br>
 
 Unimos conhecimento técnico e criatividade para transformar ideias em soluções eficientes, acessíveis e modernas. Mais do que um projeto, somos um time comprometido em construir tecnologias que facilitam o dia a dia e contribuem para um futuro mais inteligente.
 </p>
@@ -427,8 +502,17 @@ Unimos conhecimento técnico e criatividade para transformar ideias em soluçõe
 
   <div class="card">
     <h2>Ideal para</h2>
-    <p>Ideal para
-    Indústrias, centros logísticos e empresas de grande porte que precisam de controle eficiente de acesso,<br> organização de fluxos, gestão otimizada de visitantes e maior segurança nas operações diárias.</p>
+    <p>
+    Indústrias
+    <br>
+    Centros logísticos
+    <br>
+     Empresas de grande porte que precisam de: 
+     <br>
+     <br> <i class="fa-solid fa-sliders"></i> Controle eficiente de acesso
+     <br> <i class="fa-solid fa-chart-pie"></i> Organização de fluxos
+     <br> <i class="fa-solid fa-user-lock"></i> Gestão otimizada de visitantes
+     <br> <i class="fa-solid fa-shield-halved"></i> Maior segurança nas operações diárias.</p>
   </div>
 
 </section>
@@ -442,7 +526,7 @@ Unimos conhecimento técnico e criatividade para transformar ideias em soluçõe
     <p>
       Sensores detectam se a vaga está livre ou ocupada e enviam essa informação para o ESP32. Os dados vão para a nuvem, são armazenados em um banco de dados e aparecem em tempo real no app ou site.
 
-Assim, o usuário pode visualizar rapidamente as vagas disponíveis e estacionar sem perder tempo. Simples, rápido e eficiente.
+Assim, o usuário pode visualizar rapidamente as vagas disponíveis e estacionar sem perder tempo. <br><br>Simples, rápido e eficiente.
     </p>
   </div>
 </section>
@@ -452,15 +536,15 @@ Assim, o usuário pode visualizar rapidamente as vagas disponíveis e estacionar
   <br><br>
   <div class="grid">
     <div class="empresa">
-      <img src="images/TechMotion.png" data-light="images/TechMotionClaro.png">
+      <img src="images/techmotion.png" data-light="images/techmotion.png">
     </div>
 
     <div class="empresa">
-      <img src="images/Movex.png" data-light="images/MovexClaro.png">
+      <img src="images/Movex.png" data-light="images/Movex.png">
     </div>
 
     <div class="empresa">
-      <img src="images/GlobalPark.png" data-light="images/GlobalParkClaro.png">
+      <img src="images/globalpark.png" data-light="images/globalpark.png">
     </div>
   </div>
 </section>

@@ -122,12 +122,19 @@ document.addEventListener('DOMContentLoaded', () => {
       confirmarInput.classList.add("bordaVerde");
     }
 
-    // ===== SUCESSO =====
-    if (valido) {
-      alert("Cadastro realizado com sucesso!");
-      window.location.href = "02.LoginUserComum.html";
-    }
-
+// ===== SUCESSO =====
+if (valido) {
+  Swal.fire({
+    title: "Sucesso!",
+    text: "Cadastro realizado com sucesso! Você será redirecionado para a página de login.",
+    icon: "success",
+    confirmButtonText: "OK",
+    scrollbarPadding: false,
+    heightAuto: false // 🔥 evita mexer no layout
+  }).then(() => {
+    window.location.href = "02.LoginUserComum.html";
+  });
+}
   });
 
 });

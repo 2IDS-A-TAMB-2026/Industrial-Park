@@ -71,7 +71,26 @@ form.addEventListener("submit", function(e){
 });
 
 // função validar email
-function validarEmail(email){
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
+if(valido){
+    if(email.value === emailAdmin && senha.value === senhaAdmin){
+
+        Swal.fire({
+            title: "Login realizado!",
+            text: "Redirecionando...",
+            icon: "success",
+            confirmButtonText: "Continuar"
+        }).then(() => {
+            window.location.href = "04.DashBoardUser.html";
+        });
+
+    } else {
+
+        Swal.fire({
+            title: "Erro!",
+            text: "E-mail ou senha incorretos",
+            icon: "error",
+            confirmButtonText: "Tentar novamente"
+        });
+
+    }
 }
