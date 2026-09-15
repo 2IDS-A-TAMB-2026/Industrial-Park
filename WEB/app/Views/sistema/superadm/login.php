@@ -1,198 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Super Admin</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins', sans-serif;
-}
-
-body{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:#1A2742;
-}
-
-.container{
-  width:900px;
-  max-width:100%;
-  height:550px;
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 20px 40px rgba(0,0,0,0.5);
-  display:flex;
-}
-
-.left{
-  width:50%;
-  background:#0b132b;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  color:#eaeaea;
-  text-align:center;
-}
-
-.logo{
-  width:90px;
-  margin-bottom:20px;
-}
-
-.left h1{
-  font-size:28px;
-}
-
-.left p{
-  margin-top:10px;
-  font-size:14px;
-}
-
-.content{
-  width:50%;
-  background:#e9ecef;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:30px;
-}
-
-.form{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.campo{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.form input{
-  width:80%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  margin-top:10px;
-}
-
-.erro{
-  width:80%;
-  color:red;
-  font-size:12px;
-}
-
-.bordaVermelha{
-  border:2px solid red !important;
-}
-
-.bordaVerde{
-  border:2px solid green !important;
-}
-
-.form button{
-  width:80%;
-  padding:12px;
-  margin-top:15px;
-  border:none;
-  border-radius:25px;
-  background:#0b132b;
-  color:#fff;
-  cursor:pointer;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Super Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<body class="bg-light d-flex align-items-center vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title text-center mb-4">Login SuperADM</h3>
 
-<body>
+                        <?php if (session()->getFlashdata('msg')): ?>
+                            <div class="alert alert-danger">
+                                <?= session()->getFlashdata('msg') ?>[cite: 4]
+                            </div>
+                        <?php endif; ?>
 
-<div class="container">
-
-    <div class="left">
-
-        <img
-            src="<?= base_url('images/LogoModoEscuro.png') ?>"
-            class="logo">
-
-        <h1>Área Administrativa</h1>
-
-        <p>Acesse o painel de controle do sistema</p>
-
+                        <form id="formLoginSuperAdmin" action="<?= base_url('/superadm/auth') ?>" method="POST">[cite: 6]
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="senha" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="senha" name="senha" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="content">
+    <script>
+        document.getElementById('formLoginSuperAdmin').addEventListener('submit', function(e) {[cite: 6]
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value.trim();
 
-        <h2>Login Super Admin</h2>
-
-        <form
-            class="form"
-            id="formLoginSuperAdmin"
-            method="POST"
-            action="<?= base_url('/superadm/auth') ?>">
-
-            <div class="campo">
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="E-mail administrativo">
-
-                <span
-                    id="erroEmail"
-                    class="erro"></span>
-
-            </div>
-
-            <div class="campo">
-
-                <input
-                    type="password"
-                    id="senha"
-                    name="senha"
-                    placeholder="Senha">
-
-                <span
-                    id="erroSenha"
-                    class="erro"></span>
-
-            </div>
-
-            <button type="submit">
-                Entrar
-            </button>
-
-        </form>
-
-        <?php if(session()->getFlashdata('erro')) : ?>
-
-            <p style="color:red; margin-top:15px;">
-                <?= session()->getFlashdata('erro') ?>
-            </p>
-
-        <?php endif; ?>
-
-    </div>
-
-</div>
-
-<script src="<?= base_url('js/10.LoginSuperAdmin.js') ?>"></script>
-
+            if (!email || !senha) {
+                e.preventDefault();
+                alert('Por favor, preencha todos os campos!');
+            }
+        });
+    </script>
 </body>
 </html>

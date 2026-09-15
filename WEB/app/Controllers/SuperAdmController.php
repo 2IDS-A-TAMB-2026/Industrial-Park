@@ -4,89 +4,53 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\SuperAdmModel;
-use App\Models\VagasModel;
 
 class SuperAdmController extends BaseController
 {
-    // LOGIN
-    public function login()
+    public function index()
     {
-        return view('sistema/superadm/login');
+        $model = new SuperAdmModel();
+        $data['superadmins'] = $model->where('USU_TIPO', 'SUPERADM')->findAll();
+        return view('superadm', $data);
     }
 
-    // AUTENTICAR
+    public function login()
+    {
+        return view('login');
+    }
+
     public function auth()
     {
+        $session = session();
+        $model = new SuperAdmModel();
+
         $email = $this->request->getPost('email');
         $senha = $this->request->getPost('senha');
 
-        $model = new SuperAdmModel();
-
-        $superadmin = $model
-            ->where('SUP_EMAIL', $email)
-            ->where('SUP_SENHA', $senha)
-            ->first();
+        $superadmin = $model->where('USU_EMAIL', $email)
+                            ->where('USU_SENHA', $senha)
+                            ->where('USU_TIPO', 'SUPERADM')
+                            ->first();
 
         if ($superadmin) {
-
-            session()->set('superadmin', $superadmin);
-
-            return redirect()->to('/dashboard-superadm');
-        }
-
-        return redirect()
-            ->to('/superadm')
-            ->with('erro', 'Usuário não encontrado');
-    }
-
-    // DASHBOARD
-    public function dashboard()
-    {
-        if (!session()->get('superadmin')) {
+            $session->set([
+                'cpf'        => $superadmin['USU_CPF'],
+                'nome'       => $superadmin['USU_NOME'],
+                'email'      => $superadmin['USU_EMAIL'],
+                'tipo'       => $superadmin['USU_TIPO'],
+                'isLoggedIn' => true
+            ]);
             return redirect()->to('/superadm');
+        } else {
+            $session->setFlashdata('msg', 'E-mail ou Senha incorretos!');
+            return redirect()->to('/login');
         }
-
-        $superAdmModel = new SuperAdmModel();
-        $vagaModel = new VagasModel();
-
-        // Lista de administradores
-        $superadmins = $superAdmModel->findAll();
-
-        // Lista de vagas
-        $vagas = $vagaModel->findAll();
-
-        // Estatísticas
-        $total = count($vagas);
-
-        $livres = $vagaModel
-            ->where('VAG_STATUS', 'Livre')
-            ->countAllResults();
-
-        $ocupadas = $vagaModel
-            ->where('VAG_STATUS', 'Ocupada')
-            ->countAllResults();
-
-        $taxa = ($total > 0)
-            ? round(($ocupadas / $total) * 100)
-            : 0;
-
-        $dados = [
-            'superadmins' => $superadmins,
-            'vagas' => $vagas,
-            'total' => $total,
-            'livres' => $livres,
-            'ocupadas' => $ocupadas,
-            'taxa' => $taxa
-        ];
-
-        return view('sistema/superadm/dashboard', $dados);
     }
 
-    // LOGOUT
     public function logout()
     {
-        session()->destroy();
-
-        return redirect()->to('/superadm');
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/login');
     }
 }

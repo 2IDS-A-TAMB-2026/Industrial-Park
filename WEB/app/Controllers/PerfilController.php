@@ -6,29 +6,70 @@ use App\Models\UsuarioModel;
 
 class PerfilController extends BaseController
 {
+    /**
+     * GET /perfil
+     * Identifica o tipo do usuário e carrega a view correspondente automaticamente.
+     */
     public function index()
     {
-        $usuarioModel = new UsuarioModel();
+        $usuario = $this->getUsuarioAutenticado();
 
-        // Pega o CPF da sessão (tenta maiúsculo ou minúsculo)
-        $cpf = session()->get('USU_CPF') ?? session()->get('cpf');
-
-        if (!$cpf) {
+        if (!$usuario) {
             return redirect()->to('/login')->with('erro', 'Faça login para acessar o perfil.');
         }
 
-        // 🔍 Busca os dados atualizados do banco usando o CPF
-        $dados['usuario'] = $usuarioModel->find($cpf);
+        $dados['usuario'] = $usuario;
+        $tipo = $usuario['USU_TIPO'] ?? session()->get('USU_TIPO') ?? session()->get('tipo');
+        $tipoUpper = strtoupper((string)$tipo);
 
-        // Se por algum motivo não achar no banco, desloga por segurança
-        if (!$dados['usuario']) {
-            return redirect()->to('/login')->with('erro', 'Usuário não encontrado.');
+        switch ($tipoUpper) {
+            case 'PORTEIRO':
+            case '3':
+                return view('sistema/perfil/perfil-porteiro', $dados);
+
+            case 'ADMIN':
+            case 'ADMINISTRADOR':
+            case '2':
+                return view('sistema/perfil/perfil-admin', $dados);
+
+            case 'SUPER ADMIN':
+            case 'SUPERADMIN':
+            case '1':
+                return view('sistema/perfil/perfil-superadm', $dados);
+
+            default:
+                return view('sistema/perfil/perfil-usuario', $dados);
         }
-
-        // Envia os dados para a View
-        return view('sistema/perfil/perfil', $dados);
     }
 
+    /**
+     * Métodos específicos para chamadas diretas de rota:
+     * Ex: /perfil-porteiro, /perfil-admin, /perfil-superadm, /perfil-usuario
+     */
+    public function porteiro()
+    {
+        return $this->carregarViewEspecial('sistema/perfil/perfil-porteiro');
+    }
+
+    public function admin()
+    {
+        return $this->carregarViewEspecial('sistema/perfil/perfil-admin');
+    }
+
+    public function superadm()
+    {
+        return $this->carregarViewEspecial('sistema/perfil/perfil-superadm');
+    }
+
+    public function usuario()
+    {
+        return $this->carregarViewEspecial('sistema/perfil/perfil-usuario');
+    }
+
+    /**
+     * POST /perfil/atualizar
+     * Atualiza dados cadastrais, senha e upload de foto.
+     */
     public function atualizar()
     {
         $usuarioModel = new UsuarioModel();
@@ -72,6 +113,32 @@ class PerfilController extends BaseController
             'USU_FOTO'  => $usuarioAtualizado['USU_FOTO'] ?? null
         ]);
 
-        return redirect()->to('/perfil')->with('success', 'Perfil atualizado com sucesso!');
+        return redirect()->back()->with('success', 'Perfil atualizado com sucesso!');
+    }
+
+    /**
+     * Métodos Auxiliares Privados
+     */
+    private function getUsuarioAutenticado()
+    {
+        $cpf = session()->get('USU_CPF') ?? session()->get('cpf');
+
+        if (!$cpf) {
+            return null;
+        }
+
+        $usuarioModel = new UsuarioModel();
+        return $usuarioModel->find($cpf);
+    }
+
+    private function carregarViewEspecial(string $viewPath)
+    {
+        $usuario = $this->getUsuarioAutenticado();
+
+        if (!$usuario) {
+            return redirect()->to('/login')->with('erro', 'Faça login para acessar o perfil.');
+        }
+
+        return view($viewPath, ['usuario' => $usuario]);
     }
 }

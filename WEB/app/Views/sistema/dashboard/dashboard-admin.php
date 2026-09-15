@@ -1,436 +1,579 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<title>Dashboard Administrativo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Dashboard Administrativo</title>
 
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-/* Base de acessibilidade para escala responsiva de fontes */
-html {
-  font-size: 16px;
-  transition: font-size 0.2s ease;
-}
+        html {
+            font-size: 16px;
+            transition: font-size 0.2s ease;
+        }
 
-body {
-  display: flex;
-  min-height: 100vh;
-  background: radial-gradient(circle at top, #0f1a35, #070b16);
-  color: #fff;
-  overflow-x: hidden;
-  transition: background 0.3s, color 0.3s;
-}
+        /* FUNDO ESCURO SUAVIZADO */
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.12) 0px, transparent 50%);
+            color: #f8fafc;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
 
-.sidebar {
-  width: 280px;
-  height: 100vh;
-  background: rgba(18, 28, 58, 0.95);
-  backdrop-filter: blur(15px);
-  padding: 35px 25px 25px 25px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: fixed;
-  left: 0;
-  top: 0;
-  border-right: 1px solid rgba(76, 201, 240, 0.1);
-  z-index: 10;
-  transition: background 0.3s, border 0.3s;
-}
+        :focus-visible {
+            outline: 3px solid #4CC9F0 !important;
+            outline-offset: 3px !important;
+        }
 
-.logo {
-  font-size: 20px;
-  font-weight: 600;
-  color: #4CC9F0;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: color 0.3s;
-}
+        /* SIDEBAR FIXA (INTACTA) */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            left: 0;
+            top: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
 
-.user { margin-bottom: 30px; }
-.user h3 { color: #fff; font-size: 16px; font-weight: 600; transition: color 0.3s; }
-.user p { color: #A9B4D0; font-size: 13px; transition: color 0.3s; }
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #4CC9F0;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
 
-.menu a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  text-decoration: none;
-  color: #B8C2D9;
-  font-size: 15px;
-  transition: 0.3s;
-}
+        .logo img {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
+        }
 
-.menu a:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
-.menu a.active { background: rgba(76, 201, 240, 0.2); color: #fff; font-weight: 500; }
+        .user {
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 20px;
+        }
+        .user h2 { color: #fff; font-size: 0.95rem; font-weight: 600; }
+        .user p { color: #94a3b8; font-size: 0.8rem; margin-top: 2px; }
 
-.logout {
-  padding: 14px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 12px;
-  background: #4CC9F0;
-  color: #070b16;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: 0.3s;
-}
-.logout:hover {
-  background: #3bc3eb;
-  box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
-}
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
 
-.main {
-  flex: 1;
-  margin-left: 280px;
-  padding: 40px;
-  background: transparent;
-  width: calc(100% - 280px);
-}
-.page-title { margin-bottom: 35px; }
-.page-title h1 { font-size: 38px; font-weight: 600; color: #fff; margin-bottom: 5px; transition: color 0.3s; }
-.page-title p { color: #A9B4D0; font-size: 15px; transition: color 0.3s; }
+        .menu a:hover {
+            background: rgba(76, 201, 240, 0.12);
+            color: #4CC9F0;
+            transform: translateX(4px);
+        }
 
-.container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  width: 100%;
-}
+        .menu a.active {
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.25), rgba(76, 201, 240, 0.08));
+            color: #4CC9F0;
+            border: 1px solid rgba(76, 201, 240, 0.3);
+        }
 
-.card {
-  background: rgba(255, 255, 255, 0.98);
-  border-radius: 24px;
-  padding: 30px;
-  color: #0b132b;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  display: flex;
-  flex-direction: column;
-  transition: background 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
-}
+        .logout {
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            background: rgba(76, 201, 240, 0.1);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            color: #160C5A;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .logout:hover {
+            background: #4CC9F0;
+            color: #070b16;
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+        }
 
-.card h2 { 
-  font-size: 15px; 
-  color: #56667d; 
-  font-weight: 600; 
-  margin-bottom: 20px; 
-  text-transform: uppercase; 
-  letter-spacing: 0.8px; 
-  text-align: left;
-  transition: color 0.3s;
-}
+        /* CONTEÚDO PRINCIPAL DO DASHBOARD */
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px 48px;
+            width: calc(100% - 280px);
+            min-height: 100vh;
+        }
 
-.indicator-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  text-align: center;
-}
+        .page-title {
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .page-title h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
+        }
+        .page-title p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
 
-.value { font-size: 46px; font-weight: 700; margin-bottom: 15px; line-height: 1; }
-.mini { color: #6b7280; font-size: 14px; font-weight: 400; transition: color 0.3s; }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+        }
 
-.span-2 { grid-column: span 2; }
-.span-4 { grid-column: span 4; }
+        /* CARDS COM DESTAQUE E CONTRASTE MELHORADOS */
+        .card {
+            background: #2b3a53;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 1.5rem;
+            color: #f8fafc;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.3s;
+        }
 
-.chart-container {
-  position: relative;
-  flex-grow: 1;
-  width: 100%;
-  height: 260px;
-}
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.15);
+        }
 
-/* ========================================================
-   ESTILOS DE ACESSIBILIDADE DO ECOSSISTEMA UNIFICADO
-   ======================================================== */
+        .kpi-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
 
-.main-acc-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #4CC9F0;
-  border: none;
-  color: #070b16;
-  font-size: 1.4rem;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-  box-shadow: 0 4px 10px rgba(76, 201, 240, 0.3);
-  padding: 0;
-  z-index: 10000;
-}
-.main-acc-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(76, 201, 240, 0.5);
-}
+        .card h2 {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+        }
 
-.accessibility-panel {
-  position: fixed;
-  top: 80px;
-  right: -300px;
-  width: 260px;
-  background: #121c3a;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  z-index: 9999;
-  transition: right 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  color: #ffffff;
-  text-align: left;
-}
+        .kpi-icon-wrapper {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
 
-.accessibility-panel.open { right: 20px; }
+        .kpi-icon-red { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .kpi-icon-green { background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .kpi-icon-blue { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .kpi-icon-amber { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
 
-.accessibility-panel h3 {
-  font-size: 1.1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 8px;
-  color: #fff;
-}
+        .indicator-body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
 
-.panel-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+        .value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
 
-.panel-row span { font-size: 0.9rem; color: #A9B4D0; }
+        .mini {
+            color: #94a3b8;
+            font-size: 0.825rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-.acc-btn {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s;
-  font-size: 0.9rem;
-}
-.acc-btn:hover { background: #4CC9F0; color: #070b16; }
+        .span-2 { grid-column: span 2; }
+        .span-4 { grid-column: span 4; }
 
-/* =========================================
-   MAPA DE ESTACIONAMENTO CLEAN E COMPACTO
-   ========================================= */
-:root {
-  --bg-asphalt: #f4f7fb;
-  --line-color: #cbd5e1;
-  --green-walk: #e2e8f0;
-  --spot-width: 85px;  /* Tamanho reduzido */
-  --spot-height: 60px; /* Altura reduzida */
-  --color-livre: #2ecc71;   
-  --color-ocupado: #e74c3c; 
-  --color-pcd: #3498db;   
-}
+        /* GRÁFICOS */
+        .chart-container {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            min-height: 250px;
+            margin-top: 0.5rem;
+        }
 
-.dashboard-legend {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  background: #f8fafc;
-  padding: 12px 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 13px;
-  color: #475569;
-  border: 1px solid #e2e8f0;
-}
+        /* LEGENDA DO MAPA */
+        .dashboard-legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            background: #0f172a;
+            padding: 1rem 1.25rem;
+            border-radius: 14px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
 
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-}
+        .legend-item { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; }
+        .legend-car-img { height: 2rem; width: auto; object-fit: contain; }
 
-#parkingLot {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Redução de espaço vazio */
-}
+        .led-indicator-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .led-green { background: #22c55e; box-shadow: 0 0 12px rgba(34, 197, 94, 0.8); }
+        .led-red { background: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.8); }
+        .led-blue { background: #0284c7; box-shadow: 0 0 12px rgba(2, 132, 199, 0.8); }
+        .led-gray { background: #64748b; box-shadow: 0 0 12px rgba(100, 116, 139, 0.6); }
 
-.floor-section {
-  background: transparent;
-  width: 100%;
-}
+        /* SEÇÃO DO ESTACIONAMENTO */
+        #parkingLot { width: 100%; display: flex; flex-direction: column; gap: 2rem; }
+        .floor-section { width: 100%; }
 
-.floor-title {
-  font-size: 15px;
-  color: #56667d;
-  margin-bottom: 12px;
-  border-left: 4px solid #4CC9F0;
-  padding-left: 10px;
-  text-transform: uppercase;
-  font-weight: 600;
-}
+        .floor-title {
+            font-size: 0.875rem;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: #0f172a;
+            padding: 0.85rem 1.25rem;
+            border-radius: 14px 14px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: none;
+        }
 
-.parking-container {
-  background-color: var(--bg-asphalt);
-  padding: 15px; /* Redução do padding interno */
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Blocos mais próximos */
-  overflow-x: auto; 
-}
+        .floor-title span { font-size: 0.75rem; color: #38bdf8; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
-.parking-block {
-  display: flex;
-  flex-direction: column;
-  min-width: max-content;
-}
+        .parking-container {
+            background-color: #0b1120;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 0);
+            background-size: 16px 16px;
+            padding: 1.75rem;
+            border-radius: 0 0 14px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: inset 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
 
-.green-walkway {
-  background-color: var(--green-walk);
-  height: 8px; /* Corredor mais fino */
-  width: 100%;
-  border-top: 1px solid var(--line-color);
-  border-bottom: 1px solid var(--line-color);
-  z-index: 2;
-}
+        .parking-aisle { display: flex; flex-direction: column; min-width: 850px; }
+        .spots-row { display: flex; width: 100%; justify-content: flex-start; gap: 0.85rem; }
 
-.spots-row {
-  display: flex;
-}
+        .spot {
+            flex: 1;
+            max-width: 130px;
+            height: 145px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s, border-color 0.2s;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+        }
 
-.spot {
-  width: var(--spot-width);
-  height: var(--spot-height);
-  border-left: 1px dashed var(--line-color);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  background: transparent !important;
-  transition: background 0.2s;
-}
-.spot:hover { background: rgba(0,0,0,0.02) !important; z-index: 10; }
-.spot.last-in-row { border-right: 1px dashed var(--line-color); }
-.spot.pcd { background-color: rgba(52, 152, 219, 0.05) !important; }
+        .row-top .spot {
+            border-left: 2px dashed rgba(255, 255, 255, 0.2);
+            border-right: 2px dashed rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #f59e0b;
+        }
 
-.spot-pcd-icon { position: absolute; font-size: 11px; z-index: 1; }
-.row-top .spot-pcd-icon { top: 8px; right: 5px; }
-.row-bottom .spot-pcd-icon { bottom: 8px; right: 5px; }
+        .row-bottom .spot {
+            border-left: 2px dashed rgba(255, 255, 255, 0.2);
+            border-right: 2px dashed rgba(255, 255, 255, 0.2);
+            border-bottom: 4px solid #f59e0b;
+        }
 
-.spot-id {
-  position: absolute;
-  color: #94a3b8;
-  font-size: 9px;
-  font-weight: bold;
-}
-.row-top .spot-id { top: 4px; left: 4px; }
-.row-bottom .spot-id { bottom: 4px; left: 4px; }
+        .spot:hover { background: rgba(255, 255, 255, 0.07); }
 
-.spot-status-text {
-  position: absolute;
-  font-size: 7px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.row-top .spot-status-text { bottom: 4px; left: 4px; }
-.row-bottom .spot-status-text { top: 4px; left: 4px; }
+        .sensor-led { position: absolute; width: 8px; height: 8px; border-radius: 50%; z-index: 5; }
+        .row-top .sensor-led { bottom: 8px; }
+        .row-bottom .sensor-led { top: 8px; }
 
-.car-icon {
-  font-size: 32px; /* Carro ligeiramente menor */
-  position: absolute;
-  z-index: 2;
-}
-.row-top .car-icon { transform: rotate(0deg); }    
-.row-bottom .car-icon { transform: rotate(180deg); } 
+        .spot.pcd { background: rgba(2, 132, 199, 0.18) !important; border-color: rgba(56, 189, 248, 0.5) !important; }
+        .spot-pcd-ground { position: absolute; font-size: 1.5rem; color: rgba(56, 189, 248, 0.3); z-index: 1; }
 
-/* Cores Simples e Sólidas - Sem Neon */
-.icon-livre { color: var(--color-livre); }
-.icon-ocupado { color: var(--color-ocupado); }
-.icon-pcd { color: var(--color-pcd); }
+        .spot-id-paint {
+            position: absolute;
+            font-family: 'Share Tech Mono', monospace;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .row-top .spot-id-paint { top: 10px; }
+        .row-bottom .spot-id-paint { bottom: 10px; }
 
+        .spot-status-tag {
+            position: absolute;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .row-top .spot-status-tag { top: 30px; }
+        .row-bottom .spot-status-tag { bottom: 30px; }
 
-/* ===== MODO CLARO ===== */
-body.light {
-  background: linear-gradient(135deg, #f5f7fb, #e4e9f7);
-  color: #070b16;
-}
-body.light .sidebar { background: #ffffff; border-right: 1px solid rgba(0,0,0,0.1); }
-body.light .logo { color: #1c2541; }
-body.light .user h3 { color: #070b16; }
-body.light .user p { color: #56667d; }
-body.light .menu a { color: #56667d; }
-body.light .menu a:hover, body.light .menu a.active { background: rgba(28, 37, 65, 0.1); color: #1c2541; }
-body.light .page-title h1 { color: #1c2541; }
-body.light .page-title p { color: #56667d; }
-body.light .card { background: #ffffff; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-body.light .accessibility-panel { background: #ffffff; border: 1px solid rgba(0,0,0,0.1); color: #070b16; }
-body.light .accessibility-panel h3 { color: #070b16; border-bottom: 1px solid rgba(0,0,0,0.1); }
-body.light .accessibility-panel span { color: #555; }
-body.light .acc-btn { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); color: #333; }
+        .car-body {
+            height: 65px;
+            width: auto;
+            position: absolute;
+            z-index: 3;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.6));
+            transition: transform 0.3s ease;
+            object-fit: contain;
+        }
+        .row-top .car-body { transform: rotate(180deg); }    
+        .row-bottom .car-body { transform: rotate(0deg); } 
 
-/* ===== MODO ALTO-CONTRASTE (PRETO E AMARELO) ===== */
-body.high-contrast { background: #000000 !important; color: #FFFF00 !important; }
-body.high-contrast .sidebar,
-body.high-contrast .card,
-body.high-contrast .accessibility-panel { background: #000000 !important; border: 2px solid #FFFF00 !important; color: #FFFF00 !important; box-shadow: none !important; }
-body.high-contrast .logo,
-body.high-contrast .user h3,
-body.high-contrast .user p,
-body.high-contrast .page-title h1,
-body.high-contrast .page-title p,
-body.high-contrast .card h2,
-body.high-contrast .mini,
-body.high-contrast .value,
-body.high-contrast .accessibility-panel h3,
-body.high-contrast .accessibility-panel span,
-body.high-contrast .floor-title { color: #FFFF00 !important; }
-body.high-contrast .menu a { color: #FFFF00 !important; }
-body.high-contrast .menu a:hover, body.high-contrast .menu a.active { background: #FFFF00 !important; color: #000000 !important; }
-body.high-contrast button, body.high-contrast .btn, body.high-contrast .logout, body.high-contrast .acc-btn, body.high-contrast .main-acc-btn { background: #FFFF00 !important; color: #000000 !important; border: 2px solid #FFFF00 !important; }
-body.high-contrast .btn i, body.high-contrast .logout i, body.high-contrast .main-acc-btn i { color: #000000 !important; }
-.acc-btn.audio-active { background: #2ecc71 !important; color: #fff !important; }
-body.high-contrast .acc-btn.audio-active i { color: #ffffff !important; }
+        .driveway {
+            height: 70px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            margin: 1rem 0;
+            background: #070b14;
+            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+            position: relative;
+        }
 
-/* Adaptação Estrita do Mapa para Alto Contraste */
-body.high-contrast .dashboard-legend { background: #000; border: 1px solid #FF0; color: #FF0; }
-body.high-contrast .parking-container { background: #000; border: 1px solid #FF0; box-shadow: none; }
-body.high-contrast .green-walkway { background: #000; border-color: #FF0; }
-body.high-contrast .spot { border-color: #FF0 !important; background: #000 !important; }
-body.high-contrast .spot-id, body.high-contrast .spot-status-text { color: #FF0 !important; }
-body.high-contrast .icon-livre, body.high-contrast .icon-ocupado, body.high-contrast .icon-pcd { color: #FF0 !important; }
+        .driveway::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            border-top: 2px dashed rgba(245, 158, 11, 0.5);
+            transform: translateY(-50%);
+        }
 
-@media(max-width:1200px){
-  .container { grid-template-columns: repeat(2, 1fr); }
-  .span-4, .span-2 { grid-column: span 2; }
-  .main { margin-left: 0; width: 100%; }
-  .sidebar { display: none; }
-}
-</style>
+        .traffic-indicator {
+            position: relative;
+            z-index: 2;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 0.68rem;
+            color: #94a3b8;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* BOTÃO E PAINEL DE ACESSIBILIDADE */
+        .main-acc-btn {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: #0284c7 !important;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
+            z-index: 9999;
+        }
+        .main-acc-btn:hover {
+            transform: scale(1.08) rotate(15deg);
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.5);
+        }
+
+        .accessibility-panel {
+            position: fixed;
+            top: 80px;
+            right: -320px;
+            width: 280px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 9998;
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            color: #ffffff;
+        }
+
+        .accessibility-panel.open { right: 24px; }
+        .accessibility-panel h3 { font-size: 0.95rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; color: #fff; }
+        .panel-row { display: flex; justify-content: space-between; align-items: center; }
+        .panel-row span { font-size: 0.85rem; color: #cbd5e1; font-weight: 500; }
+
+        .acc-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .acc-btn i { color: #ffffff; }
+        .acc-btn:hover { background: #38bdf8; color: #070b16; }
+        .acc-btn:hover i { color: #070b16; }
+
+        /* MODO CLARO */
+        body.light {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        body.light .sidebar { 
+            background: rgba(255, 255, 255, 0.95); 
+            border-right: 1px solid #cbd5e1; 
+        }
+        body.light .logo { color: #0f172a; }
+        body.light .user h2 { color: #0f172a; }
+        body.light .user p { color: #475569; font-weight: 500; }
+        body.light .menu a { color: #475569; font-weight: 600; }
+        body.light .menu a:hover, body.light .menu a.active { 
+            background: rgba(15, 23, 42, 0.08); 
+            color: #0f172a; 
+        }
+        body.light .page-title h1 { color: #0f172a; }
+        body.light .page-title p { color: #475569; }
+        body.light .card { 
+            background: #ffffff; 
+            border-color: #e2e8f0; 
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
+            color: #0f172a;
+        }
+        body.light .card h2 { color: #64748b; }
+        body.light .mini { color: #64748b; }
+        body.light .dashboard-legend { background: #ffffff; border-color: #e2e8f0; color: #0f172a; }
+        body.light .floor-title { background: #e2e8f0; border-color: #cbd5e1; color: #0f172a; }
+        body.light .parking-container { background: #f8fafc; border-color: #cbd5e1; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05); }
+        body.light .driveway { background: #e2e8f0; border-color: #cbd5e1; }
+        body.light .traffic-indicator { background: #ffffff; border-color: #cbd5e1; color: #475569; }
+        body.light .spot-id-paint { color: rgba(15, 23, 42, 0.4); }
+
+        /* MODO ALTO-CONTRASTE */
+        body.high-contrast { background: #000000 !important; color: #FFFF00 !important; }
+        body.high-contrast .sidebar,
+        body.high-contrast .card,
+        body.high-contrast .accessibility-panel,
+        body.high-contrast .dashboard-legend,
+        body.high-contrast .floor-title,
+        body.high-contrast .parking-container {
+            background: #000000 !important;
+            border: 2px solid #FFFF00 !important;
+            color: #FFFF00 !important;
+            box-shadow: none !important;
+        }
+        body.high-contrast .logo,
+        body.high-contrast .user h2,
+        body.high-contrast .user p,
+        body.high-contrast .page-title h1,
+        body.high-contrast .page-title p,
+        body.high-contrast .card h2,
+        body.high-contrast .value,
+        body.high-contrast .mini,
+        body.high-contrast .accessibility-panel h3,
+        body.high-contrast .accessibility-panel span,
+        body.high-contrast .floor-title span,
+        body.high-contrast .spot-id-paint {
+            color: #FFFF00 !important;
+        }
+        body.high-contrast .menu a { color: #FFFF00 !important; }
+        body.high-contrast .menu a:hover, body.high-contrast .menu a.active { background: #FFFF00 !important; color: #000000 !important; }
+        body.high-contrast .logout, body.high-contrast .acc-btn, body.high-contrast .main-acc-btn {
+            background: #FFFF00 !important;
+            color: #000000 !important;
+            border: 2px solid #FFFF00 !important;
+        }
+        body.high-contrast .acc-btn i { color: #000000 !important; }
+        body.high-contrast .driveway { background: #111111 !important; border-color: #FFFF00 !important; }
+        body.high-contrast .traffic-indicator { background: #000000 !important; border-color: #FFFF00 !important; color: #FFFF00 !important; }
+
+        .acc-btn.audio-active { background: #10b981 !important; color: #fff !important; }
+        .acc-btn.audio-active i { color: #fff !important; }
+
+        .img-fade { opacity: 0; transform: scale(0.98); }
+        img { transition: opacity 0.4s ease, transform 0.3s ease; }
+
+        [vw] { z-index: 9995 !important; }
+
+        @media(max-width:1200px){
+            .container { grid-template-columns: repeat(2, 1fr); }
+            .span-4, .span-2 { grid-column: span 2; }
+            .main { margin-left: 0; width: 100%; padding: 1.5rem; }
+            .sidebar { display: none; }
+        }
+    </style>
 </head>
 <body>
 
@@ -442,149 +585,393 @@ body.high-contrast .icon-livre, body.high-contrast .icon-ocupado, body.high-cont
 <script>Swal.fire({icon:'success',title:'Sucesso',text:'<?= session()->getFlashdata('sucesso') ?>'});</script>
 <?php endif; ?>
 
-<button class="main-acc-btn" id="mainAccBtn" title="Opções de Acessibilidade">
-  <i class="fa-solid fa-universal-access"></i>
+<!-- BOTÃO DE ACESSIBILIDADE FLUTUANTE -->
+<button class="main-acc-btn" id="mainAccBtn" title="Opções de Acessibilidade" aria-label="Abrir painel de acessibilidade" aria-expanded="false" aria-controls="accPanel">
+    <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
 </button>
 
-<div class="accessibility-panel" id="accPanel">
-  <h3>Acessibilidade</h3>
-  <div class="panel-row">
-    <span>Tamanho da Letra:</span>
-    <div style="display:flex; gap:5px;">
-      <button class="acc-btn" id="decreaseText" title="Diminuir">-</button>
-      <button class="acc-btn" id="increaseText" title="Aumentar">+</button>
-    </div>
-  </div>
-  <div class="panel-row">
-    <span>Contraste Amarelo:</span>
-    <button class="acc-btn" id="contrastBtn"><i class="fa-solid fa-circle-half-stroke"></i></button>
-  </div>
-  <div class="panel-row">
-    <span>Ouvir Texto:</span>
-    <button class="acc-btn" id="audioBtn"><i class="fa-solid fa-volume-high"></i></button>
-  </div>
-  <div class="panel-row">
-    <span>Cor do Tema:</span>
-    <button class="acc-btn" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</div>
-
-<div class="sidebar">
-  <div>
-    <div class="logo"><i class="fa-solid fa-square-parking"></i> Industrial Park</div>
-    <div class="user">
-      <h3><?= session()->get('nome') ?? 'Usuário do Sistema' ?></h3>
-      <p>Perfil: <?= session()->get('USU_TIPO') ?? 'Acesso Especial' ?></p>
-    </div>
-    <div class="menu">
-      <a href="#" class="active"><i class="fa-solid fa-house"></i> Dashboard</a>
-      <a href="<?= base_url('/vagas') ?>"><i class="fa-solid fa-car"></i> Cadastro de Vagas</a>
-      <a href="<?= base_url('/sensores') ?>"><i class="fa-solid fa-microchip"></i> Cadastro de Sensor</a>
-      <a href="<?= base_url('/porteiros') ?>"><i class="fa-solid fa-id-badge"></i> Cadastro de Porteiro</a>
-      <a href="<?= base_url('/perfil') ?>"><i class="fa-solid fa-user-pen"></i> Perfil</a>
-    </div>
-  </div>
-  <a href="#" class="logout" id="logoutBtn">
-    <i class="fa-solid fa-right-from-bracket"></i> Logout
-  </a>
-</div>
-
-<div class="main">
-  <div class="page-title">
-    <h1>Painel Administrativo</h1>
-    <p>Monitoramento em tempo real do estacionamento</p>
-  </div>
-
-  <div class="container">
-    <div class="card">
-      <h2>Vagas Ocupadas</h2>
-      <div class="indicator-body">
-        <div class="value" id="occupiedCount" style="color: #e74c3c;">0</div>
-        <div class="mini">Em uso</div>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Vagas Livres</h2>
-      <div class="indicator-body">
-        <div class="value" id="freeCount" style="color: #2ecc71;">0</div>
-        <div class="mini">Disponíveis</div>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Total de Vagas</h2>
-      <div class="indicator-body">
-        <div class="value" id="totalCount" style="color: #0b132b;">0</div>
-        <div class="mini">Vagas cadastradas</div>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Taxa de Ocupação</h2>
-      <div class="indicator-body">
-        <div class="value" id="rate" style="color: #f39c12;">0%</div>
-        <div class="mini">Percentual atual</div>
-      </div>
-    </div>
-
-    <div class="card span-2">
-      <h2>Ocupação Geral</h2>
-      <div class="chart-container">
-        <canvas id="occupancyChart"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Entradas</h2>
-      <div class="chart-container">
-        <canvas id="barChart"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Fluxo</h2>
-      <div class="chart-container">
-        <canvas id="lineChart"></canvas>
-      </div>
-    </div>
-
-    <div class="card span-4">
-      <h2>Mapa do Estacionamento</h2>
-      
-      <div class="dashboard-legend">
-        <div class="legend-item">
-          <i class="fa-solid fa-car icon-livre" style="font-size: 18px;"></i>
-          <span>Vaga Livre</span>
+<!-- PAINEL LATERAL DE ACESSIBILIDADE -->
+<section class="accessibility-panel" id="accPanel" aria-label="Painel de Acessibilidade" aria-hidden="true">
+    <h3>Acessibilidade</h3>
+    
+    <div class="panel-row">
+        <span>Tamanho da Letra:</span>
+        <div style="display:flex; gap:6px;">
+            <button class="acc-btn" id="decreaseText" title="Diminuir texto" aria-label="Diminuir tamanho da fonte">-</button>
+            <button class="acc-btn" id="increaseText" title="Aumentar texto" aria-label="Aumentar tamanho da fonte">+</button>
         </div>
-        <div class="legend-item">
-          <i class="fa-solid fa-car icon-ocupado" style="font-size: 18px;"></i>
-          <span>Vaga Ocupada</span>
-        </div>
-        <div class="legend-item">
-          <i class="fa-solid fa-wheelchair icon-pcd" style="font-size: 18px;"></i>
-          <span>Vaga PCD</span>
-        </div>
-      </div>
-
-      <div id="parkingLot"></div>
     </div>
 
-  </div>
+    <div class="panel-row">
+        <span>Alto Contraste:</span>
+        <button class="acc-btn" id="contrastBtn" title="Alternar alto contraste" aria-label="Alternar modo de alto contraste"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="panel-row">
+        <span>Ouvir Texto:</span>
+        <button class="acc-btn" id="audioBtn" title="Ouvir resumo do painel por voz" aria-label="Ouvir dados do painel por voz"><i class="fa-solid fa-volume-high" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="panel-row">
+        <span>Tema Claro/Escuro:</span>
+        <button class="acc-btn" id="themeBtn" title="Alternar tema claro/escuro" aria-label="Alternar modo claro ou escuro"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="panel-row">
+        <span>Tradutor VLibras:</span>
+        <button class="acc-btn" id="vlibrasBtn" aria-label="Ativar ou abrir tradutor VLibras">
+            <i class="fa-solid fa-hands-asl-interpreting" aria-hidden="true"></i> Libras
+        </button>
+    </div>
+</section>
+
+<!-- MENU LATERAL DA ADMINISTRAÇÃO (INTACTO) -->
+<aside class="sidebar">
+    <div>
+        <div class="logo">
+            <img id="logoImg" src="<?= base_url('/images/LogoModoEscuro.png') ?>" data-light="<?= base_url('/images/LogoModoClaro.png') ?>" class="logo-img" alt="Logotipo Industrial Park"> 
+            <span>Industrial Park</span>
+        </div>
+
+        <div class="user">
+            <h2><?= session()->get('nome') ?? session()->get('USR_NOME') ?? 'Administrador' ?></h2>
+            <p>Perfil: <?= session()->get('USU_TIPO') ?? 'Administrador' ?></p>
+        </div>
+
+        <nav class="menu" aria-label="Menu Principal">
+            <a href="#" class="active" aria-current="page"><i class="fa-solid fa-house" aria-hidden="true"></i> <span>Dashboard</span></a>
+            <a href="<?= base_url('/vagas') ?>"><i class="fa-solid fa-car" aria-hidden="true"></i> <span>Cadastro de Vagas</span></a>
+            <a href="<?= base_url('/sensores') ?>"><i class="fa-solid fa-microchip" aria-hidden="true"></i> <span>Cadastro de Sensor</span></a>
+            <a href="<?= base_url('/porteiros') ?>"><i class="fa-solid fa-id-badge" aria-hidden="true"></i> <span>Cadastro de Porteiro</span></a>
+            <a href="<?= base_url('/perfil-admin') ?>"><i class="fa-solid fa-user-pen" aria-hidden="true"></i> <span>Perfil</span></a>
+        </nav>
+    </div>
+
+    <a href="#" class="logout" id="logoutBtn" aria-label="Sair da conta">
+        <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Logout</span>
+    </a>
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL (REORGANIZADO) -->
+<main class="main">
+    <header class="page-title">
+        <h1>Painel Administrativo</h1>
+        <p>Monitoramento em tempo real do estacionamento</p>
+    </header>
+
+    <div class="container">
+        <!-- LINHA 1: 4 KPIS -->
+        <section class="card" aria-labelledby="lbl-ocupadas">
+            <div class="kpi-header">
+                <h2 id="lbl-ocupadas">Vagas Ocupadas</h2>
+                <div class="kpi-icon-wrapper kpi-icon-red">
+                    <i class="fa-solid fa-car-side"></i>
+                </div>
+            </div>
+            <div class="indicator-body">
+                <div class="value" id="occupiedCount" style="color: #f87171;">0</div>
+                <div class="mini"><i class="fa-solid fa-circle" style="font-size: 8px; color: #f87171;"></i> Em uso no momento</div>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="lbl-livres">
+            <div class="kpi-header">
+                <h2 id="lbl-livres">Vagas Livres</h2>
+                <div class="kpi-icon-wrapper kpi-icon-green">
+                    <i class="fa-solid fa-square-check"></i>
+                </div>
+            </div>
+            <div class="indicator-body">
+                <div class="value" id="freeCount" style="color: #4ade80;">0</div>
+                <div class="mini"><i class="fa-solid fa-circle" style="font-size: 8px; color: #4ade80;"></i> Disponíveis para uso</div>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="lbl-total">
+            <div class="kpi-header">
+                <h2 id="lbl-total">Total de Vagas</h2>
+                <div class="kpi-icon-wrapper kpi-icon-blue">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+            </div>
+            <div class="indicator-body">
+                <div class="value" id="totalCount" style="color: #38bdf8;">0</div>
+                <div class="mini">Vagas cadastradas</div>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="lbl-taxa">
+            <div class="kpi-header">
+                <h2 id="lbl-taxa">Taxa de Ocupação</h2>
+                <div class="kpi-icon-wrapper kpi-icon-amber">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+            </div>
+            <div class="indicator-body">
+                <div class="value" id="rate" style="color: #fbbf24;">0%</div>
+                <div class="mini">Percentual atual</div>
+            </div>
+        </section>
+
+        <!-- LINHA 2: 2 GRÁFICOS LADO A LADO (2 COLUNAS CADA) -->
+        <section class="card span-2" aria-labelledby="lbl-chart-geral">
+            <div class="kpi-header">
+                <h2 id="lbl-chart-geral">Ocupação Geral</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="occupancyChart"></canvas>
+            </div>
+        </section>
+
+        <section class="card span-2" aria-labelledby="lbl-chart-fluxo">
+            <div class="kpi-header">
+                <h2 id="lbl-chart-fluxo">Fluxo Geral de Veículos</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="lineChart"></canvas>
+            </div>
+        </section>
+
+        <!-- LINHA 3: MAPA DO ESTACIONAMENTO -->
+        <section class="card span-4" aria-labelledby="lbl-mapa">
+            <div class="kpi-header" style="margin-bottom: 1.2rem;">
+                <h2 id="lbl-mapa">Mapa do Estacionamento</h2>
+            </div>
+            
+            <div class="dashboard-legend" role="region" aria-label="Legenda do mapa">
+                <div class="legend-item">
+                    <span class="led-indicator-dot led-green"></span>
+                    <img src="<?= base_url('/images/CarroVerde.png') ?>" alt="" class="legend-car-img" aria-hidden="true">
+                    <span>Vaga Livre (Verde)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="led-indicator-dot led-red"></span>
+                    <img src="<?= base_url('/images/CarroVermelho.png') ?>" alt="" class="legend-car-img" aria-hidden="true">
+                    <span>Vaga Ocupada (Vermelha)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="led-indicator-dot led-gray"></span>
+                    <img src="<?= base_url('/images/CarroCinza.png') ?>" alt="" class="legend-car-img" aria-hidden="true">
+                    <span>Vaga Indisponível (Cinza)</span>
+                </div>
+            </div>
+
+            <div id="parkingLot" role="region" aria-live="polite"></div>
+        </section>
+    </div>
+</main>
+
+<!-- INTEGRACÃO WIDGET VLIBRAS -->
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
 </div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
 
 <script>
-// Mantém as variáveis originais rigorosamente
-const spots = <?= json_encode($vagasMapa ?? []) ?>;
-const barLabels = <?= json_encode($barChartLabels ?? ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']) ?>;
-const barData = <?= json_encode($barChartData ?? [0, 0, 0, 0, 0]) ?>;
+// Confirmador de Logout
+document.getElementById("logoutBtn").addEventListener("click", function(e){
+    e.preventDefault();
+    Swal.fire({
+        title: "Deseja sair?",
+        text: "Você será desconectado com segurança do sistema.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, sair",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if(result.isConfirmed){
+            window.location.href = "<?= base_url('/logout') ?>";
+        }
+    });
+});
+
+// ACESSIBILIDADE E PAINEL LATERAL
+const mainAccBtn = document.getElementById("mainAccBtn");
+const accPanel = document.getElementById("accPanel");
+const body = document.body;
+
+function togglePanel(open) {
+    const isOpen = open !== undefined ? open : !accPanel.classList.contains("open");
+    accPanel.classList.toggle("open", isOpen);
+    accPanel.setAttribute("aria-hidden", !isOpen);
+    mainAccBtn.setAttribute("aria-expanded", isOpen);
+}
+
+mainAccBtn.addEventListener("click", (e) => { e.stopPropagation(); togglePanel(); });
+document.addEventListener("click", (e) => { if (!accPanel.contains(e.target) && e.target !== mainAccBtn) togglePanel(false); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && accPanel.classList.contains("open")) togglePanel(false); });
+
+// Redimensionamento de Fonte
+let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
+const updateFontSize = (size) => {
+    document.documentElement.style.fontSize = size + "px";
+    localStorage.setItem("fontSize", size);
+};
+updateFontSize(currentFontSize);
+
+document.getElementById("increaseText").addEventListener("click", () => {
+    if(currentFontSize < 24) { currentFontSize += 1; updateFontSize(currentFontSize); }
+});
+document.getElementById("decreaseText").addEventListener("click", () => {
+    if(currentFontSize > 13) { currentFontSize -= 1; updateFontSize(currentFontSize); }
+});
+
+// Troca de Imagem do Logo conforme tema
+function trocarImagens(modo){
+    const imagens = document.querySelectorAll("img.logo-img, #logoImg");
+    imagens.forEach(img => {
+        if(!img.getAttribute("data-dark")){ img.setAttribute("data-dark", img.src); }
+        const lightSrc = img.getAttribute("data-light");
+        let novaSrc = modo === "light" ? lightSrc : img.getAttribute("data-dark");
+
+        if(novaSrc && img.src !== novaSrc){
+            img.classList.add("img-fade");
+            setTimeout(() => {
+                img.src = novaSrc;
+                img.onload = () => { img.classList.remove("img-fade"); };
+            }, 200);
+        }
+    });
+}
+
+// Alternar Tema Claro/Escuro
+const themeBtn = document.getElementById("themeBtn");
+const themeIcon = themeBtn.querySelector("i");
+
+if(localStorage.getItem("theme") === "light"){
+    body.classList.add("light");
+    themeIcon.classList.replace("fa-moon", "fa-sun");
+    trocarImagens("light");
+}
+
+themeBtn.addEventListener("click", () => {
+    body.classList.remove("high-contrast");
+    body.classList.toggle("light");
+    if(body.classList.contains("light")){
+        themeIcon.classList.replace("fa-moon", "fa-sun");
+        localStorage.setItem("theme", "light");
+        trocarImagens("light");
+    } else {
+        themeIcon.classList.replace("fa-sun", "fa-moon");
+        localStorage.setItem("theme", "dark");
+        trocarImagens("dark");
+    }
+    renderizarGraficos();
+});
+
+// Alternar Alto-Contraste
+const contrastBtn = document.getElementById("contrastBtn");
+if(localStorage.getItem("contrast") === "high"){ body.classList.add("high-contrast"); }
+
+contrastBtn.addEventListener("click", () => {
+    body.classList.remove("light");
+    body.classList.toggle("high-contrast");
+    localStorage.setItem("contrast", body.classList.contains("high-contrast") ? "high" : "normal");
+    renderizarGraficos();
+});
+
+// Leitura de Tela (Text-to-Speech)
+const audioBtn = document.getElementById("audioBtn");
+let synth = window.speechSynthesis;
+let isSpeaking = false;
+
+audioBtn.addEventListener("click", () => {
+    if (isSpeaking) {
+        synth.cancel();
+        isSpeaking = false;
+        audioBtn.classList.remove("audio-active");
+    } else {
+        let textoParaLer = "";
+        const elementos = document.querySelectorAll(".page-title h1, .page-title p, .card h2, .value, .mini, .floor-title, .spot-id-paint, .spot-status-tag");
+        elementos.forEach(el => { textoParaLer += el.innerText + ". "; });
+        
+        if(textoParaLer.trim() !== "") {
+            const utterance = new SpeechSynthesisUtterance(textoParaLer);
+            utterance.lang = "pt-BR";
+            utterance.onend = () => { audioBtn.classList.remove("audio-active"); isSpeaking = false; };
+            utterance.onerror = () => { audioBtn.classList.remove("audio-active"); isSpeaking = false; };
+            synth.speak(utterance);
+            audioBtn.classList.add("audio-active");
+            isSpeaking = true;
+        }
+    }
+});
+
+// Ativador direto para VLibras
+document.getElementById("vlibrasBtn").addEventListener("click", () => {
+    const vLibrasBtn = document.querySelector('[vw-access-button]');
+    if (vLibrasBtn) {
+        vLibrasBtn.click();
+    }
+});
+
+window.addEventListener('beforeunload', () => { synth.cancel(); });
+
+/* DADOS E LOGICA PHP DO ADMINISTRATIVO */
+const imgBaseUrl = '<?= base_url('') ?>';
+const spotsBrutos = <?= json_encode($vagasMapa ?? []) ?>;
 const lineLabels = <?= json_encode($lineChartLabels ?? ['08h', '10h', '12h', '14h', '16h']) ?>;
 const lineData = <?= json_encode($lineChartData ?? [0, 0, 0, 0, 0]) ?>;
 
-let free = 0;
-let occupied = 0;
+function obterLabelVaga(vaga, index) {
+    let nome = vaga.VAG_LOCALIZACAO ?? vaga.localizacao ?? vaga.VAG_NUMERO ?? vaga.numero ?? vaga.VAG_CODIGO ?? vaga.codigo ?? vaga.NOME ?? vaga.nome;
+    if (!nome) return `V${index + 1}`;
+    return String(nome).trim();
+}
 
-// Contagem para os Gráficos
-spots.forEach(vaga => {
-  if (vaga.status === 'occupied') { occupied++; } else { free++; }
+const spots = spotsBrutos.filter(vaga => {
+    const label = obterLabelVaga(vaga, 0).toLowerCase();
+    return label !== 'sp' && label !== 'setor principal' && label !== '';
 });
 
-const totalVagas = free + occupied;
+function obterStatusVaga(vaga) {
+    if (!vaga) return 'livre';
+
+    let rawStatus = vaga.VAG_STATUS ?? vaga.status ?? vaga.STATUS ?? vaga.VAG_SITUACAO ?? vaga.situacao ?? vaga.SITUACAO ?? '';
+
+    if (vaga.VAG_DISPONIVEL === 0 || vaga.VAG_DISPONIVEL === '0' || vaga.disponivel === 0 || vaga.disponivel === '0') {
+        return 'indisponivel';
+    }
+
+    let st = String(rawStatus)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+    if (['indisponivel', 'unavailable', 'manutencao', 'bloqueado', 'bloqueada', 'inativo', 'inativa', 'disabled'].includes(st)) {
+        return 'indisponivel';
+    }
+
+    if (['ocupado', 'ocupada', 'occupied', 'em uso', 'busy'].includes(st)) {
+        return 'ocupado';
+    }
+
+    return 'livre';
+}
+
+let free = 0;
+let occupied = 0;
+let unavailable = 0;
+
+spots.forEach(vaga => {
+    const statusCalculado = obterStatusVaga(vaga);
+    if (statusCalculado === 'ocupado') { 
+        occupied++; 
+    } else if (statusCalculado === 'indisponivel') { 
+        unavailable++; 
+    } else { 
+        free++; 
+    }
+});
+
+const totalVagas = free + occupied + unavailable;
 const taxaCalculada = totalVagas > 0 ? Math.round((occupied / totalVagas) * 100) : 0;
 
 document.getElementById('totalCount').innerText = totalVagas;
@@ -592,277 +979,210 @@ document.getElementById('freeCount').innerText = free;
 document.getElementById('occupiedCount').innerText = occupied;
 document.getElementById('rate').innerText = taxaCalculada + '%';
 
-// Nova Geração Visual (Limpa, sem Neon)
+function extrairNomeDoPiso(vaga) {
+    if (vaga.PISO && vaga.PISO.toLowerCase() !== "setor principal") {
+        return vaga.PISO.trim();
+    }
+    const texto = vaga.VAG_LOCALIZACAO || vaga.localizacao || vaga.PISO || "";
+    const match = texto.match(/(Piso\s*\d+|PISO\s*\d+)/i);
+    if (match) {
+        return match[0].toUpperCase().replace("PISO", "Piso ");
+    }
+    return vaga.PISO || vaga.piso || "Piso Principal";
+}
+
 function desenharMapaEstacionamento(dadosBanco) {
-  const mainContainer = document.getElementById('parkingLot');
-  mainContainer.innerHTML = ''; 
+    const mainContainer = document.getElementById('parkingLot');
+    if (!mainContainer) return;
+    mainContainer.innerHTML = ''; 
 
-  if (dadosBanco.length === 0) {
-    mainContainer.innerHTML = '<p style="color: #56667d; text-align: center; padding: 20px;">Nenhuma vaga vinculada ou cadastrada para o seu perfil.</p>';
-    return;
-  }
-
-  const vagasPorPiso = dadosBanco.reduce((acc, vaga) => {
-    let pisoNome = vaga.PISO || "Setor Principal";
-    if (!acc[pisoNome]) acc[pisoNome] = [];
-    acc[pisoNome].push(vaga);
-    return acc;
-  }, {});
-
-  const VAGAS_POR_FILA = 6;
-  const VAGAS_POR_BLOCO = VAGAS_POR_FILA * 2;
-
-  for (const nomeDoPiso in vagasPorPiso) {
-    const vagasDestePiso = vagasPorPiso[nomeDoPiso];
-    const TOTAL_DE_BLOCOS = Math.ceil(vagasDestePiso.length / VAGAS_POR_BLOCO) || 1;
-
-    const floorSection = document.createElement('div');
-    floorSection.className = 'floor-section';
-
-    const floorTitle = document.createElement('h2');
-    floorTitle.className = 'floor-title';
-    floorTitle.innerText = nomeDoPiso;
-    floorSection.appendChild(floorTitle);
-
-    const parkingContainer = document.createElement('div');
-    parkingContainer.className = 'parking-container';
-
-    let vagaIndexGeral = 0;
-
-    for (let b = 0; b < TOTAL_DE_BLOCOS; b++) {
-      const blocoDiv = document.createElement('div');
-      blocoDiv.className = 'parking-block';
-
-      const filaSuperiorDiv = document.createElement('div');
-      filaSuperiorDiv.className = 'spots-row row-top';
-      const calcadaDiv = document.createElement('div');
-      calcadaDiv.className = 'green-walkway';
-      const filaInferiorDiv = document.createElement('div');
-      filaInferiorDiv.className = 'spots-row row-bottom';
-
-      for (let f = 0; f < VAGAS_POR_BLOCO; f++) {
-        let vagaReal = vagasDestePiso[vagaIndexGeral];
-        
-        let isOcupado = false;
-        let isPcd = false;
-        let labelVaga = `V${vagaIndexGeral + 1}`;
-        let statusText = 'Livre';
-        let colorText = 'var(--color-livre)';
-
-        if(vagaReal) {
-          isOcupado = (vagaReal.status === 'occupied');
-          isPcd = (vagaReal.pcd || false);
-          labelVaga = vagaReal.VAG_LOCALIZACAO || labelVaga;
-          statusText = isOcupado ? 'Ocupado' : 'Livre';
-          colorText = isOcupado ? 'var(--color-ocupado)' : 'var(--color-livre)';
-        }
-
-        const vagaDiv = document.createElement('div');
-        vagaDiv.className = `spot ${isPcd ? 'pcd' : ''}`;
-        
-        if (f === VAGAS_POR_FILA - 1 || f === VAGAS_POR_BLOCO - 1) {
-          vagaDiv.className += ' last-in-row';
-        }
-
-        if (isPcd) {
-          const pcdIcon = document.createElement('i');
-          pcdIcon.className = 'fa-solid fa-wheelchair spot-pcd-icon icon-pcd';
-          vagaDiv.appendChild(pcdIcon);
-        }
-
-        const idSpan = document.createElement('span');
-        idSpan.className = 'spot-id';
-        idSpan.innerText = labelVaga;
-        vagaDiv.appendChild(idSpan);
-
-        const statusSpan = document.createElement('span');
-        statusSpan.className = 'spot-status-text';
-        statusSpan.innerText = statusText;
-        statusSpan.style.color = colorText;
-
-        const carroIcon = document.createElement('i');
-        carroIcon.className = 'fa-solid fa-car car-icon';
-
-        // Classes de cor sem neon
-        if (isOcupado) {
-          carroIcon.classList.add('icon-ocupado');
-        } else {
-          carroIcon.classList.add('icon-livre');
-        }
-
-        vagaDiv.appendChild(statusSpan);
-        vagaDiv.appendChild(carroIcon);
-
-        // Acessibilidade leitor de tela
-        const ariaLabel = document.createElement('span');
-        ariaLabel.style.display = 'none';
-        ariaLabel.innerText = `Vaga ${labelVaga}. ${statusText}`;
-        vagaDiv.appendChild(ariaLabel);
-
-        if (f < VAGAS_POR_FILA) {
-          filaSuperiorDiv.appendChild(vagaDiv);
-        } else {
-          filaInferiorDiv.appendChild(vagaDiv);
-        }
-        
-        vagaIndexGeral++;
-      }
-
-      blocoDiv.appendChild(filaSuperiorDiv);
-      blocoDiv.appendChild(calcadaDiv);
-      blocoDiv.appendChild(filaInferiorDiv);
-      parkingContainer.appendChild(blocoDiv);
+    if (!dadosBanco || dadosBanco.length === 0) {
+        mainContainer.innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 30px; font-size: 1rem;">Nenhuma vaga válida cadastrada.</p>';
+        return;
     }
 
-    floorSection.appendChild(parkingContainer);
-    mainContainer.appendChild(floorSection);
-  }
+    const vagasPorPiso = dadosBanco.reduce((acc, vaga) => {
+        let pisoNome = extrairNomeDoPiso(vaga);
+        if (!acc[pisoNome]) acc[pisoNome] = [];
+        acc[pisoNome].push(vaga);
+        return acc;
+    }, {});
+
+    const pisosOrdenados = Object.keys(vagasPorPiso).sort((a, b) => {
+        const numA = parseInt(a.replace(/\D/g, '')) || 0;
+        const numB = parseInt(b.replace(/\D/g, '')) || 0;
+        return numA - numB;
+    });
+
+    pisosOrdenados.forEach(nomeDoPiso => {
+        const vagasDestePiso = vagasPorPiso[nomeDoPiso];
+        const metade = Math.ceil(vagasDestePiso.length / 2);
+
+        const floorSection = document.createElement('div');
+        floorSection.className = 'floor-section';
+
+        const floorTitle = document.createElement('h3');
+        floorTitle.className = 'floor-title';
+        floorTitle.innerHTML = `<span><i class="fa-solid fa-layer-group" aria-hidden="true"></i> SETOR DE ESTACIONAMENTO</span> ${nomeDoPiso}`;
+        floorSection.appendChild(floorTitle);
+
+        const parkingContainer = document.createElement('div');
+        parkingContainer.className = 'parking-container';
+
+        const parkingAisle = document.createElement('div');
+        parkingAisle.className = 'parking-aisle';
+
+        const filaSuperiorDiv = document.createElement('div');
+        filaSuperiorDiv.className = 'spots-row row-top';
+        
+        const drivewayDiv = document.createElement('div');
+        drivewayDiv.className = 'driveway';
+        drivewayDiv.innerHTML = `
+            <div class="traffic-indicator"><i class="fa-solid fa-circle-arrow-right" style="color: #22c55e;" aria-hidden="true"></i> ENTRADA</div>
+            <div class="traffic-indicator"><i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i> SENTIDO ÚNICO</div>
+            <div class="traffic-indicator">SAÍDA <i class="fa-solid fa-circle-arrow-right" style="color: #ef4444;" aria-hidden="true"></i></div>
+        `;
+        
+        const filaInferiorDiv = document.createElement('div');
+        filaInferiorDiv.className = 'spots-row row-bottom';
+
+        vagasDestePiso.forEach((vagaReal, index) => {
+            const statusCalculado = obterStatusVaga(vagaReal);
+            let isOcupado = (statusCalculado === 'ocupado');
+            let isIndisponivel = (statusCalculado === 'indisponivel');
+            let isPcd = Boolean(vagaReal.pcd || vagaReal.VAG_PCD || vagaReal.PCD);
+            let labelVaga = obterLabelVaga(vagaReal, index);
+
+            let statusText = 'Livre';
+            let statusColor = '#22c55e';
+            let carImgName = '/images/CarroVerde.png';
+            let ledClass = 'led-green';
+
+            if (isOcupado) {
+                statusText = 'Ocupado';
+                statusColor = '#ef4444';
+                carImgName = '/images/CarroVermelho.png';
+                ledClass = 'led-red';
+            } else if (isIndisponivel) {
+                statusText = 'Indisponível';
+                statusColor = '#64748b';
+                carImgName = '/images/CarroCinza.png';
+                ledClass = 'led-gray';
+            }
+
+            const vagaDiv = document.createElement('div');
+            vagaDiv.className = `spot ${isPcd ? 'pcd' : ''}`;
+            vagaDiv.setAttribute('tabindex', '0');
+            vagaDiv.setAttribute('aria-label', `${labelVaga}: ${statusText}${isPcd ? ', vaga PCD' : ''}`);
+
+            const sensorLed = document.createElement('div');
+            sensorLed.className = `sensor-led ${isPcd && !isOcupado && !isIndisponivel ? 'led-blue' : ledClass}`;
+            vagaDiv.appendChild(sensorLed);
+
+            if (isPcd) {
+                const pcdGround = document.createElement('i');
+                pcdGround.className = 'fa-solid fa-wheelchair spot-pcd-ground';
+                pcdGround.setAttribute('aria-hidden', 'true');
+                vagaDiv.appendChild(pcdGround);
+            }
+
+            const idSpan = document.createElement('span');
+            idSpan.className = 'spot-id-paint';
+            idSpan.innerText = labelVaga;
+            vagaDiv.appendChild(idSpan);
+
+            const statusSpan = document.createElement('span');
+            statusSpan.className = 'spot-status-tag';
+            statusSpan.innerText = statusText;
+            statusSpan.style.color = statusColor;
+            vagaDiv.appendChild(statusSpan);
+
+            const carroImg = document.createElement('img');
+            carroImg.src = imgBaseUrl + carImgName;
+            carroImg.className = 'car-body';
+            carroImg.alt = '';
+            carroImg.setAttribute('aria-hidden', 'true');
+            vagaDiv.appendChild(carroImg);
+
+            if (index < metade) {
+                filaSuperiorDiv.appendChild(vagaDiv);
+            } else {
+                filaInferiorDiv.appendChild(vagaDiv);
+            }
+        });
+
+        parkingAisle.appendChild(filaSuperiorDiv);
+        parkingAisle.appendChild(drivewayDiv);
+        parkingAisle.appendChild(filaInferiorDiv);
+        
+        parkingContainer.appendChild(parkingAisle);
+        floorSection.appendChild(parkingContainer);
+        mainContainer.appendChild(floorSection);
+    });
 }
 
 desenharMapaEstacionamento(spots);
 
-// Instâncias Globais dos Gráficos (Lógica Mantida)
-let chart1, chart2, chart3;
+// GRÁFICOS DO PAINEL ADMINISTRATIVO
+let chart1, chart3;
 
 function obterCoresDeAcordoComTema() {
-  const isHighContrast = document.body.classList.contains("high-contrast");
-  const isLight = document.body.classList.contains("light");
+    const isHighContrast = document.body.classList.contains("high-contrast");
+    const isLight = document.body.classList.contains("light");
 
-  if (isHighContrast) {
-    return { text: '#FFFF00', grid: '#FFFF00', primary: '#FFFF00', occupied: '#FFFF00', free: '#000000', freeBorder: '#FFFF00' };
-  } else if (isLight) {
-    return { text: '#0b132b', grid: 'rgba(0,0,0,0.06)', primary: '#4CC9F0', occupied: '#e74c3c', free: '#2ecc71', freeBorder: 'transparent' };
-  } else {
-    return { text: '#0b132b', grid: 'rgba(0,0,0,0.05)', primary: '#4CC9F0', occupied: '#e74c3c', free: '#2ecc71', freeBorder: 'transparent' };
-  }
+    if (isHighContrast) {
+        return { text: '#FFFF00', grid: '#FFFF00', primary: '#FFFF00', occupied: '#FFFF00', free: '#333300', freeBorder: '#FFFF00' };
+    } else if (isLight) {
+        return { text: '#0f172a', grid: 'rgba(0,0,0,0.08)', primary: '#0284c7', occupied: '#ef4444', free: '#22c55e', freeBorder: 'transparent' };
+    } else {
+        return { text: '#f8fafc', grid: 'rgba(255,255,255,0.08)', primary: '#38bdf8', occupied: '#ef4444', free: '#22c55e', freeBorder: 'transparent' };
+    }
 }
 
 function renderizarGraficos() {
-  const cores = obterCoresDeAcordoComTema();
-  if(chart1) chart1.destroy();
-  if(chart2) chart2.destroy();
-  if(chart3) chart3.destroy();
+    const cores = obterCoresDeAcordoComTema();
+    if(chart1) chart1.destroy();
+    if(chart3) chart3.destroy();
 
-  chart1 = new Chart(document.getElementById('occupancyChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Ocupadas', 'Livres'],
-      datasets: [{
-        data: [occupied, free],
-        backgroundColor: [cores.occupied, cores.free],
-        borderWidth: document.body.classList.contains("high-contrast") ? 2 : 0,
-        borderColor: cores.freeBorder
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: { color: cores.text, font: { family: 'Poppins', weight: 500 } } } }
-    }
-  });
+    chart1 = new Chart(document.getElementById('occupancyChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Ocupadas', 'Livres', 'Indisponíveis'],
+            datasets: [{
+                data: [occupied, free, unavailable],
+                backgroundColor: [cores.occupied, cores.free, '#64748b'],
+                borderWidth: document.body.classList.contains("high-contrast") ? 2 : 0,
+                borderColor: cores.freeBorder
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { color: cores.text, font: { family: 'Plus Jakarta Sans', weight: 600 } } } }
+        }
+    });
 
-  chart2 = new Chart(document.getElementById('barChart'), {
-    type: 'bar',
-    data: {
-      labels: barLabels,
-      datasets: [{ data: barData, backgroundColor: cores.primary, borderRadius: 6 }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: cores.text, font: { family: 'Poppins' } } },
-        y: { grid: { color: cores.grid }, ticks: { color: cores.text, font: { family: 'Poppins' }, precision: 0 } }
-      }
-    }
-  });
-
-  chart3 = new Chart(document.getElementById('lineChart'), {
-    type: 'line',
-    data: {
-      labels: lineLabels,
-      datasets: [{
-        data: lineData, borderColor: cores.primary,
-        backgroundColor: document.body.classList.contains("high-contrast") ? 'transparent' : 'rgba(76, 201, 240, 0.1)',
-        fill: true, tension: 0.3
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: cores.text, font: { family: 'Poppins' } } },
-        y: { grid: { color: cores.grid }, ticks: { color: cores.text, font: { family: 'Poppins' }, precision: 0 } }
-      }
-    }
-  });
+    chart3 = new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: lineLabels,
+            datasets: [{
+                data: lineData, borderColor: cores.primary,
+                backgroundColor: document.body.classList.contains("high-contrast") ? 'transparent' : 'rgba(56, 189, 248, 0.12)',
+                fill: true, tension: 0.35
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { color: cores.text, font: { family: 'Plus Jakarta Sans' } } },
+                y: { grid: { color: cores.grid }, ticks: { color: cores.text, font: { family: 'Plus Jakarta Sans' }, precision: 0 } }
+            }
+        }
+    });
 }
 
 renderizarGraficos();
-
-// Evento de Logout
-document.getElementById("logoutBtn").addEventListener("click", function(e){
-  e.preventDefault();
-  Swal.fire({
-    title: "Deseja sair?", text: "Você será desconectado com segurança do sistema.",
-    icon: "warning", showCancelButton: true, confirmButtonText: "Sim, sair",
-    cancelButtonText: "Cancelar", scrollbarPadding: false, heightAuto: false
-  }).then((result) => {
-    if(result.isConfirmed){ window.location.href = "<?= base_url('/logout') ?>"; }
-  });
-});
-
-// Acessibilidade Eventos
-const mainAccBtn = document.getElementById("mainAccBtn");
-const accPanel = document.getElementById("accPanel");
-mainAccBtn.addEventListener("click", (e) => { e.stopPropagation(); accPanel.classList.toggle("open"); });
-document.addEventListener("click", (e) => { if (!accPanel.contains(e.target) && e.target !== mainAccBtn) { accPanel.classList.remove("open"); } });
-
-let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
-const updateFontSize = (size) => { document.documentElement.style.fontSize = size + "px"; localStorage.setItem("fontSize", size); };
-updateFontSize(currentFontSize);
-document.getElementById("increaseText").addEventListener("click", () => { if(currentFontSize < 24) { currentFontSize += 2; updateFontSize(currentFontSize); } });
-document.getElementById("decreaseText").addEventListener("click", () => { if(currentFontSize > 12) { currentFontSize -= 2; updateFontSize(currentFontSize); } });
-
-const themeBtn = document.getElementById("themeBtn");
-const themeIcon = themeBtn.querySelector("i");
-if(localStorage.getItem("theme") === "light"){ document.body.classList.add("light"); themeIcon.classList.replace("fa-moon", "fa-sun"); setTimeout(renderizarGraficos, 50); }
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("light");
-  if(document.body.classList.contains("light")){ themeIcon.classList.replace("fa-moon", "fa-sun"); localStorage.setItem("theme", "light"); } 
-  else { themeIcon.classList.replace("fa-sun", "fa-moon"); localStorage.setItem("theme", "dark"); }
-  renderizarGraficos();
-});
-
-const contrastBtn = document.getElementById("contrastBtn");
-if(localStorage.getItem("contrast") === "high"){ document.body.classList.add("high-contrast"); setTimeout(renderizarGraficos, 50); }
-contrastBtn.addEventListener("click", () => {
-  document.body.classList.toggle("high-contrast");
-  if(document.body.classList.contains("high-contrast")){ localStorage.setItem("contrast", "high"); } 
-  else { localStorage.setItem("contrast", "normal"); }
-  renderizarGraficos();
-});
-
-const audioBtn = document.getElementById("audioBtn");
-let synth = window.speechSynthesis;
-let utterance = null;
-let isSpeaking = false;
-audioBtn.addEventListener("click", () => {
-  if (isSpeaking) { synth.cancel(); isSpeaking = false; audioBtn.classList.remove("audio-active"); } 
-  else {
-    let textoParaLer = "";
-    const elementos = document.querySelectorAll(".page-title h1, .page-title p, .card h2, .value, .mini, .spot > span:last-child");
-    elementos.forEach(el => { textoParaLer += el.innerText + ". "; });
-    if(textoParaLer.trim() !== "") {
-      utterance = new SpeechSynthesisUtterance(textoParaLer);
-      utterance.lang = "pt-BR";
-      utterance.onend = () => { audioBtn.classList.remove("audio-active"); isSpeaking = false; };
-      synth.speak(utterance);
-      audioBtn.classList.add("audio-active");
-      isSpeaking = true;
-    }
-  }
-});
-window.addEventListener('beforeunload', () => { synth.cancel(); });
 </script>
 </body>
 </html>

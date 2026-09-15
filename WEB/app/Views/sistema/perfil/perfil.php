@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,9 +11,9 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
-/* Base de acessibilidade para escala responsiva de fontes */
+/* Base percentual para funcionamento correto do dimensionamento em rem */
 html {
-  font-size: 16px;
+  font-size: 100%;
   transition: font-size 0.2s ease;
 }
 
@@ -26,12 +26,18 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
+/* Foco visível para navegação por teclado */
+:focus-visible {
+  outline: 3px solid #4CC9F0 !important;
+  outline-offset: 3px !important;
+}
+
 .sidebar {
   width: 280px;
   height: 100vh;
   background: rgba(18, 28, 58, 0.95);
   backdrop-filter: blur(15px);
-  padding: 25px;
+  padding: 1.56rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -44,36 +50,37 @@ body {
 }
 
 .logo {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #4CC9F0;
-  margin-bottom: 30px;
+  margin-bottom: 1.87rem;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.62rem;
   transition: color 0.3s;
 }
-.logo img { height: 24px; width: auto; object-fit: contain; }
+.logo img { height: 1.5rem; width: auto; object-fit: contain; }
 
-.user h3 { color: #fff; font-size: 16px; transition: color 0.3s; }
-.user p { color: #A9B4D0; font-size: 13px; transition: color 0.3s; }
+.user h2 { color: #fff; font-size: 1rem; font-weight: 600; transition: color 0.3s; }
+.user p { color: #A9B4D0; font-size: 0.81rem; transition: color 0.3s; }
 
 .menu a {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px;
-  margin-bottom: 10px;
+  gap: 0.62rem;
+  padding: 0.75rem;
+  margin-bottom: 0.62rem;
   border-radius: 10px;
   text-decoration: none;
   color: #B8C2D9;
+  font-size: 0.93rem;
   transition: 0.3s;
 }
 .menu a:hover { background: rgba(76, 201, 240, 0.15); color: #fff; }
 .menu a.active { background: rgba(76, 201, 240, 0.25); color: #fff; }
 
 .logout {
-  padding: 12px;
+  padding: 0.75rem;
   text-align: center;
   text-decoration: none;
   border-radius: 12px;
@@ -82,6 +89,10 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 .logout:hover {
   background:#3bc3eb;
@@ -91,14 +102,14 @@ body {
 .main {
   flex: 1;
   margin-left: 280px;
-  padding: 30px;
+  padding: 1.87rem;
   background: transparent;
   width: calc(100% - 280px);
 }
 
-.page-title { margin-bottom: 25px; }
-.page-title h1 { font-size: 36px; color: #fff; transition: color 0.3s; }
-.page-title p { color: #A9B4D0; transition: color 0.3s; }
+.page-title { margin-bottom: 1.56rem; }
+.page-title h1 { font-size: 2.25rem; color: #fff; transition: color 0.3s; }
+.page-title p { color: #A9B4D0; font-size: 0.93rem; transition: color 0.3s; }
 
 .card {
   width: 100%;
@@ -108,7 +119,7 @@ body {
   color: #0b132b;
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  padding: 30px;
+  padding: 1.87rem;
   transition: background 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
 }
 
@@ -116,91 +127,88 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 25px;
+  padding-bottom: 1.56rem;
   border-bottom: 1px solid rgba(0,0,0,0.06);
-  margin-bottom: 30px;
+  margin-bottom: 1.87rem;
 }
 
-.profile-info { display: flex; align-items: center; gap: 20px; }
+.profile-info { display: flex; align-items: center; gap: 1.25rem; }
 .profile-info img {
-  width: 90px;
-  height: 90px;
+  width: 5.62rem;
+  height: 5.62rem;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #4CC9F0;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-.user-data h2 { font-size: 22px; color: #0b132b; font-weight: 600; transition: color 0.3s; }
-.user-data p { color: #56667d; font-size: 14px; transition: color 0.3s; }
+.user-data h2 { font-size: 1.37rem; color: #0b132b; font-weight: 600; transition: color 0.3s; }
+.user-data p { color: #56667d; font-size: 0.87rem; transition: color 0.3s; }
 
 .status-badge {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #2ecc71;
   background: rgba(46, 204, 113, 0.15);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 6px 14px;
+  padding: 0.37rem 0.87rem;
   border-radius: 8px;
   transition: background 0.3s, color 0.3s, border 0.3s;
 }
 
 .form-section-header {
-  font-size: 13px;
+  font-size: 0.81rem;
   color: #56667d;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 0.31rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   grid-column: span 2;
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  padding-bottom: 5px;
+  padding-bottom: 0.31rem;
   transition: color 0.3s, border 0.3s;
 }
 
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 .field { display: flex; flex-direction: column; }
-.field label { color: #6b7280; font-size: 12px; font-weight: 500; margin-bottom: 6px; transition: color 0.3s; }
+.field label { color: #4b5563; font-size: 0.81rem; font-weight: 600; margin-bottom: 0.37rem; transition: color 0.3s; }
 
 .input {
   width: 100%;
-  height: 46px;
+  height: 2.87rem;
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.2);
   background: #ffffff;
   color: #0b132b;
-  padding: 0 15px;
-  font-size: 14px;
+  padding: 0 0.93rem;
+  font-size: 0.87rem;
   transition: 0.2s;
 }
-.input:focus { outline: none; border-color: #4CC9F0; box-shadow: 0 0 8px rgba(76, 201, 240, 0.25); }
+.input:focus { border-color: #4CC9F0; box-shadow: 0 0 8px rgba(76, 201, 240, 0.25); }
 
-.input-blocked { background: #e9ecef; color: #6c757d; cursor: not-allowed; border: 1px solid rgba(0,0,0,0.08); }
-.input[type="file"] { padding: 8px 12px; font-size: 13px; color: #6b7280; }
+.input-blocked { background: #e9ecef; color: #495057; cursor: not-allowed; border: 1px solid rgba(0,0,0,0.15); }
+.input[type="file"] { padding: 0.5rem 0.75rem; font-size: 0.81rem; color: #6b7280; height: auto; }
 
-.button-row { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.06); text-align: right; }
+.button-row { margin-top: 1.87rem; padding-top: 1.25rem; border-top: 1px solid rgba(0,0,0,0.06); text-align: right; }
 
 .button {
   border: none;
-  padding: 12px 30px;
+  padding: 0.75rem 1.87rem;
   border-radius: 10px;
   background: #1c2541;
   color: #ffffff;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.87rem;
   cursor: pointer;
   transition: 0.2s;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 .button:hover { background: #0b132b; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(11, 19, 43, 0.2); }
 
-/* ========================================================
-   ESTILOS DE ACESSIBILIDADE DO ECOSSISTEMA UNIFICADO
-   ======================================================== */
-
+/* BOTÃO E PAINEL DE ACESSIBILIDADE */
 .main-acc-btn {
   position: fixed;
   top: 20px;
@@ -229,27 +237,28 @@ body {
 .accessibility-panel {
   position: fixed;
   top: 80px;
-  right: -300px;
+  right: -320px;
   width: 260px;
   background: #121c3a;
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 12px;
-  padding: 20px;
+  padding: 1.25rem;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   z-index: 9999;
   transition: right 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 0.93rem;
   color: #ffffff;
   text-align: left;
 }
 .accessibility-panel.open { right: 20px; }
-.accessibility-panel h3 {
+.accessibility-panel h2 {
   font-size: 1.1rem;
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 8px;
+  padding-bottom: 0.5rem;
   color: #fff;
+  margin-bottom: 0;
 }
 
 .panel-row { display: flex; justify-content: space-between; align-items: center; }
@@ -259,7 +268,7 @@ body {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
   color: #fff;
-  padding: 8px 14px;
+  padding: 0.5rem 0.87rem;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.2s;
@@ -267,14 +276,14 @@ body {
 }
 .acc-btn:hover { background: #4CC9F0; color: #070b16; }
 
-/* ===== MODO CLARO ===== */
+/* MODO CLARO */
 body.light {
   background: linear-gradient(135deg, #f5f7fb, #e4e9f7);
   color: #070b16;
 }
 body.light .sidebar { background: #ffffff; border-right: 1px solid rgba(0,0,0,0.1); }
 body.light .logo { color: #1c2541; }
-body.light .user h3 { color: #070b16; }
+body.light .user h2 { color: #070b16; }
 body.light .user p { color: #56667d; }
 body.light .menu a { color: #56667d; }
 body.light .menu a:hover, body.light .menu a.active { background: rgba(28, 37, 65, 0.1); color: #1c2541; }
@@ -289,14 +298,14 @@ body.light .card {
 body.light .user-data h2 { color: #0b132b; }
 body.light .user-data p { color: #56667d; }
 body.light .form-section-header { color: #1c2541; border-bottom: 1px solid rgba(0,0,0,0.08); }
-body.light .field label { color: #56667d; }
+body.light .field label { color: #374151; }
 
 body.light .accessibility-panel { background: #ffffff; border: 1px solid rgba(0,0,0,0.1); color: #070b16; }
-body.light .accessibility-panel h3 { color: #070b16; border-bottom: 1px solid rgba(0,0,0,0.1); }
-body.light .accessibility-panel span { color: #555; }
+body.light .accessibility-panel h2 { color: #070b16; border-bottom: 1px solid rgba(0,0,0,0.1); }
+body.light .accessibility-panel span { color: #333; }
 body.light .acc-btn { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); color: #333; }
 
-/* ===== MODO ALTO-CONTRASTE (PRETO E AMARELO) ===== */
+/* MODO ALTO-CONTRASTE */
 body.high-contrast {
   background: #000000 !important;
   color: #FFFF00 !important;
@@ -310,7 +319,7 @@ body.high-contrast .accessibility-panel {
   box-shadow: none !important;
 }
 body.high-contrast .logo,
-body.high-contrast .user h3,
+body.high-contrast .user h2,
 body.high-contrast .user p,
 body.high-contrast .page-title h1,
 body.high-contrast .page-title p,
@@ -318,7 +327,7 @@ body.high-contrast .user-data h2,
 body.high-contrast .user-data p,
 body.high-contrast .form-section-header,
 body.high-contrast .field label,
-body.high-contrast .accessibility-panel h3,
+body.high-contrast .accessibility-panel h2,
 body.high-contrast .accessibility-panel span {
   color: #FFFF00 !important;
 }
@@ -338,7 +347,7 @@ body.high-contrast .input {
   border: 2px solid #FFFF00 !important;
 }
 body.high-contrast .input-blocked {
-  opacity: 0.6;
+  opacity: 0.7;
   border-style: dashed !important;
 }
 body.high-contrast button,
@@ -350,17 +359,13 @@ body.high-contrast .main-acc-btn {
   color: #000000 !important;
   border: 2px solid #FFFF00 !important;
 }
-body.high-contrast .button i, body.high-contrast .logout i, body.high-contrast .main-acc-btn i {
-  color: #000000 !important;
-}
 
 .acc-btn.audio-active { background: #2ecc71 !important; color: #fff !important; }
-body.high-contrast .acc-btn.audio-active i { color: #ffffff !important; }
 
 @media(max-width:900px){
   .form-grid { grid-template-columns: 1fr; }
   .form-section-header { grid-column: span 1; }
-  .profile-top-row { flex-direction: column; align-items: flex-start; gap:15px; }
+  .profile-top-row { flex-direction: column; align-items: flex-start; gap:0.93rem; }
   .button-row { text-align: left; }
   .main { margin-left: 0; width: 100%; }
   .sidebar { display: none; }
@@ -385,89 +390,116 @@ $u_cpf   = $usuario['USU_CPF']   ?? session()->get('USU_CPF')   ?? session()->ge
 $u_foto  = $usuario['USU_FOTO']  ?? session()->get('USU_FOTO')  ?? null;
 $u_nasc  = $usuario['USU_DATA_NASCIMENTO'] ?? null;
 $u_cnpj  = $usuario['FK_EMP_CNPJ'] ?? 'Não associado';
+
+// Normaliza o tipo de perfil para validação do menu
+$tipoUpper = strtoupper((string)$u_tipo);
 ?>
 
-<button class="main-acc-btn" id="mainAccBtn" title="Opções de Acessibilidade">
-  <i class="fa-solid fa-universal-access"></i>
+<!-- BOTÃO FLUTUANTE DE ACESSIBILIDADE -->
+<button class="main-acc-btn" id="mainAccBtn" title="Opções de Acessibilidade" aria-label="Abrir opções de acessibilidade" aria-expanded="false" aria-controls="accPanel">
+  <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
 </button>
 
-<div class="accessibility-panel" id="accPanel">
-  <h3>Acessibilidade</h3>
+<!-- PAINEL LATERAL DE ACESSIBILIDADE -->
+<section class="accessibility-panel" id="accPanel" aria-label="Painel de Acessibilidade" aria-hidden="true">
+  <h2>Acessibilidade</h2>
   
   <div class="panel-row">
     <span>Tamanho da Letra:</span>
     <div style="display:flex; gap:5px;">
-      <button class="acc-btn" id="decreaseText" title="Diminuir">-</button>
-      <button class="acc-btn" id="increaseText" title="Aumentar">+</button>
+      <button class="acc-btn" id="decreaseText" title="Diminuir texto" aria-label="Diminuir tamanho da fonte">-</button>
+      <button class="acc-btn" id="increaseText" title="Aumentar texto" aria-label="Aumentar tamanho da fonte">+</button>
     </div>
   </div>
 
   <div class="panel-row">
-    <span>Contraste Amarelo:</span>
-    <button class="acc-btn" id="contrastBtn"><i class="fa-solid fa-circle-half-stroke"></i></button>
+    <span>Alto Contraste:</span>
+    <button class="acc-btn" id="contrastBtn" title="Alternar alto contraste" aria-label="Alternar modo de alto contraste"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
   </div>
 
   <div class="panel-row">
     <span>Ouvir Texto:</span>
-    <button class="acc-btn" id="audioBtn"><i class="fa-solid fa-volume-high"></i></button>
+    <button class="acc-btn" id="audioBtn" title="Ouvir perfil por voz" aria-label="Ouvir dados do perfil por voz"><i class="fa-solid fa-volume-high" aria-hidden="true"></i></button>
   </div>
 
   <div class="panel-row">
     <span>Cor do Tema:</span>
-    <button class="acc-btn" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
+    <button class="acc-btn" id="themeBtn" title="Alternar tema claro/escuro" aria-label="Alternar modo claro ou escuro"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
   </div>
-</div>
+</section>
 
-<div class="sidebar">
+<!-- MENU LATERAL DINÂMICO -->
+<aside class="sidebar">
   <div>
     <div class="logo">
-      <img src="<?= base_url('/images/LogoModoEscuro.png') ?>" alt="Logo"> Industrial Park
+      <img src="<?= base_url('/images/LogoModoEscuro.png') ?>" alt="Logotipo Industrial Park"> Industrial Park
     </div>
 
     <div class="user">
-      <h3><?= esc($u_nome) ?></h3>
+      <h2><?= esc($u_nome) ?></h2>
       <p>Perfil: <?= esc($u_tipo) ?></p>
       <br>
     </div>
 
-    <div class="menu">
-      <a href="<?= base_url('/dashboard-admin') ?>"><i class="fa-solid fa-house"></i> Dashboard</a>
-      <a href="<?= base_url('/vagas') ?>"><i class="fa-solid fa-car"></i> Cadastro de Vagas</a>
-      <a href="<?= base_url('/sensores') ?>"><i class="fa-solid fa-microchip"></i> Cadastro de Sensor</a>
-      <a href="<?= base_url('/porteiros') ?>"><i class="fa-solid fa-id-badge"></i> Cadastro de Porteiro</a>
-      <a href="<?= base_url('/perfil') ?>" class="active"><i class="fa-solid fa-user-pen"></i> Perfil</a>
-    </div>
+    <nav class="menu" aria-label="Menu Principal">
+      <?php if (in_array($tipoUpper, ['SUPER ADMIN', 'SUPERADMIN', '1'])): ?>
+        <!-- 1. Menu Super Admin -->
+        <a href="<?= base_url('/dashboard-superadm') ?>"><i class="fa-solid fa-house" aria-hidden="true"></i> <span>Dashboard</span></a>
+        <a href="<?= base_url('/admin') ?>"><i class="fa-solid fa-id-badge" aria-hidden="true"></i> <span>Cadastro de Admin</span></a>
+        <a href="<?= base_url('/empresas') ?>"><i class="fa-solid fa-building" aria-hidden="true"></i> <span>Cadastro de Empresa</span></a>
+        <a href="<?= base_url('/perfil') ?>" class="active" aria-current="page"><i class="fa-solid fa-user-pen" aria-hidden="true"></i> <span>Perfil</span></a>
+
+      <?php elseif (in_array($tipoUpper, ['ADMIN', 'ADMINISTRADOR', '2'])): ?>
+        <!-- 2. Menu Admin / Gerencial -->
+        <a href="<?= base_url('/dashboard-admin') ?>"><i class="fa-solid fa-house" aria-hidden="true"></i> <span>Dashboard</span></a>
+        <a href="<?= base_url('/vagas') ?>"><i class="fa-solid fa-car" aria-hidden="true"></i> <span>Cadastro de Vagas</span></a>
+        <a href="<?= base_url('/sensores') ?>"><i class="fa-solid fa-microchip" aria-hidden="true"></i> <span>Cadastro de Sensor</span></a>
+        <a href="<?= base_url('/porteiros') ?>"><i class="fa-solid fa-id-badge" aria-hidden="true"></i> <span>Cadastro de Porteiro</span></a>
+        <a href="<?= base_url('/perfil') ?>" class="active" aria-current="page"><i class="fa-solid fa-user-pen" aria-hidden="true"></i> <span>Perfil</span></a>
+
+      <?php elseif (in_array($tipoUpper, ['PORTEIRO', '3'])): ?>
+        <!-- 3. Menu Porteiro -->
+        <a href="<?= base_url('/dashboard-porteiro') ?>"><i class="fa-solid fa-house" aria-hidden="true"></i> <span>Dashboard</span></a>
+        <a href="<?= base_url('/perfil') ?>" class="active" aria-current="page"><i class="fa-solid fa-user" aria-hidden="true"></i> <span>Perfil</span></a>
+
+      <?php else: ?>
+        <!-- 4. Menu Usuário Comum -->
+        <a href="<?= base_url('/dashboard-usu') ?>"><i class="fa-solid fa-house" aria-hidden="true"></i> <span>Dashboard</span></a>
+        <a href="<?= base_url('/perfil') ?>" class="active" aria-current="page"><i class="fa-solid fa-user" aria-hidden="true"></i> <span>Editar Perfil</span></a>
+      <?php endif; ?>
+    </nav>
   </div>
 
-  <a href="#" class="logout" id="logoutBtn">
-    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  <a href="#" class="logout" id="logoutBtn" aria-label="Sair da conta">
+    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Logout</span>
   </a>
-</div>
+</aside>
 
-<div class="main">
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="main">
 
-  <div class="page-title">
+  <header class="page-title">
     <h1>Meu Perfil</h1>
     <p>Gerencie e visualize suas informações do sistema</p>
-  </div>
+  </header>
 
-  <div class="card">
+  <section class="card" aria-labelledby="perfil-titulo">
     
     <div class="profile-top-row">
       <div class="profile-info">
         <img
           id="previewFoto"
           src="<?= !empty($u_foto) ? base_url('uploads/' . $u_foto) : base_url('images/user.png') ?>" 
-          alt="Foto de perfil">
+          alt="Foto de perfil de <?= esc($u_nome) ?>">
 
         <div class="user-data">
-          <h2><?= esc($u_nome) ?></h2>
+          <h2 id="perfil-titulo"><?= esc($u_nome) ?></h2>
           <p><?= esc($u_email) ?></p>
         </div>
       </div>
 
-      <div class="status-badge">
-        <i class="fa-solid fa-shield-halved" style="margin-right: 4px;"></i> Dados Verificados
+      <div class="status-badge" role="status">
+        <i class="fa-solid fa-shield-halved" aria-hidden="true" style="margin-right: 4px;"></i> Dados Verificados
       </div>
     </div>
 
@@ -478,59 +510,59 @@ $u_cnpj  = $usuario['FK_EMP_CNPJ'] ?? 'Não associado';
         <div class="form-section-header">Campos Editáveis</div>
 
         <div class="field">
-          <label>Nome Completo</label>
-          <input class="input" type="text" name="USU_NOME" value="<?= esc($u_nome) ?>" required>
+          <label for="usu_nome">Nome Completo</label>
+          <input class="input" type="text" id="usu_nome" name="USU_NOME" value="<?= esc($u_nome) ?>" required aria-required="true">
         </div>
 
         <div class="field">
-          <label>E-mail Institucional</label>
-          <input class="input" type="email" name="USU_EMAIL" value="<?= esc($u_email) ?>" required>
+          <label for="usu_email">E-mail Institucional</label>
+          <input class="input" type="email" id="usu_email" name="USU_EMAIL" value="<?= esc($u_email) ?>" required aria-required="true">
         </div>
 
         <div class="field">
-          <label>Nova Senha (deixe vazio para manter a atual)</label>
-          <input class="input" type="password" name="USU_SENHA" placeholder="Digite apenas se quiser alterar">
+          <label for="usu_senha">Nova Senha (opcional)</label>
+          <input class="input" type="password" id="usu_senha" name="USU_SENHA" placeholder="Digite apenas se quiser alterar">
         </div>
 
         <div class="field">
-          <label>Alterar Foto de Perfil</label>
+          <label for="foto">Alterar Foto de Perfil</label>
           <input class="input" type="file" name="foto" id="foto" accept="image/*">
         </div>
 
         <div class="form-section-header" style="margin-top: 15px;">Informações do Registro (Não alteráveis)</div>
 
         <div class="field">
-          <label>CPF do Usuário</label>
-          <input class="input input-blocked" type="text" value="<?= esc($u_cpf) ?>" readonly>
+          <label for="usu_cpf">CPF do Usuário</label>
+          <input class="input input-blocked" type="text" id="usu_cpf" value="<?= esc($u_cpf) ?>" readonly aria-readonly="true">
         </div>
 
         <div class="field">
-          <label>Data de Nascimento</label>
-          <input class="input input-blocked" type="text" value="<?= !empty($u_nasc) ? date('d/m/Y', strtotime($u_nasc)) : 'Não cadastrada' ?>" readonly>
+          <label for="usu_nasc">Data de Nascimento</label>
+          <input class="input input-blocked" type="text" id="usu_nasc" value="<?= !empty($u_nasc) ? date('d/m/Y', strtotime($u_nasc)) : 'Não cadastrada' ?>" readonly aria-readonly="true">
         </div>
 
         <div class="field">
-          <label>Tipo de Conta</label>
-          <input class="input input-blocked" type="text" value="<?= esc($u_tipo) ?>" readonly>
+          <label for="usu_tipo">Tipo de Conta</label>
+          <input class="input input-blocked" type="text" id="usu_tipo" value="<?= esc($u_tipo) ?>" readonly aria-readonly="true">
         </div>
 
         <div class="field">
-          <label>CNPJ da Empresa Vinculada</label>
-          <input class="input input-blocked" type="text" value="<?= esc($u_cnpj) ?>" readonly>
+          <label for="usu_cnpj">CNPJ da Empresa Vinculada</label>
+          <input class="input input-blocked" type="text" id="usu_cnpj" value="<?= esc($u_cnpj) ?>" readonly aria-readonly="true">
         </div>
 
       </div>
 
       <div class="button-row">
         <button class="button" type="submit">
-          <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+          <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Salvar Alterações
         </button>
       </div>
 
     </form>
-  </div>
+  </section>
 
-</div>
+</main>
 
 <script>
 // Preview da foto em tempo real
@@ -559,9 +591,7 @@ document.getElementById("logoutBtn").addEventListener("click", function(e){
         confirmButtonColor: '#4CC9F0',
         cancelButtonColor: '#1c2541',
         confirmButtonText: "Sim, sair",
-        cancelButtonText: "Cancelar",
-        scrollbarPadding: false,
-        heightAuto: false
+        cancelButtonText: "Cancelar"
     }).then((result) => {
         if(result.isConfirmed){
             window.location.href = "<?= base_url('/logout') ?>";
@@ -569,125 +599,129 @@ document.getElementById("logoutBtn").addEventListener("click", function(e){
     });
 });
 
-// ==========================================
-// LÓGICA DO PAINEL DE ACESSIBILIDADE FLUTUANTE
-// ==========================================
+// LÓGICA DO PAINEL DE ACESSIBILIDADE
 const mainAccBtn = document.getElementById("mainAccBtn");
 const accPanel = document.getElementById("accPanel");
 
+function togglePanel(open) {
+    const isOpen = open !== undefined ? open : !accPanel.classList.contains("open");
+    accPanel.classList.toggle("open", isOpen);
+    accPanel.setAttribute("aria-hidden", !isOpen);
+    mainAccBtn.setAttribute("aria-expanded", isOpen);
+}
+
 mainAccBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  accPanel.classList.toggle("open");
+    e.stopPropagation();
+    togglePanel();
 });
 
 document.addEventListener("click", (e) => {
-  if (!accPanel.contains(e.target) && e.target !== mainAccBtn) {
-    accPanel.classList.remove("open");
-  }
+    if (!accPanel.contains(e.target) && e.target !== mainAccBtn) {
+        togglePanel(false);
+    }
 });
 
-// 1. Controle de Letra Modular por escala tipográfica
-let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
-const updateFontSize = (size) => {
-  document.documentElement.style.fontSize = size + "px";
-  localStorage.setItem("fontSize", size);
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && accPanel.classList.contains("open")) {
+        togglePanel(false);
+    }
+});
+
+// 1. Controle do Tamanho de Fonte (escala percentual rem)
+let fontScale = parseFloat(localStorage.getItem("fontScale")) || 100;
+const updateFontScale = (scale) => {
+    document.documentElement.style.fontSize = scale + "%";
+    localStorage.setItem("fontScale", scale);
 };
-updateFontSize(currentFontSize);
+updateFontScale(fontScale);
 
 document.getElementById("increaseText").addEventListener("click", () => {
-  if(currentFontSize < 24) { currentFontSize += 2; updateFontSize(currentFontSize); }
+    if(fontScale < 140) { fontScale += 10; updateFontScale(fontScale); }
 });
 document.getElementById("decreaseText").addEventListener("click", () => {
-  if(currentFontSize > 12) { currentFontSize -= 2; updateFontSize(currentFontSize); }
+    if(fontScale > 80) { fontScale -= 10; updateFontScale(fontScale); }
 });
 
-// 2. Alternador de Tema Claro / Escuro Nativo
+// 2. Alternador de Tema Claro / Escuro
 const themeBtn = document.getElementById("themeBtn");
 const themeIcon = themeBtn.querySelector("i");
 
 if(localStorage.getItem("theme") === "light"){
-  document.body.classList.add("light");
-  themeIcon.classList.replace("fa-moon", "fa-sun");
+    document.body.classList.add("light");
+    themeIcon.classList.replace("fa-moon", "fa-sun");
 }
 
 themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("light");
-  if(document.body.classList.contains("light")){
-    themeIcon.classList.replace("fa-moon", "fa-sun");
-    localStorage.setItem("theme", "light");
-  } else {
-    themeIcon.classList.replace("fa-sun", "fa-moon");
-    localStorage.setItem("theme", "dark");
-  }
+    document.body.classList.toggle("light");
+    if(document.body.classList.contains("light")){
+        themeIcon.classList.replace("fa-moon", "fa-sun");
+        localStorage.setItem("theme", "light");
+    } else {
+        themeIcon.classList.replace("fa-sun", "fa-moon");
+        localStorage.setItem("theme", "dark");
+    }
 });
 
-// 3. Sistema de Alto-Contraste Isolado
+// 3. Modo Alto-Contraste
 const contrastBtn = document.getElementById("contrastBtn");
 if(localStorage.getItem("contrast") === "high"){
-  document.body.classList.add("high-contrast");
+    document.body.classList.add("high-contrast");
 }
 
 contrastBtn.addEventListener("click", () => {
-  document.body.classList.toggle("high-contrast");
-  if(document.body.classList.contains("high-contrast")){
-    localStorage.setItem("contrast", "high");
-  } else {
-    localStorage.setItem("contrast", "normal");
-  }
+    document.body.classList.toggle("high-contrast");
+    localStorage.setItem("contrast", document.body.classList.contains("high-contrast") ? "high" : "normal");
 });
 
-// 4. Mecanismo TTS Inteligente de Varredura Estrutural
+// 4. Mecanismo de Leitura de Tela (Text-to-Speech)
 const audioBtn = document.getElementById("audioBtn");
 let synth = window.speechSynthesis;
-let utterance = null;
 let isSpeaking = false;
 
 audioBtn.addEventListener("click", () => {
-  if (isSpeaking) {
-    synth.cancel();
-    isSpeaking = false;
-    audioBtn.classList.remove("audio-active");
-  } else {
-    let textoParaLer = "";
-    
-    // Seleciona as áreas relevantes para construir o contexto falado completo
-    const tituloPagina = document.querySelector(".page-title h1");
-    const subTituloPagina = document.querySelector(".page-title p");
-    if(tituloPagina) textoParaLer += tituloPagina.innerText + ". " + (subTituloPagina ? subTituloPagina.innerText : "") + ". ";
-
-    const nomeUsuario = document.querySelector(".user-data h2");
-    const emailUsuario = document.querySelector(".user-data p");
-    if(nomeUsuario) textoParaLer += "Perfil de: " + nomeUsuario.innerText + ". E-mail: " + (emailUsuario ? emailUsuario.innerText : "") + ". ";
-
-    // Varre as seções e os rótulos acompanhados de seus respectivos valores atuais
-    const camposForm = document.querySelectorAll(".form-section-header, .field");
-    camposForm.forEach(el => {
-      if(el.classList.contains("form-section-header")) {
-        textoParaLer += "Seção " + el.innerText + ". ";
-      } else {
-        const label = el.querySelector("label");
-        const input = el.querySelector("input");
-        if(label && input) {
-          const valor = input.value ? input.value : "vazio";
-          textoParaLer += label.innerText + ": " + (input.placeholder && !input.value ? input.placeholder : valor) + ". ";
-        }
-      }
-    });
-
-    if(textoParaLer.trim() !== "") {
-      utterance = new SpeechSynthesisUtterance(textoParaLer);
-      utterance.lang = "pt-BR";
-      
-      utterance.onend = () => {
-        audioBtn.classList.remove("audio-active");
+    if (isSpeaking) {
+        synth.cancel();
         isSpeaking = false;
-      };
+        audioBtn.classList.remove("audio-active");
+    } else {
+        let textoParaLer = "";
+        
+        const titulo = document.querySelector(".page-title h1");
+        const subtitulo = document.querySelector(".page-title p");
+        if(titulo) textoParaLer += titulo.innerText + ". " + (subtitulo ? subtitulo.innerText : "") + ". ";
 
-      synth.speak(utterance);
-      audioBtn.classList.add("audio-active");
-      isSpeaking = true;
+        const nome = document.querySelector(".user-data h2");
+        const email = document.querySelector(".user-data p");
+        if(nome) textoParaLer += "Usuário: " + nome.innerText + ". E-mail: " + (email ? email.innerText : "") + ". ";
+
+        const campos = document.querySelectorAll(".form-section-header, .field");
+        campos.forEach(el => {
+            if(el.classList.contains("form-section-header")) {
+                textoParaLer += "Seção " + el.innerText + ". ";
+            } else {
+                const label = el.querySelector("label");
+                const input = el.querySelector("input");
+                if(label && input) {
+                    const valor = input.value ? input.value : "não preenchido";
+                    textoParaLer += label.innerText + ": " + valor + ". ";
+                }
+            }
+        });
+
+        if(textoParaLer.trim() !== "") {
+            const utterance = new SpeechSynthesisUtterance(textoParaLer);
+            utterance.lang = "pt-BR";
+            
+            utterance.onend = () => {
+                audioBtn.classList.remove("audio-active");
+                isSpeaking = false;
+            };
+
+            synth.speak(utterance);
+            audioBtn.classList.add("audio-active");
+            isSpeaking = true;
+        }
     }
-  }
 });
 
 window.addEventListener('beforeunload', () => { synth.cancel(); });

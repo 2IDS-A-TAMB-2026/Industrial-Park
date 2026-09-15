@@ -7,116 +7,207 @@ use App\Models\EmpresasModel;
 
 class EmpresasController extends BaseController
 {
-    // LISTAGEM
+    // Tela Principal (Tabela)
     public function index()
     {
         $model = new EmpresasModel();
-
         $dados['empresas'] = $model->findAll();
 
         return view('sistema/empresas/index', $dados);
     }
 
-    // FORMULÁRIO NOVA EMPRESA
+    // Tela de Nova Empresa
     public function nova()
     {
         return view('sistema/empresas/nova_empresa');
     }
 
-    // INSERIR
-    public function inserir()
-    {
-        $model = new EmpresasModel();
+public function inserir()
+{
+    $model = new EmpresasModel();
 
-        // Remove os caracteres especiais do CNPJ antes de salvar no banco
-        $cnpjLimpo = preg_replace('/\D/', '', $this->request->getPost('EMP_CNPJ'));
+    $dados = $this->request->getPost();
 
-        $dados = [
-            'EMP_CNPJ'    => $cnpjLimpo,
-            'EMP_NOME'    => $this->request->getPost('EMP_NOME'),
-            'EMP_RUA'     => $this->request->getPost('EMP_RUA'),
-            'EMP_NUMERO'  => $this->request->getPost('EMP_NUMERO'),
-            'EMP_CIDADE'  => $this->request->getPost('EMP_CIDADE'),
-            'EMP_STATUS'  => $this->request->getPost('EMP_STATUS')
-        ];
+    $cnpj = preg_replace('/\D/', '', $dados['EMP_CNPJ'] ?? '');
 
-        $model->insert($dados);
-
-        return redirect()->to('/empresas');
+    if (empty($cnpj)) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Informe o CNPJ da empresa.');
     }
 
-    // EDITAR
+    if (strlen($cnpj) !== 14) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'O CNPJ deve possuir 14 números.');
+    }
+
+    if ($model->find($cnpj)) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Este CNPJ já está cadastrado.');
+    }
+
+    $empresa = [
+        'EMP_CNPJ'   => $cnpj,
+        'EMP_NOME'   => trim($dados['EMP_NOME'] ?? ''),
+        'EMP_RUA'    => trim($dados['EMP_RUA'] ?? ''),
+        'EMP_NUMERO' => trim($dados['EMP_NUMERO'] ?? ''),
+        'EMP_CIDADE' => trim($dados['EMP_CIDADE'] ?? ''),
+        'EMP_STATUS' => $dados['EMP_STATUS'] ?? 'Ativa'
+    ];
+
+    // Validação dos campos
+    if (
+        empty($empresa['EMP_NOME']) ||
+        empty($empresa['EMP_RUA']) ||
+        empty($empresa['EMP_NUMERO']) ||
+        empty($empresa['EMP_CIDADE']) ||
+        empty($empresa['EMP_STATUS'])
+    ) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Preencha todos os campos da empresa.');
+    }
+
+    if (strlen($empresa['EMP_NUMERO']) > 5) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'O número da empresa deve possuir no máximo 5 caracteres.');
+    }
+
+    try {
+
+        /*
+         * NÃO usamos:
+         *
+         * if ($model->insert($empresa))
+         *
+         * porque EMP_CNPJ não é AUTO_INCREMENT.
+         *
+         * Fazemos o insert e depois verificamos se o registro
+         * realmente existe no banco.
+         */
+
+        $model->insert($empresa);
+
+        // Confirma que o registro realmente foi gravado
+        $empresaCadastrada = $model->find($cnpj);
+
+        if ($empresaCadastrada) {
+
+            return redirect()
+                ->to('/empresas')
+                ->with('sucesso', 'Empresa cadastrada com sucesso!');
+
+        }
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Não foi possível confirmar o cadastro da empresa.');
+
+    } catch (\Throwable $e) {
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with(
+                'error',
+                'Erro ao cadastrar a empresa: ' . $e->getMessage()
+            );
+    }
+}
+    // Tela de Editar Empresa
     public function editar($cnpj)
     {
         $model = new EmpresasModel();
-        
-        // Remove pontuação caso venha da URL com a máscara do JavaScript
+
         $cnpjLimpo = preg_replace('/\D/', '', $cnpj);
 
-        // Busca no banco (tenta com o CNPJ limpo, se não achar, tenta com a string original)
-        $empresa = $model->find($cnpjLimpo) ?? $model->find($cnpj);
+        $dados['empresa'] = $model->find($cnpjLimpo);
 
-        if (!$empresa) {
-            return redirect()->to('/empresas')->with('error', 'Empresa não encontrada.');
+        if (!$dados['empresa']) {
+            return redirect()->to('/empresas')
+                ->with('error', 'Empresa não encontrada.');
         }
-
-        $dados['empresa'] = $empresa;
 
         return view('sistema/empresas/editar_empresa', $dados);
     }
 
-    // ATUALIZAR
+    // Atualizar Empresa
     public function atualizar($cnpj)
     {
         $model = new EmpresasModel();
+
         $cnpjLimpo = preg_replace('/\D/', '', $cnpj);
 
-        $dados = [
-            'EMP_NOME'   => $this->request->getPost('EMP_NOME'),
-            'EMP_RUA'    => $this->request->getPost('EMP_RUA'),
-            'EMP_NUMERO' => $this->request->getPost('EMP_NUMERO'),
-            'EMP_CIDADE' => $this->request->getPost('EMP_CIDADE'),
-            'EMP_STATUS' => $this->request->getPost('EMP_STATUS')
-        ];
-
-        // Verifica qual formato de chave está registrado no banco para aplicar o update correto
-        if ($model->find($cnpjLimpo)) {
-            $model->update($cnpjLimpo, $dados);
-        } else {
-            $model->update($cnpj, $dados);
+        if (!$model->find($cnpjLimpo)) {
+            return redirect()->to('/empresas')
+                ->with('error', 'Empresa não encontrada.');
         }
 
-        return redirect()->to('/empresas');
+        $dados = $this->request->getPost();
+
+        $empresa = [
+            'EMP_NOME'   => trim($dados['EMP_NOME'] ?? ''),
+            'EMP_RUA'    => trim($dados['EMP_RUA'] ?? ''),
+            'EMP_NUMERO' => trim($dados['EMP_NUMERO'] ?? ''),
+            'EMP_CIDADE' => trim($dados['EMP_CIDADE'] ?? ''),
+            'EMP_STATUS' => $dados['EMP_STATUS'] ?? 'Ativa'
+        ];
+
+        if ($model->update($cnpjLimpo, $empresa)) {
+            return redirect()->to('/empresas')
+                ->with('sucesso', 'Empresa atualizada com sucesso!');
+        }
+
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Erro ao atualizar a empresa.');
     }
 
-    // EXCLUIR
+    // Excluir Empresa
     public function excluir($cnpj)
     {
         $model = new EmpresasModel();
+
         $cnpjLimpo = preg_replace('/\D/', '', $cnpj);
 
-        // Deleta usando o formato correto encontrado no banco
-        if ($model->find($cnpjLimpo)) {
-            $model->delete($cnpjLimpo);
-        } else {
-            $model->delete($cnpj);
+        if (!$model->find($cnpjLimpo)) {
+            return redirect()->to('/empresas')
+                ->with('error', 'Empresa não encontrada.');
         }
 
-        return redirect()->to('/empresas');
+        if ($model->delete($cnpjLimpo)) {
+            return redirect()->to('/empresas')
+                ->with('sucesso', 'Empresa excluída com sucesso!');
+        }
+
+        return redirect()->to('/empresas')
+            ->with('error', 'Erro ao excluir a empresa.');
     }
 
-    // VISUALIZAR
+    // Tela de Visualizar Empresa
     public function visualizar($cnpj)
     {
         $model = new EmpresasModel();
+
         $cnpjLimpo = preg_replace('/\D/', '', $cnpj);
 
-        $dados['empresa'] = $model->find($cnpjLimpo) ?? $model->find($cnpj);
+        $dados['empresa'] = $model->find($cnpjLimpo);
 
         if (!$dados['empresa']) {
-            return redirect()->to('/empresas')->with('error', 'Empresa não encontrada.');
+            return redirect()->to('/empresas')
+                ->with('error', 'Empresa não encontrada.');
         }
 
         return view('sistema/empresas/visualizar_empresa', $dados);
     }
 }
+

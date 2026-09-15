@@ -11,8 +11,10 @@ class DadosModel extends Model
     protected $primaryKey = 'DAD_ID';
 
     protected $allowedFields = [
-        'DAD_DESCRICAO',
-        'DAD_VALOR',
-        'DAD_STATUS'
+        'DAD_MEDIDA',
+        'DAD_DATA_HORA',
+        'FK_SEN_ID'
     ];
+
+    protected $useAutoIncrement = true;
 }
