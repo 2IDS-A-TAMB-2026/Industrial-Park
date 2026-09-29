@@ -1,4 +1,4 @@
-package com.example.industrial_park
+package com.example.industrial_park_
 
 import io.flutter.embedding.android.FlutterActivity
 
