@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="<?= base_url('css/sweetalert-theme.css') ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Dashboard Administrativo</title>
@@ -104,28 +105,46 @@
             border: 1px solid rgba(76, 201, 240, 0.3);
         }
 
-        .logout {
-            padding: 12px;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 12px;
-            background: rgba(76, 201, 240, 0.1);
-            border: 1px solid rgba(76, 201, 240, 0.3);
-            color: #160C5A;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .logout:hover {
-            background: #4CC9F0;
-            color: #070b16;
-            box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
-        }
+       /* BOTÃO LOGOUT (MODERNO EM AZUL) */
+.logout {
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
+    border: 1px solid rgba(76, 201, 240, 0.3);
+    color: #4CC9F0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+}
+
+.logout i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.logout:hover {
+    background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
+    color: #070b16;
+    border-color: #4CC9F0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
+}
+
+.logout:hover i {
+    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
+}
+
+.logout:active {
+    transform: translateY(0);
+}
 
         /* CONTEÚDO PRINCIPAL DO DASHBOARD */
         .main {
@@ -573,6 +592,7 @@
             .main { margin-left: 0; width: 100%; padding: 1.5rem; }
             .sidebar { display: none; }
         }
+
     </style>
 </head>
 <body>
@@ -647,7 +667,7 @@
         </nav>
     </div>
 
-    <a href="#" class="logout" id="logoutBtn" aria-label="Sair da conta">
+    <a href="<?= base_url('/logout') ?>" class="logout" id="logoutBtn" aria-label="Sair da conta">
         <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Logout</span>
     </a>
 </aside>
@@ -775,21 +795,73 @@
 
 <script>
 // Confirmador de Logout
-document.getElementById("logoutBtn").addEventListener("click", function(e){
-    e.preventDefault();
-    Swal.fire({
-        title: "Deseja sair?",
-        text: "Você será desconectado com segurança do sistema.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sim, sair",
-        cancelButtonText: "Cancelar"
-    }).then((result) => {
-        if(result.isConfirmed){
-            window.location.href = "<?= base_url('/logout') ?>";
+// ==========================================
+// CONFIRMAÇÃO DE LOGOUT - SWEETALERT
+// ==========================================
+
+const logoutBtn = document.getElementById('logoutBtn');
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const logoutUrl = this.getAttribute('href');
+
+        // Detecta o modo atual da tela
+        const isHighContrast = document.body.classList.contains('high-contrast');
+        const isLight = document.body.classList.contains('light');
+
+        let config = {
+            title: 'Deseja sair?',
+            text: 'Você será desconectado do sistema.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, sair',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            focusCancel: true
+        };
+
+        // 🌙 MODO ESCURO
+        if (!isLight && !isHighContrast) {
+            config.background = '#1e293b';
+            config.color = '#f8fafc';
+            config.confirmButtonColor = '#4CC9F0';
+            config.cancelButtonColor = '#475569';
         }
+
+        // ☀️ MODO CLARO
+        else if (isLight && !isHighContrast) {
+            config.background = '#ffffff';
+            config.color = '#0f172a';
+            config.confirmButtonColor = '#0284c7';
+            config.cancelButtonColor = '#64748b';
+        }
+
+        // ⚠️ ALTO CONTRASTE
+        else if (isHighContrast) {
+            config.background = '#000000';
+            config.color = '#ffff00';
+            config.confirmButtonColor = '#ffff00';
+            config.cancelButtonColor = '#000000';
+
+            // CSS específico para manter o padrão do alto contraste
+            config.customClass = {
+                popup: 'swal-high-contrast',
+                title: 'swal-high-contrast-title',
+                htmlContainer: 'swal-high-contrast-text',
+                confirmButton: 'swal-high-contrast-confirm',
+                cancelButton: 'swal-high-contrast-cancel'
+            };
+        }
+
+        Swal.fire(config).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = logoutUrl;
+            }
+        });
     });
-});
+}
 
 // ACESSIBILIDADE E PAINEL LATERAL
 const mainAccBtn = document.getElementById("mainAccBtn");
@@ -1183,6 +1255,39 @@ function renderizarGraficos() {
 }
 
 renderizarGraficos();
+
+// ==========================================
+// ATUALIZAÇÃO AUTOMÁTICA DO DASHBOARD
+// ==========================================
+setInterval(() => {
+    window.location.reload();
+}, 3000);
+</script>
+
+
+<!-- SWEET ALERT ENTRADA DE USUÁRIOS -->
+
+
+<script>
+(function () {
+
+    const theme = localStorage.getItem('theme');
+    const contrast = localStorage.getItem('contrast');
+
+    document.body.classList.remove('light');
+    document.body.classList.remove('high-contrast');
+
+    if (contrast === 'high') {
+
+        document.body.classList.add('high-contrast');
+
+    } else if (theme === 'light') {
+
+        document.body.classList.add('light');
+
+    }
+
+})();
 </script>
 </body>
 </html>

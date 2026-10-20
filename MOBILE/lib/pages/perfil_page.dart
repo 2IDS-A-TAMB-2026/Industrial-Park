@@ -187,7 +187,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
     try {
       final url = Uri.parse(
-        'http://10.141.131.54/INDUSTRIAL_PARK/public/api/perfil/${widget.cpf}',
+        'http://10.141.131.70/INDUSTRIAL_PARK/public/api/perfil/${widget.cpf}',
       );
 
       print('==========================================');
@@ -283,7 +283,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
     try {
       final url = Uri.parse(
-        'http://10.141.131.54/INDUSTRIAL_PARK/public/api/perfil/${widget.cpf}',
+        'http://10.141.131.70/INDUSTRIAL_PARK/public/api/perfil/${widget.cpf}',
       );
 
       final dados = {
@@ -502,7 +502,7 @@ class _PerfilPageState extends State<PerfilPage> {
             _fotoUrl != null &&
                     _fotoUrl!.isNotEmpty
                 ? NetworkImage(
-                    'http://10.141.130.54:8080/uploads/$_fotoUrl',
+                    'http://10.141.131.70/uploads/$_fotoUrl',
                   )
                 : null,
         child: _fotoUrl == null ||

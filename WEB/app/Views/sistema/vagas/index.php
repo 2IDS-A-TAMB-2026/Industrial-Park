@@ -174,42 +174,45 @@ body {
 }
 
 
-/* LOGOUT */
-
+/* BOTÃO LOGOUT (MODERNO EM AZUL) */
 .logout {
-    padding: 12px;
-
+    padding: 12px 20px;
     text-align: center;
     text-decoration: none;
-
-    border-radius: 12px;
-
-    background: rgba(76,201,240,.1);
-
-    border: 1px solid rgba(76,201,240,.3);
-
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
+    border: 1px solid rgba(76, 201, 240, 0.3);
     color: #4CC9F0;
-
     font-weight: 600;
-    font-size: .9rem;
-
+    font-size: 0.9rem;
     cursor: pointer;
-
-    transition: all .3s ease;
-
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+}
 
-    gap: 8px;
+.logout i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
 }
 
 .logout:hover {
-    background: #4CC9F0;
+    background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
     color: #070b16;
+    border-color: #4CC9F0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
+}
 
-    box-shadow:
-        0 0 20px rgba(76,201,240,.4);
+.logout:hover i {
+    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
+}
+
+.logout:active {
+    transform: translateY(0);
 }
 
 
@@ -243,14 +246,11 @@ body {
 
 .page-title h1 {
     font-size: 2.2rem;
-
     font-weight: 800;
-
     color: #fff;
-
     letter-spacing: -.8px;
-
     line-height: 1.2;
+    white-space: nowrap; /* Evita que o texto quebre em duas linhas */
 }
 
 .page-title p {
@@ -1021,13 +1021,13 @@ body.light .acc-btn:hover i {
 
 
 /* =========================================================
-   ALTO CONTRASTE
+   ALTO CONTRASTE (IGUAL AO DASHBOARD)
 ========================================================= */
 
 body.high-contrast {
-    background: #000 !important;
+    background: #000000 !important;
 
-    color: #ff0 !important;
+    color: #FFFF00 !important;
 
     background-image: none !important;
 }
@@ -1037,11 +1037,11 @@ body.high-contrast .card,
 body.high-contrast .accessibility-panel,
 body.high-contrast thead,
 body.high-contrast .table-responsive {
-    background: #000 !important;
+    background: #000000 !important;
 
-    border: 2px solid #ff0 !important;
+    border: 2px solid #FFFF00 !important;
 
-    color: #ff0 !important;
+    color: #FFFF00 !important;
 
     box-shadow: none !important;
 }
@@ -1056,18 +1056,28 @@ body.high-contrast label,
 body.high-contrast th,
 body.high-contrast td,
 body.high-contrast span {
-    color: #ff0 !important;
+    color: #FFFF00 !important;
+}
+
+body.high-contrast .menu a {
+    color: #FFFF00 !important;
+}
+
+body.high-contrast .menu a:hover,
+body.high-contrast .menu a.active {
+    background: #FFFF00 !important;
+
+    color: #000000 !important;
 }
 
 body.high-contrast input,
 body.high-contrast select,
 body.high-contrast tbody tr {
-    background: #000 !important;
+    background: #000000 !important;
 
-    color: #ff0 !important;
+    color: #FFFF00 !important;
 
-    border:
-        1px solid #ff0 !important;
+    border: 1px solid #FFFF00 !important;
 }
 
 body.high-contrast button,
@@ -1075,16 +1085,15 @@ body.high-contrast .btn,
 body.high-contrast .logout,
 body.high-contrast .acc-btn,
 body.high-contrast .main-acc-btn {
-    background: #ff0 !important;
+    background: #FFFF00 !important;
 
-    color: #000 !important;
+    color: #000000 !important;
 
-    border:
-        2px solid #ff0 !important;
+    border: 2px solid #FFFF00 !important;
 }
 
 body.high-contrast .acc-btn i {
-    color: #000 !important;
+    color: #000000 !important;
 }
 
 
@@ -1158,6 +1167,34 @@ img {
     }
 }
 
+
+/* ==========================================
+   SWEETALERT - ALTO CONTRASTE
+   ========================================== */
+
+.swal-high-contrast {
+    border: 2px solid #ffff00 !important;
+    border-radius: 16px !important;
+}
+
+.swal-high-contrast-title,
+.swal-high-contrast-text {
+    color: #ffff00 !important;
+}
+
+.swal-high-contrast-confirm {
+    background: #ffff00 !important;
+    color: #000000 !important;
+    border: 2px solid #ffff00 !important;
+    font-weight: 700 !important;
+}
+
+.swal-high-contrast-cancel {
+    background: #000000 !important;
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+    font-weight: 700 !important;
+}
 </style>
 </head>
 
@@ -1379,7 +1416,7 @@ img {
             </a>
 
 
-            <a href="<?= base_url('/perfil') ?>">
+            <a href="<?= base_url('/perfil-admin') ?>">
 
                 <i class="fa-solid fa-user-pen"></i>
 
@@ -1893,6 +1930,70 @@ img {
 
 <script>
 
+const logoutBtn = document.getElementById('logoutBtn');
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const logoutUrl = this.getAttribute('href');
+
+        // Detecta o modo atual da tela
+        const isHighContrast = document.body.classList.contains('high-contrast');
+        const isLight = document.body.classList.contains('light');
+
+        let config = {
+            title: 'Deseja sair?',
+            text: 'Você será desconectado do sistema.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, sair',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            focusCancel: true
+        };
+
+        // 🌙 MODO ESCURO
+        if (!isLight && !isHighContrast) {
+            config.background = '#1e293b';
+            config.color = '#f8fafc';
+            config.confirmButtonColor = '#4CC9F0';
+            config.cancelButtonColor = '#475569';
+        }
+
+        // ☀️ MODO CLARO
+        else if (isLight && !isHighContrast) {
+            config.background = '#ffffff';
+            config.color = '#0f172a';
+            config.confirmButtonColor = '#0284c7';
+            config.cancelButtonColor = '#64748b';
+        }
+
+        // ⚠️ ALTO CONTRASTE
+        else if (isHighContrast) {
+            config.background = '#000000';
+            config.color = '#ffff00';
+            config.confirmButtonColor = '#ffff00';
+            config.cancelButtonColor = '#000000';
+
+            // CSS específico para manter o padrão do alto contraste
+            config.customClass = {
+                popup: 'swal-high-contrast',
+                title: 'swal-high-contrast-title',
+                htmlContainer: 'swal-high-contrast-text',
+                confirmButton: 'swal-high-contrast-confirm',
+                cancelButton: 'swal-high-contrast-cancel'
+            };
+        }
+
+        Swal.fire(config).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = logoutUrl;
+            }
+        });
+    });
+}
+
 /* =========================================================
    FORMULÁRIO - VALIDAÇÃO
 ========================================================= */
@@ -2080,63 +2181,6 @@ if (form) {
 
 }
 
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-const btnLogout =
-    document.getElementById("logoutBtn");
-
-
-if (btnLogout) {
-
-    btnLogout.addEventListener(
-        "click",
-        function(e) {
-
-            e.preventDefault();
-
-
-            Swal.fire({
-
-                title: "Deseja sair?",
-
-                text: "Sua sessão será encerrada.",
-
-                icon: "warning",
-
-                showCancelButton: true,
-
-                confirmButtonText: "Sim, sair",
-
-                cancelButtonText: "Cancelar",
-
-                confirmButtonColor: "#ef4444",
-
-                reverseButtons: true,
-
-                scrollbarPadding: false,
-
-                heightAuto: false
-
-            }).then(
-                (result) => {
-
-                    if (result.isConfirmed) {
-
-                        window.location.href =
-                            "<?= base_url('/logout') ?>";
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-}
 
 
 /* =========================================================

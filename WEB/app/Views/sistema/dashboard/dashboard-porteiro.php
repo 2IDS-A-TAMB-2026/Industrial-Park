@@ -6,6 +6,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="<?= base_url('css/sweetalert-theme.css') ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>Dashboard do Porteiro</title>
@@ -1262,7 +1263,7 @@ Swal.fire({
         <div class="user">
 
             <h2>
-                <?= session()->get('USR_NOME') ?? 'porteiro' ?>
+                <?= session()->get('USR_NOME') ?? 'Porteiro' ?>
             </h2>
 
             <p>
@@ -2840,6 +2841,33 @@ document
         }
     );
 </script>
+
+
+<!-- SWEET ALERT ENTRADA DE USUÁRIOS -->
+
+
+<script>
+(function () {
+
+    const theme = localStorage.getItem('theme');
+    const contrast = localStorage.getItem('contrast');
+
+    document.body.classList.remove('light');
+    document.body.classList.remove('high-contrast');
+
+    if (contrast === 'high') {
+
+        document.body.classList.add('high-contrast');
+
+    } else if (theme === 'light') {
+
+        document.body.classList.add('light');
+
+    }
+
+})();
+</script>
+
 
 </body>
 </html>

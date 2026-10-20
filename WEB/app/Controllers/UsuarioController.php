@@ -126,17 +126,67 @@ class UsuarioController extends BaseController
     // EDITAR
     // ==========================
 
-    public function atualizar($cpf)
-    {
-        $this->usuarioModel->update($cpf, [
-            'USU_NOME' => $this->request->getPost('USU_NOME'),
-            'USU_EMAIL' => $this->request->getPost('USU_EMAIL')
-            //'USU_DATA_NASCIMENTO' => $this->request->getPost('USU_DATA_NASCIMENTO')
-            //'FK_EMP_CNPJ' => $this->request->getPost('FK_EMP_CNPJ')
-        ]);
+    // ==========================
+// EDITAR
+// ==========================
+// ==========================
+// EDITAR
+// ==========================
+public function atualizar($cpf)
+{
+    // Procura primeiro exatamente como o CPF veio pela URL
+    $usuario = $this->usuarioModel
+        ->where('USU_CPF', $cpf)
+        ->first();
 
-        return redirect()->back();
+    // Se não encontrar, tenta com CPF somente com números
+    if (!$usuario) {
+        $cpfLimpo = preg_replace('/\D/', '', $cpf);
+
+        $usuario = $this->usuarioModel
+            ->where('USU_CPF', $cpfLimpo)
+            ->first();
     }
+
+    // Se ainda não encontrou
+    if (!$usuario) {
+        return redirect()
+            ->to('/admin')
+            ->with('error', 'Administrador não encontrado.');
+    }
+
+    // Pega os dados enviados pelo formulário
+    $nome = trim($this->request->getPost('USU_NOME'));
+    $email = trim($this->request->getPost('USU_EMAIL'));
+
+    // Verifica se os campos foram preenchidos
+    if (empty($nome) || empty($email)) {
+        return redirect()
+            ->to('/admin')
+            ->with('error', 'Nome e e-mail são obrigatórios.');
+    }
+
+    // Atualiza usando o CPF REAL encontrado no banco
+    $atualizado = $this->usuarioModel->update(
+        $usuario['USU_CPF'],
+        [
+            'USU_NOME'  => $nome,
+            'USU_EMAIL' => $email
+        ]
+    );
+
+    // Se o update falhar
+    if ($atualizado === false) {
+        return redirect()
+            ->to('/admin')
+            ->with('error', 'Não foi possível atualizar o administrador.');
+    }
+
+    // Volta para a lista
+    return redirect()
+        ->to('/admin')
+        ->with('success', 'Administrador atualizado com sucesso!');
+}
 
     // ==========================
     // EXCLUIR

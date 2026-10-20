@@ -55,7 +55,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   // ALTERE PARA A URL DA SUA API
   static const String apiUrl =
-      'http://10.141.131.54/INDUSTRIAL_PARK/public/api/vagas';
+      'http://10.141.131.70/INDUSTRIAL_PARK/public/api/vagas';
 
   late TextEditingController _nomeCtrl;
   late TextEditingController _emailCtrl;

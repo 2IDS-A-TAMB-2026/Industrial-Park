@@ -10,7 +10,7 @@ class ApiService {
   // ============================================================
 
   static const String baseUrl =
-      'http://10.141.130.54/INDUSTRIAL_PARK/public';
+      'http://10.141.131.52/INDUSTRIAL_PARK/public';
 
   // ============================================================
   // CONSULTAR VAGAS

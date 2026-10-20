@@ -203,14 +203,6 @@ $routes->group('api', function($routes) {
         'login',
         'Api\AuthApiController::autenticar'
     );
-});
-
-$routes->group('api', function($routes) {
-
-    $routes->post(
-        'login',
-        'Api\AuthApiController::autenticar'
-    );
 
     $routes->post(
         'cadastrar/usuario',
@@ -226,7 +218,18 @@ $routes->group('api', function($routes) {
         'cadastrar/porteiro',
         'Api\CadastrarApiController::inserirPorteiro'
     );
-});
+
+    // Perfil do usuário
+    $routes->get(
+        'perfil/(:segment)',
+        'Api\PerfilApiController::exibir/$1'
+    );
+
+    $routes->put(
+        'perfil/(:segment)',
+        'Api\PerfilApiController::atualizar/$1'
+    );
+    });
 
 // ======================================
 // DASHBOARD JSON
@@ -273,7 +276,7 @@ $routes->group('api', static function ($routes) {
 
     // Login
     $routes->post(
-        'login',
+        'login-api',
         'Api\LoginApiController::login'
     );
 
@@ -490,3 +493,17 @@ $routes->get(
     'sobre_nos',
     'SobreNos::index'
 );
+
+$routes->options('api/(:any)', function () {
+    return service('response')
+        ->setStatusCode(200)
+        ->setHeader('Access-Control-Allow-Origin', '*')
+        ->setHeader(
+            'Access-Control-Allow-Methods',
+            'GET, POST, PUT, DELETE, OPTIONS'
+        )
+        ->setHeader(
+            'Access-Control-Allow-Headers',
+            'Content-Type, Authorization, Accept'
+        );
+});

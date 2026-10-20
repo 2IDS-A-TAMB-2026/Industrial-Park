@@ -32,11 +32,56 @@ body {
 .menu a { display:flex; align-items:center; gap:12px; padding:12px 16px; margin-bottom:8px; border-radius:12px; text-decoration:none; color:#94a3b8; font-size:.9rem; font-weight:500; transition:all .25s ease; }
 .menu a:hover { background:rgba(76,201,240,.12); color:#4CC9F0; transform:translateX(4px); }
 .menu a.active { background:linear-gradient(135deg,rgba(76,201,240,.25),rgba(76,201,240,.08)); color:#4CC9F0; border:1px solid rgba(76,201,240,.3); }
-.logout { padding:12px; text-align:center; text-decoration:none; border-radius:12px; background:rgba(76,201,240,.1); border:1px solid rgba(76,201,240,.3); color:#4CC9F0; font-weight:600; font-size:.9rem; cursor:pointer; transition:all .3s ease; display:flex; align-items:center; justify-content:center; gap:8px; }
-.logout:hover { background:#4CC9F0; color:#070b16; box-shadow:0 0 20px rgba(76,201,240,.4); }
+/* BOTÃO LOGOUT (MODERNO EM AZUL) */
+.logout {
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
+    border: 1px solid rgba(76, 201, 240, 0.3);
+    color: #4CC9F0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+}
+
+.logout i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.logout:hover {
+    background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
+    color: #070b16;
+    border-color: #4CC9F0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
+}
+
+.logout:hover i {
+    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
+}
+
+.logout:active {
+    transform: translateY(0);
+}
 .main { flex:1; margin-left:280px; padding:40px 48px; width:calc(100% - 280px); min-height:100vh; }
 .page-title { margin-bottom:32px; display:flex; flex-direction:column; gap:4px; }
-.page-title h1 { font-size:2.2rem; font-weight:800; color:#fff; letter-spacing:-.8px; line-height:1.2; }
+.page-title h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.8px;
+    line-height: 1.2;
+    white-space: nowrap; /* Evita que o texto quebre em duas linhas */
+}
 .page-title p { color:#94a3b8; font-size:.95rem; font-weight:500; }
 .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; width:100%; }
 .card { grid-column:span 4; background:#2b3a53; border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:1.5rem; color:#f8fafc; box-shadow:0 10px 25px -5px rgba(0,0,0,.3),0 8px 10px -6px rgba(0,0,0,.2); transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background .3s; }
@@ -92,15 +137,213 @@ body.light .accessibility-panel { background:#fff; border:1px solid #cbd5e1; col
 body.light .accessibility-panel h3 { border-bottom-color:#e2e8f0; color:#0f172a; } body.light .panel-row span { color:#1e293b; font-weight:600; }
 body.light .acc-btn { background:#f1f5f9; border-color:#cbd5e1; color:#0f172a !important; font-weight:600; } body.light .acc-btn i { color:#0f172a !important; }
 body.light .acc-btn:hover { background:#0f172a; color:#fff !important; } body.light .acc-btn:hover i { color:#fff !important; }
-body.high-contrast { background:#000 !important; color:#ff0 !important; background-image:none !important; }
-body.high-contrast .sidebar,body.high-contrast .card,body.high-contrast .accessibility-panel,body.high-contrast thead,body.high-contrast .table-responsive { background:#000 !important; border:2px solid #ff0 !important; color:#ff0 !important; box-shadow:none !important; }
-body.high-contrast .logo,body.high-contrast .user h3,body.high-contrast .user p,body.high-contrast .page-title h1,body.high-contrast .page-title p,body.high-contrast .card h2,body.high-contrast label,body.high-contrast th,body.high-contrast td,body.high-contrast span { color:#ff0 !important; }
-body.high-contrast input,body.high-contrast select,body.high-contrast tbody tr { background:#000 !important; color:#ff0 !important; border:1px solid #ff0 !important; }
-body.high-contrast button,body.high-contrast .btn,body.high-contrast .logout,body.high-contrast .acc-btn,body.high-contrast .main-acc-btn { background:#ff0 !important; color:#000 !important; border:2px solid #ff0 !important; }
-body.high-contrast .acc-btn i { color:#000 !important; }
-.acc-btn.audio-active { background:#10b981 !important; color:#fff !important; } .acc-btn.audio-active i { color:#fff !important; }
+/* ==========================================
+   ALTO CONTRASTE
+   ========================================== */
+
+body.high-contrast {
+    background: #000 !important;
+    color: #ffff00 !important;
+    background-image: none !important;
+}
+
+/* SIDEBAR */
+body.high-contrast .sidebar {
+    background: #000 !important;
+    border-right: 2px solid #ffff00 !important;
+    box-shadow: none !important;
+}
+
+/* LOGO */
+body.high-contrast .logo {
+    color: #ffff00 !important;
+}
+
+body.high-contrast .logo span {
+    color: #ffff00 !important;
+}
+
+/* USUÁRIO */
+body.high-contrast .user {
+    border-bottom: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .user h3,
+body.high-contrast .user p {
+    color: #ffff00 !important;
+}
+
+/* =========================
+   MENU - ALTO CONTRASTE
+   ========================= */
+
+body.high-contrast .menu a {
+    background: #000 !important;
+    color: #ffff00 !important;
+    border: 2px solid transparent !important;
+}
+
+body.high-contrast .menu a i {
+    color: #ffff00 !important;
+}
+
+/* Hover */
+body.high-contrast .menu a:hover {
+    background: #ffff00 !important;
+    color: #000 !important;
+    border: 2px solid #ffff00 !important;
+    transform: translateX(4px);
+}
+
+body.high-contrast .menu a:hover i {
+    color: #000 !important;
+}
+
+/* Menu ativo */
+body.high-contrast .menu a.active {
+    background: #ffff00 !important;
+    color: #000 !important;
+    border: 2px solid #ffff00 !important;
+    box-shadow: none !important;
+}
+
+body.high-contrast .menu a.active i {
+    color: #000 !important;
+}
+
+/* TÍTULO E CONTEÚDO */
+body.high-contrast .page-title h1,
+body.high-contrast .page-title p,
+body.high-contrast .card h2,
+body.high-contrast label,
+body.high-contrast th,
+body.high-contrast td,
+body.high-contrast span {
+    color: #ffff00 !important;
+}
+
+/* CARDS / TABELA / PAINEL */
+body.high-contrast .card,
+body.high-contrast .accessibility-panel,
+body.high-contrast thead,
+body.high-contrast .table-responsive {
+    background: #000 !important;
+    border: 2px solid #ffff00 !important;
+    color: #ffff00 !important;
+    box-shadow: none !important;
+}
+
+/* INPUTS */
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast tbody tr {
+    background: #000 !important;
+    color: #ffff00 !important;
+    border: 1px solid #ffff00 !important;
+}
+
+body.high-contrast input::placeholder {
+    color: #ffff00 !important;
+    opacity: .8;
+}
+
+body.high-contrast select option {
+    background: #000 !important;
+    color: #ffff00 !important;
+}
+
+/* BOTÕES */
+body.high-contrast button,
+body.high-contrast .btn,
+body.high-contrast .logout,
+body.high-contrast .acc-btn,
+body.high-contrast .main-acc-btn {
+    background: #ffff00 !important;
+    color: #000 !important;
+    border: 2px solid #ffff00 !important;
+}
+
+/* ÍCONES DOS BOTÕES */
+body.high-contrast button i,
+body.high-contrast .btn i,
+body.high-contrast .logout i,
+body.high-contrast .acc-btn i,
+body.high-contrast .main-acc-btn i {
+    color: #000 !important;
+}
+
+/* HOVER DOS BOTÕES */
+body.high-contrast button:hover,
+body.high-contrast .btn:hover,
+body.high-contrast .logout:hover,
+body.high-contrast .acc-btn:hover {
+    background: #000 !important;
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast button:hover i,
+body.high-contrast .btn:hover i,
+body.high-contrast .logout:hover i,
+body.high-contrast .acc-btn:hover i {
+    color: #ffff00 !important;
+}
+
+/* PAINEL DE ACESSIBILIDADE */
+body.high-contrast .accessibility-panel h3,
+body.high-contrast .panel-row span {
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+}
+
+/* LINHAS DA TABELA */
+body.high-contrast tbody tr:hover {
+    background: #ffff00 !important;
+    color: #000 !important;
+}
+
+body.high-contrast tbody tr:hover td {
+    color: #000 !important;
+}
+
+/* BOTÃO DE ÁUDIO ATIVO */
+body.high-contrast .acc-btn.audio-active {
+    background: #ffff00 !important;
+    color: #000 !important;
+}
+
+body.high-contrast .acc-btn.audio-active i {
+    color: #000 !important;
+}
 .img-fade { opacity:0; transform:scale(.98); } img { transition:opacity .4s ease,transform .3s ease; } [vw] { z-index:9995 !important; }
 @media(max-width:1200px){ .grid{grid-template-columns:1fr;} .card{grid-column:span 1;} .form-grid{grid-template-columns:1fr;} .main{margin-left:0;width:100%;padding:1.5rem;} .sidebar{display:none;} .page-title h1{font-size:1.8rem;} }
+/* ==========================================
+   SWEETALERT - ALTO CONTRASTE
+   ========================================== */
+
+.swal-high-contrast {
+    border: 2px solid #ffff00 !important;
+    border-radius: 16px !important;
+}
+
+.swal-high-contrast-title,
+.swal-high-contrast-text {
+    color: #ffff00 !important;
+}
+
+.swal-high-contrast-confirm {
+    background: #ffff00 !important;
+    color: #000000 !important;
+    border: 2px solid #ffff00 !important;
+    font-weight: 700 !important;
+}
+
+.swal-high-contrast-cancel {
+    background: #000000 !important;
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+    font-weight: 700 !important;
+}
 </style>
 </head>
 
@@ -153,7 +396,7 @@ body.high-contrast .acc-btn i { color:#000 !important; }
 
     <div class="user">
       <h3><?= session()->get('nome') ?? 'SuperAdm' ?></h3>
-      <p>Perfil: Administrador</p>
+      <p>Perfil: Super Admin</p>
     </div>
 
     <div class="menu">
@@ -517,15 +760,23 @@ document.querySelectorAll('.btnEditar').forEach(btn => {
       if (result.isConfirmed) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '<?= base_url("usuarios/editarAdmin") ?>';
+        form.action = '<?= base_url("admin/atualizar/") ?>' + encodeURIComponent(result.value.cpf);
 
-        for (const key in result.value) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key.toUpperCase();
-          input.value = result.value[key];
-          form.appendChild(input);
-        }
+        const campos = {
+    cpf: 'USU_CPF',
+    nome: 'USU_NOME',
+    email: 'USU_EMAIL'
+};
+
+for (const key in campos) {
+    const input = document.createElement('input');
+
+    input.type = 'hidden';
+    input.name = campos[key];
+    input.value = result.value[key];
+
+    form.appendChild(input);
+}
 
         document.body.appendChild(form);
         form.submit();
@@ -556,6 +807,74 @@ document.querySelectorAll('.btnExcluir').forEach(btn => {
     });
   });
 });
+
+// ==========================================
+// CONFIRMAÇÃO DE LOGOUT - SWEETALERT
+// ==========================================
+
+const logoutBtn = document.getElementById('logoutBtn');
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const logoutUrl = this.getAttribute('href');
+
+        // Detecta o modo atual da tela
+        const isHighContrast = document.body.classList.contains('high-contrast');
+        const isLight = document.body.classList.contains('light');
+
+        let config = {
+            title: 'Deseja sair?',
+            text: 'Você será desconectado do sistema.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, sair',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            focusCancel: true
+        };
+
+        // 🌙 MODO ESCURO
+        if (!isLight && !isHighContrast) {
+            config.background = '#1e293b';
+            config.color = '#f8fafc';
+            config.confirmButtonColor = '#4CC9F0';
+            config.cancelButtonColor = '#475569';
+        }
+
+        // ☀️ MODO CLARO
+        else if (isLight && !isHighContrast) {
+            config.background = '#ffffff';
+            config.color = '#0f172a';
+            config.confirmButtonColor = '#0284c7';
+            config.cancelButtonColor = '#64748b';
+        }
+
+        // ⚠️ ALTO CONTRASTE
+        else if (isHighContrast) {
+            config.background = '#000000';
+            config.color = '#ffff00';
+            config.confirmButtonColor = '#ffff00';
+            config.cancelButtonColor = '#000000';
+
+            // CSS específico para manter o padrão do alto contraste
+            config.customClass = {
+                popup: 'swal-high-contrast',
+                title: 'swal-high-contrast-title',
+                htmlContainer: 'swal-high-contrast-text',
+                confirmButton: 'swal-high-contrast-confirm',
+                cancelButton: 'swal-high-contrast-cancel'
+            };
+        }
+
+        Swal.fire(config).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = logoutUrl;
+            }
+        });
+    });
+}
 </script>
 <script>
 // ==========================================

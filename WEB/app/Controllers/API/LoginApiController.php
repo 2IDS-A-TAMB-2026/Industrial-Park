@@ -54,10 +54,11 @@ class LoginApiController extends ResourceController
             'status'       => true,
             'mensagem'     => 'Autenticado com sucesso!',
             'redirecionar' => $redirecionar,
-            'usuario'      => [
-                'nome'  => $usuario['USU_NOME'] ?? '',
+            'usuario' => [
+                'cpf' => $usuario['USU_CPF'] ?? '',
+                'nome' => $usuario['USU_NOME'] ?? '',
                 'email' => $usuario['USU_EMAIL'] ?? '',
-                'tipo'  => $tipo
+                'tipo' => $tipo
             ]
         ], 200);
     }

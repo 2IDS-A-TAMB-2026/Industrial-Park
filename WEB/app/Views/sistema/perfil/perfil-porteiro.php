@@ -33,13 +33,12 @@
             outline-offset: 3px !important;
         }
 
-        /* SIDEBAR - ESTILO SUPER ADM */
+        /* SIDEBAR FIXA */
         .sidebar {
             width: 280px;
             height: 100vh;
-            background: rgba(18, 28, 58, 0.90);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             padding: 28px 24px;
             display: flex;
             flex-direction: column;
@@ -53,8 +52,8 @@
         }
 
         .logo {
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: #4CC9F0;
             margin-bottom: 35px;
             display: flex;
@@ -64,7 +63,7 @@
         }
 
         .logo img {
-            height: 30px;
+            height: 28px;
             width: auto;
             object-fit: contain;
         }
@@ -74,18 +73,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             margin-bottom: 20px;
         }
-
-        .user h2 {
-            color: #fff;
-            font-size: 0.92rem;
-            font-weight: 700;
-        }
-
-        .user p {
-            color: #94a3b8;
-            font-size: 0.76rem;
-            margin-top: 3px;
-        }
+        .user h2 { color: #fff; font-size: 0.95rem; font-weight: 600; }
+        .user p { color: #94a3b8; font-size: 0.8rem; margin-top: 2px; }
 
         .menu a {
             display: flex;
@@ -96,14 +85,9 @@
             border-radius: 12px;
             text-decoration: none;
             color: #94a3b8;
-            font-size: 0.86rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 500;
             transition: all 0.25s ease;
-        }
-
-        .menu a i {
-            width: 18px;
-            text-align: center;
         }
 
         .menu a:hover {
@@ -115,32 +99,48 @@
         .menu a.active {
             background: linear-gradient(135deg, rgba(76, 201, 240, 0.25), rgba(76, 201, 240, 0.08));
             color: #4CC9F0;
-            border: 1px solid rgba(76, 201, 240, 0.30);
+            border: 1px solid rgba(76, 201, 240, 0.3);
         }
 
-        /* LOGOUT */
+        /* BOTÃO LOGOUT (MODERNO EM AZUL) */
         .logout {
-            padding: 12px;
+            padding: 12px 20px;
             text-align: center;
             text-decoration: none;
-            border-radius: 12px;
-            background: rgba(76, 201, 240, 0.10);
-            border: 1px solid rgba(76, 201, 240, 0.30);
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
+            border: 1px solid rgba(76, 201, 240, 0.3);
             color: #4CC9F0;
-            font-weight: 700;
-            font-size: 0.86rem;
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+        }
+
+        .logout i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
         }
 
         .logout:hover {
-            background: #4CC9F0;
+            background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
             color: #070b16;
-            box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+            border-color: #4CC9F0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
+        }
+
+        .logout:hover i {
+            transform: translateX(3px);
+        }
+
+        .logout:active {
+            transform: translateY(0);
         }
 
         /* CONTEÚDO PRINCIPAL */
@@ -172,7 +172,7 @@
             transition: color 0.3s;
         }
 
-        /* CARD PRINCIPAL (VISUAL ESCURO SUPER ADM) */
+        /* CARD PRINCIPAL */
         .card {
             width: 100%;
             max-width: 1100px;
@@ -764,13 +764,13 @@
 <script>Swal.fire({icon:'error', title:'Erro', text:'<?= session()->getFlashdata('erro') ?>'});</script>
 <?php endif; ?>
 
-<?php if(session()->getFlashdata('success')): ?>
-<script>Swal.fire({icon:'success', title:'Sucesso', text:'<?= session()->getFlashdata('success') ?>'});</script>
+<?php if(session()->getFlashdata('sucesso') || session()->getFlashdata('success')): ?>
+<script>Swal.fire({icon:'success', title:'Sucesso', text:'<?= session()->getFlashdata('sucesso') ?? session()->getFlashdata('success') ?>'});</script>
 <?php endif; ?>
 
 <?php
-$u_nome  = $usuario['USU_NOME']  ?? session()->get('USR_NOME')  ?? 'porteiro';
-$u_tipo  = 'Porteiro';
+$u_nome  = $usuario['USU_NOME']  ?? session()->get('USR_NOME')  ?? session()->get('nome') ?? 'Porteiro';
+$u_tipo  = $usuario['USU_TIPO']  ?? session()->get('USU_TIPO')  ?? session()->get('tipo') ?? 'Porteiro';
 $u_email = $usuario['USU_EMAIL'] ?? session()->get('USU_EMAIL') ?? 'Sem e-mail';
 $u_cpf   = $usuario['USU_CPF']   ?? session()->get('USU_CPF')   ?? session()->get('cpf')  ?? '000.000.000-00';
 $u_foto  = $usuario['USU_FOTO']  ?? session()->get('USU_FOTO')  ?? null;
@@ -821,7 +821,7 @@ $u_cnpj  = $usuario['FK_EMP_CNPJ'] ?? 'Não associado';
 
         <div class="user">
             <h2><?= esc($u_nome) ?></h2>
-            <p>Perfil: Porteiro</p>
+            <p>Perfil: <?= esc($u_tipo) ?></p>
         </div>
 
         <nav class="menu" aria-label="Menu Principal">
@@ -1060,7 +1060,7 @@ audioBtn.addEventListener("click", () => {
         audioBtn.classList.remove("audio-active");
     } else {
         let textoParaLer = "";
-
+        
         const titulo = document.querySelector(".page-title h1");
         const subtitulo = document.querySelector(".page-title p");
         if(titulo) textoParaLer += titulo.innerText + ". " + (subtitulo ? subtitulo.innerText : "") + ". ";

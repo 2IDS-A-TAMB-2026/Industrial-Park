@@ -6,6 +6,13 @@ use App\Models\AuthModel;
 
 class AuthController extends BaseController
 {
+    protected $authModel;
+
+    public function __construct()
+    {
+        $this->authModel = new AuthModel();
+    }
+
     public function index()
     {
         return view('sistema/auth');
@@ -13,100 +20,148 @@ class AuthController extends BaseController
 
     public function autenticar()
     {
-        $session = session();
-        $model = new AuthModel();
+        $email = trim((string) $this->request->getPost('USU_EMAIL'));
+        $senha = (string) $this->request->getPost('USU_SENHA');
 
-        $email = $this->request->getPost('USU_EMAIL');
-        $senha = $this->request->getPost('USU_SENHA');
-
-        $user = $model->getUserByEmail($email);
-
-        // 🚫 usuário não existe
-        if (!$user) {
-            return redirect()->back()->with('erro', 'Usuário não encontrado');
+        if ($email === '' || $senha === '') {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'Preencha o e-mail e a senha.');
         }
 
-        // 🚫 senha errada
-        if (!password_verify($senha, $user['USU_SENHA'])) {
-            return redirect()->back()->with('erro', 'Senha incorreta');
+        $usuario = $this->authModel->getUserByEmail($email);
+
+        if (!$usuario) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'E-mail ou senha incorretos.');
         }
 
-        // ✅ login OK
-        $session->set([
-            'cpf'    => $user['USU_CPF'],
-            'nome'   => $user['USU_NOME'],
-            'tipo'   => $user['USU_TIPO'],
+        /*
+         * Verifica a senha.
+         *
+         * O banco atualmente possui usuários antigos
+         * com senha em texto puro. O método verificarSenha()
+         * também trata esses usuários e converte a senha
+         * para hash automaticamente.
+         */
+        if (!$this->authModel->verificarSenha($usuario, $senha)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'E-mail ou senha incorretos.');
+        }
+
+        // Regenera a sessão por segurança
+        session()->regenerate();
+
+        // Dados da sessão
+        session()->set([
+            'cpf'    => $usuario['USU_CPF'],
+            'nome'   => $usuario['USU_NOME'],
+            'tipo'   => $usuario['USU_TIPO'],
+            'email'  => $usuario['USU_EMAIL'],
             'logado' => true
         ]);
 
-        // 🔀 redirecionamento baseado no tipo
-        return redirect()->to($this->getDashboardRoute($user['USU_TIPO']))->with('sucesso', 'Bem-vindo!');
-    }
+        // Redirecionamento conforme o tipo de usuário
+switch (strtoupper(trim($usuario['USU_TIPO']))) {
 
+    case 'SUPERADM':
+        return redirect()
+            ->to('/dashboard-superadm')
+            ->with('sucesso', 'Bem-vindo, Super Administrador!');
+
+    case 'ADMIN':
+        return redirect()
+            ->to('/dashboard-admin')
+            ->with('sucesso', 'Bem-vindo, Administrador!');
+
+    case 'PORTEIRO':
+        return redirect()
+            ->to('/dashboard-porteiro')
+            ->with('sucesso', 'Bem-vindo, Porteiro!');
+
+    case 'USUARIO':
+        return redirect()
+            ->to('/dashboard-usu')
+            ->with('sucesso', 'Bem-vindo ao Industrial Park!');
+
+    default:
+        session()->destroy();
+
+        return redirect()
+            ->back()
+            ->with('erro', 'Tipo de usuário inválido.');
+}
+
+    }
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+
+        return redirect()
+            ->to('/login')
+            ->with('sucesso', 'Logout realizado com sucesso.');
     }
 
-    // 📄 Exibe a tela de alteração de senha
     public function alterarSenha()
     {
         return view('sistema/alterar_senha');
     }
 
-    // 💾 Processa a alteração da senha no banco
     public function salvarNovaSenha()
     {
-        // 1. Regras de validação (removemos a 'senha_atual')
-        $regras = [
-            'email'          => 'required|valid_email',
-            'nova_senha'     => 'required|min_length[6]',
-            'confirma_senha' => 'required|matches[nova_senha]'
-        ];
+        $email = trim((string) $this->request->getPost('USU_EMAIL'));
+        $senha = (string) $this->request->getPost('USU_SENHA');
+        $confirmar = (string) $this->request->getPost('CONFIRMAR_SENHA');
 
-        $mensagens = [
-            'email'      => ['required' => 'O e-mail é obrigatório.', 'valid_email' => 'Insira um e-mail válido.'],
-            'nova_senha' => [
-                'required'   => 'A nova senha é obrigatória.',
-                'min_length' => 'A nova senha deve ter pelo menos 6 caracteres.'
-            ],
-            'confirma_senha' => [
-                'required' => 'A confirmação de senha é obrigatória.',
-                'matches'  => 'A nova senha e a confirmação não coincidem.'
-            ]
-        ];
-
-        if (!$this->validate($regras, $mensagens)) {
-            return redirect()->back()->withInput()->with('erro', $this->validator->listErrors());
+        if ($email === '' || $senha === '' || $confirmar === '') {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'Preencha todos os campos.');
         }
 
-        // 2. Buscar o usuário pelo E-mail enviado pelo formulário
-        $email = $this->request->getPost('email');
-        $novaSenha  = $this->request->getPost('nova_senha');
-        
-        $model = new AuthModel();
-        $user  = $model->getUserByEmail($email); // Certifique-se de que este método existe no seu Model
-
-        if (!$user) {
-            return redirect()->back()->withInput()->with('erro', 'Nenhum usuário encontrado com este e-mail.');
+        if (strlen($senha) < 6) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'A senha deve possuir pelo menos 6 caracteres.');
         }
 
-        // 3. Atualizar a senha usando a chave primária correta (supondo que seja o CPF no seu banco)
-        $model->update($user['USU_CPF'], [
-            'USU_SENHA' => password_hash($novaSenha, PASSWORD_DEFAULT)
-        ]);
-
-        return redirect()->to('/')->with('sucesso', 'Senha alterada com sucesso! Faça seu login.');
-    }
-    // 🛠️ Função auxiliar para centralizar as rotas de Dashboard
-    private function getDashboardRoute($tipo)
-    {
-        switch ($tipo) {
-            case 'SUPERADM': return '/dashboard-superadm';
-            case 'ADMIN':    return '/dashboard-admin';
-            case 'PORTEIRO': return '/dashboard-porteiro';
-            default:         return '/dashboard-usu'; // Batendo com a nova rota
+        if ($senha !== $confirmar) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'As senhas não coincidem.');
         }
+
+        $usuario = $this->authModel->getUserByEmail($email);
+
+        if (!$usuario) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'E-mail não encontrado.');
+        }
+
+        $resultado = $this->authModel->atualizarSenha(
+            $usuario['USU_CPF'],
+            $senha
+        );
+
+        if (!$resultado) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'Não foi possível alterar a senha.');
+        }
+
+        return redirect()
+            ->to('/login')
+            ->with('sucesso', 'Senha alterada com sucesso.');
     }
 }
