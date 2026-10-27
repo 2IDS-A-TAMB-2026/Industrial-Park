@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
 
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -32,7 +33,8 @@ body {
 .menu a { display:flex; align-items:center; gap:12px; padding:12px 16px; margin-bottom:8px; border-radius:12px; text-decoration:none; color:#94a3b8; font-size:.9rem; font-weight:500; transition:all .25s ease; }
 .menu a:hover { background:rgba(76,201,240,.12); color:#4CC9F0; transform:translateX(4px); }
 .menu a.active { background:linear-gradient(135deg,rgba(76,201,240,.25),rgba(76,201,240,.08)); color:#4CC9F0; border:1px solid rgba(76,201,240,.3); }
-/* BOTÃO LOGOUT (MODERNO EM AZUL) */
+
+/* BOTÃO LOGOUT */
 .logout {
     padding: 12px 20px;
     text-align: center;
@@ -66,12 +68,13 @@ body {
 }
 
 .logout:hover i {
-    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
+    transform: translateX(3px);
 }
 
 .logout:active {
     transform: translateY(0);
 }
+
 .main { flex:1; margin-left:280px; padding:40px 48px; width:calc(100% - 280px); min-height:100vh; }
 .page-title { margin-bottom:32px; display:flex; flex-direction:column; gap:4px; }
 .page-title h1 {
@@ -80,7 +83,7 @@ body {
     color: #fff;
     letter-spacing: -.8px;
     line-height: 1.2;
-    white-space: nowrap; /* Evita que o texto quebre em duas linhas */
+    white-space: nowrap;
 }
 .page-title p { color:#94a3b8; font-size:.95rem; font-weight:500; }
 .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; width:100%; }
@@ -96,8 +99,6 @@ input::placeholder { color:#64748b; }
 input:focus,select:focus { border-color:#38bdf8; background:#172033; box-shadow:0 0 0 4px rgba(56,189,248,.14); }
 select option { background:#1e293b; color:#f8fafc; }
 .erro { font-size:.75rem; color:#f87171; display:block; margin-top:6px; font-weight:600; min-height:0; }
-.bordaVermelha { border-color:#ef4444 !important; }
-.bordaVerde { border-color:#10b981 !important; }
 button[type=submit],.btn-submit { width:100%; padding:13px 16px; border:none; border-radius:12px; background:linear-gradient(135deg,#0284c7,#0369a1); color:#fff; font-weight:700; font-size:.9rem; cursor:pointer; margin-top:8px; transition:all .25s ease; box-shadow:0 8px 18px rgba(2,132,199,.22); }
 button[type=submit]:hover { background:linear-gradient(135deg,#0ea5e9,#0284c7); transform:translateY(-2px); box-shadow:0 10px 24px rgba(2,132,199,.32); }
 .table-responsive { width:100%; overflow-x:auto; border-radius:14px; border:1px solid rgba(255,255,255,.1); }
@@ -123,10 +124,13 @@ tbody tr:last-child td { border-bottom:none; }
 .panel-row span { font-size:.85rem; color:#cbd5e1; font-weight:500; }
 .acc-btn { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); color:#fff; padding:6px 12px; border-radius:8px; cursor:pointer; transition:.2s; font-size:.85rem; display:inline-flex; align-items:center; justify-content:center; gap:5px; }
 .acc-btn i { color:#fff; } .acc-btn:hover { background:#38bdf8; color:#070b16; } .acc-btn:hover i { color:#070b16; }
+
 body.light { background:#f1f5f9; color:#0f172a; background-image:none; }
 body.light .sidebar { background:rgba(255,255,255,.95); border-right:1px solid #cbd5e1; }
 body.light .logo { color:#0f172a; } body.light .user h3 { color:#0f172a; } body.light .user p { color:#475569; font-weight:500; }
 body.light .menu a { color:#475569; font-weight:600; } body.light .menu a:hover,body.light .menu a.active { background:rgba(15,23,42,.08); color:#0f172a; }
+body.light .logout { background: rgba(15, 23, 42, 0.05); border-color: #cbd5e1; color: #0f172a; }
+body.light .logout:hover { background: #0f172a; color: #fff; }
 body.light .page-title h1 { color:#0f172a; } body.light .page-title p { color:#475569; }
 body.light .card { background:#fff; border-color:#e2e8f0; box-shadow:0 10px 25px -5px rgba(0,0,0,.05); color:#0f172a; }
 body.light .card h2 { color:#64748b; } body.light label { color:#334155; }
@@ -137,81 +141,47 @@ body.light .accessibility-panel { background:#fff; border:1px solid #cbd5e1; col
 body.light .accessibility-panel h3 { border-bottom-color:#e2e8f0; color:#0f172a; } body.light .panel-row span { color:#1e293b; font-weight:600; }
 body.light .acc-btn { background:#f1f5f9; border-color:#cbd5e1; color:#0f172a !important; font-weight:600; } body.light .acc-btn i { color:#0f172a !important; }
 body.light .acc-btn:hover { background:#0f172a; color:#fff !important; } body.light .acc-btn:hover i { color:#fff !important; }
-/* ==========================================
-   ALTO CONTRASTE
-   ========================================== */
 
 body.high-contrast {
     background: #000 !important;
     color: #ffff00 !important;
     background-image: none !important;
 }
-
-/* SIDEBAR */
 body.high-contrast .sidebar {
     background: #000 !important;
     border-right: 2px solid #ffff00 !important;
     box-shadow: none !important;
 }
-
-/* LOGO */
-body.high-contrast .logo {
+body.high-contrast .logo, body.high-contrast .logo span {
     color: #ffff00 !important;
 }
-
-body.high-contrast .logo span {
-    color: #ffff00 !important;
-}
-
-/* USUÁRIO */
 body.high-contrast .user {
     border-bottom: 2px solid #ffff00 !important;
 }
-
 body.high-contrast .user h3,
 body.high-contrast .user p {
     color: #ffff00 !important;
 }
-
-/* =========================
-   MENU - ALTO CONTRASTE
-   ========================= */
-
 body.high-contrast .menu a {
     background: #000 !important;
     color: #ffff00 !important;
     border: 2px solid transparent !important;
 }
-
-body.high-contrast .menu a i {
-    color: #ffff00 !important;
-}
-
-/* Hover */
+body.high-contrast .menu a i { color: #ffff00 !important; }
 body.high-contrast .menu a:hover {
     background: #ffff00 !important;
     color: #000 !important;
     border: 2px solid #ffff00 !important;
     transform: translateX(4px);
 }
-
-body.high-contrast .menu a:hover i {
-    color: #000 !important;
-}
-
-/* Menu ativo */
+body.high-contrast .menu a:hover i { color: #000 !important; }
 body.high-contrast .menu a.active {
     background: #ffff00 !important;
     color: #000 !important;
     border: 2px solid #ffff00 !important;
     box-shadow: none !important;
 }
-
-body.high-contrast .menu a.active i {
-    color: #000 !important;
-}
-
-/* TÍTULO E CONTEÚDO */
+body.high-contrast .menu a.active i { color: #000 !important; }
 body.high-contrast .page-title h1,
 body.high-contrast .page-title p,
 body.high-contrast .card h2,
@@ -221,8 +191,6 @@ body.high-contrast td,
 body.high-contrast span {
     color: #ffff00 !important;
 }
-
-/* CARDS / TABELA / PAINEL */
 body.high-contrast .card,
 body.high-contrast .accessibility-panel,
 body.high-contrast thead,
@@ -232,8 +200,6 @@ body.high-contrast .table-responsive {
     color: #ffff00 !important;
     box-shadow: none !important;
 }
-
-/* INPUTS */
 body.high-contrast input,
 body.high-contrast select,
 body.high-contrast tbody tr {
@@ -241,18 +207,8 @@ body.high-contrast tbody tr {
     color: #ffff00 !important;
     border: 1px solid #ffff00 !important;
 }
-
-body.high-contrast input::placeholder {
-    color: #ffff00 !important;
-    opacity: .8;
-}
-
-body.high-contrast select option {
-    background: #000 !important;
-    color: #ffff00 !important;
-}
-
-/* BOTÕES */
+body.high-contrast input::placeholder { color: #ffff00 !important; opacity: .8; }
+body.high-contrast select option { background: #000 !important; color: #ffff00 !important; }
 body.high-contrast button,
 body.high-contrast .btn,
 body.high-contrast .logout,
@@ -262,8 +218,6 @@ body.high-contrast .main-acc-btn {
     color: #000 !important;
     border: 2px solid #ffff00 !important;
 }
-
-/* ÍCONES DOS BOTÕES */
 body.high-contrast button i,
 body.high-contrast .btn i,
 body.high-contrast .logout i,
@@ -271,8 +225,6 @@ body.high-contrast .acc-btn i,
 body.high-contrast .main-acc-btn i {
     color: #000 !important;
 }
-
-/* HOVER DOS BOTÕES */
 body.high-contrast button:hover,
 body.high-contrast .btn:hover,
 body.high-contrast .logout:hover,
@@ -281,63 +233,45 @@ body.high-contrast .acc-btn:hover {
     color: #ffff00 !important;
     border: 2px solid #ffff00 !important;
 }
-
 body.high-contrast button:hover i,
 body.high-contrast .btn:hover i,
 body.high-contrast .logout:hover i,
 body.high-contrast .acc-btn:hover i {
     color: #ffff00 !important;
 }
-
-/* PAINEL DE ACESSIBILIDADE */
 body.high-contrast .accessibility-panel h3,
 body.high-contrast .panel-row span {
     color: #ffff00 !important;
     border-color: #ffff00 !important;
 }
-
-/* LINHAS DA TABELA */
 body.high-contrast tbody tr:hover {
     background: #ffff00 !important;
     color: #000 !important;
 }
-
-body.high-contrast tbody tr:hover td {
-    color: #000 !important;
-}
-
-/* BOTÃO DE ÁUDIO ATIVO */
+body.high-contrast tbody tr:hover td { color: #000 !important; }
 body.high-contrast .acc-btn.audio-active {
     background: #ffff00 !important;
     color: #000 !important;
 }
+body.high-contrast .acc-btn.audio-active i { color: #000 !important; }
 
-body.high-contrast .acc-btn.audio-active i {
-    color: #000 !important;
-}
 .img-fade { opacity:0; transform:scale(.98); } img { transition:opacity .4s ease,transform .3s ease; } [vw] { z-index:9995 !important; }
 @media(max-width:1200px){ .grid{grid-template-columns:1fr;} .card{grid-column:span 1;} .form-grid{grid-template-columns:1fr;} .main{margin-left:0;width:100%;padding:1.5rem;} .sidebar{display:none;} .page-title h1{font-size:1.8rem;} }
-/* ==========================================
-   SWEETALERT - ALTO CONTRASTE
-   ========================================== */
 
 .swal-high-contrast {
     border: 2px solid #ffff00 !important;
     border-radius: 16px !important;
 }
-
 .swal-high-contrast-title,
 .swal-high-contrast-text {
     color: #ffff00 !important;
 }
-
 .swal-high-contrast-confirm {
     background: #ffff00 !important;
     color: #000000 !important;
     border: 2px solid #ffff00 !important;
     font-weight: 700 !important;
 }
-
 .swal-high-contrast-cancel {
     background: #000000 !important;
     color: #ffff00 !important;
@@ -407,8 +341,8 @@ body.high-contrast .acc-btn.audio-active i {
     </div>
   </div>
 
-  <a href="<?= base_url('logout') ?>" class="logout" id="logoutBtn">
-    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  <a href="<?= base_url('logout') ?>" class="logout" id="logoutBtn" aria-label="Sair da conta">
+    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Logout</span>
   </a>
 </div>
 
@@ -462,7 +396,7 @@ body.high-contrast .acc-btn.audio-active i {
           <select name="FK_EMP_CNPJ" id="usu_empresa">
             <option value="">Selecione uma empresa</option>
             <?php if(!empty($empresas)): ?>
-              <?php foreach($empresas as $empresa): ?>
+              <?php foreach($empresas as$empresa): ?>
                 <option value="<?= $empresa['EMP_CNPJ'] ?>"><?= $empresa['EMP_NOME'] ?></option>
               <?php endforeach; ?>
             <?php endif; ?>
@@ -495,7 +429,7 @@ body.high-contrast .acc-btn.audio-active i {
           </thead>
           <tbody>
             <?php if(!empty($admins)): ?>
-              <?php foreach($admins as $admin): ?>
+              <?php foreach($admins as$admin): ?>
               <tr>
                 <td><strong><?= $admin['USU_CPF'] ?></strong></td>
                 <td><?= $admin['USU_NOME'] ?></td>
@@ -686,10 +620,6 @@ function trocarImagens(modo){
   });
 }
 
-// ==========================================
-// AÇÕES DA TABELA (SWEETALERT2)
-// ==========================================
-
 // VISUALIZAR
 document.querySelectorAll('.btnVisualizar').forEach(btn => {
   btn.addEventListener('click', function() {
@@ -763,20 +693,18 @@ document.querySelectorAll('.btnEditar').forEach(btn => {
         form.action = '<?= base_url("admin/atualizar/") ?>' + encodeURIComponent(result.value.cpf);
 
         const campos = {
-    cpf: 'USU_CPF',
-    nome: 'USU_NOME',
-    email: 'USU_EMAIL'
-};
+          cpf: 'USU_CPF',
+          nome: 'USU_NOME',
+          email: 'USU_EMAIL'
+        };
 
-for (const key in campos) {
-    const input = document.createElement('input');
-
-    input.type = 'hidden';
-    input.name = campos[key];
-    input.value = result.value[key];
-
-    form.appendChild(input);
-}
+        for (const key in campos) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = campos[key];
+          input.value = result.value[key];
+          form.appendChild(input);
+        }
 
         document.body.appendChild(form);
         form.submit();
@@ -811,7 +739,6 @@ document.querySelectorAll('.btnExcluir').forEach(btn => {
 // ==========================================
 // CONFIRMAÇÃO DE LOGOUT - SWEETALERT
 // ==========================================
-
 const logoutBtn = document.getElementById('logoutBtn');
 
 if (logoutBtn) {
@@ -819,8 +746,6 @@ if (logoutBtn) {
         e.preventDefault();
 
         const logoutUrl = this.getAttribute('href');
-
-        // Detecta o modo atual da tela
         const isHighContrast = document.body.classList.contains('high-contrast');
         const isLight = document.body.classList.contains('light');
 
@@ -835,30 +760,21 @@ if (logoutBtn) {
             focusCancel: true
         };
 
-        // 🌙 MODO ESCURO
         if (!isLight && !isHighContrast) {
             config.background = '#1e293b';
             config.color = '#f8fafc';
             config.confirmButtonColor = '#4CC9F0';
             config.cancelButtonColor = '#475569';
-        }
-
-        // ☀️ MODO CLARO
-        else if (isLight && !isHighContrast) {
+        } else if (isLight && !isHighContrast) {
             config.background = '#ffffff';
             config.color = '#0f172a';
             config.confirmButtonColor = '#0284c7';
             config.cancelButtonColor = '#64748b';
-        }
-
-        // ⚠️ ALTO CONTRASTE
-        else if (isHighContrast) {
+        } else if (isHighContrast) {
             config.background = '#000000';
             config.color = '#ffff00';
             config.confirmButtonColor = '#ffff00';
             config.cancelButtonColor = '#000000';
-
-            // CSS específico para manter o padrão do alto contraste
             config.customClass = {
                 popup: 'swal-high-contrast',
                 title: 'swal-high-contrast-title',
@@ -876,13 +792,9 @@ if (logoutBtn) {
     });
 }
 </script>
+
 <script>
-// ==========================================
-// SWEETALERT - CADASTRO DE ADMINISTRADOR
-// ==========================================
-
 <?php if (session()->getFlashdata('sucesso')): ?>
-
 Swal.fire({
     title: 'Administrador cadastrado!',
     text: 'O administrador foi cadastrado com sucesso.',
@@ -892,12 +804,9 @@ Swal.fire({
     background: '#1e293b',
     color: '#fff'
 });
-
 <?php endif; ?>
 
-
 <?php if (session()->getFlashdata('error')): ?>
-
 Swal.fire({
     title: 'Erro ao cadastrar',
     text: <?= json_encode(session()->getFlashdata('error')) ?>,
@@ -907,7 +816,6 @@ Swal.fire({
     background: '#1e293b',
     color: '#fff'
 });
-
 <?php endif; ?>
 </script>
 </body>

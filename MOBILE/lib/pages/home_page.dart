@@ -21,8 +21,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _isChatOpen = false;
   bool _isAccessibilityOpen = false;
+  final GlobalKey _featuresKey = GlobalKey();
+  bool _entrarAtivo = false;
+
+  // Cor de destaque de acordo com o tema selecionado.
+  Color _getAccentColor() {
+    switch (widget.themeMode) {
+      case AppThemeMode.light:
+        return const Color(0xFF0645B5); // Azul escuro no modo claro
+      case AppThemeMode.dark:
+        return const Color(0xFF00F0FF); // Ciano neon no modo escuro
+      case AppThemeMode.highContrast:
+        return Colors.yellow;
+    }
+  }
 
   // ============================================================
   // LOGO DE ACORDO COM O TEMA
@@ -42,32 +55,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   // ============================================================
-  // CHAT
-  // ============================================================
-
-  void _toggleChat() {
-    setState(() {
-      _isChatOpen = !_isChatOpen;
-
-      if (_isChatOpen) {
-        _isAccessibilityOpen = false;
-      }
-    });
-  }
-
-  // ============================================================
   // ACESSIBILIDADE
   // ============================================================
 
   void _toggleAccessibility() {
-    setState(() {
-      _isAccessibilityOpen = !_isAccessibilityOpen;
-
-      if (_isAccessibilityOpen) {
-        _isChatOpen = false;
-      }
-    });
-  }
+  setState(() {
+    _isAccessibilityOpen = !_isAccessibilityOpen;
+  });
+}
 
   // ============================================================
   // BUILD
@@ -116,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: _toggleAccessibility,
                   backgroundColor: highContrast
                       ? Colors.yellow
-                      : const Color(0xFF4CC9F0),
+                      : _getAccentColor(),
                   foregroundColor: highContrast
                       ? Colors.black
                       : Colors.white,
@@ -128,37 +123,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-
-              // ==================================================
-              // BOTÃO CHAT
-              // ==================================================
-
-              Positioned(
-                right: 20,
-                bottom: 20,
-                child: FloatingActionButton(
-                  heroTag: 'chatButton',
-                  onPressed: _toggleChat,
-                  backgroundColor: highContrast
-                      ? Colors.yellow
-                      : const Color(0xFF4CC9F0),
-                  foregroundColor: highContrast
-                      ? Colors.black
-                      : Colors.white,
-                  tooltip: 'Chat',
-                  child: Icon(
-                    _isChatOpen
-                        ? Icons.close
-                        : Icons.chat,
-                  ),
-                ),
-              ),
-
-              // ==================================================
-              // CHAT
-              // ==================================================
-
-              if (_isChatOpen) _buildChat(),
 
               // ==================================================
               // ACESSIBILIDADE
@@ -271,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 11,
                           color: highContrast
                               ? Colors.yellow
-                              : const Color(0xFF4CC9F0),
+                              : _getAccentColor(),
                           fontWeight: FontWeight.bold,
                           letterSpacing: 2,
                         ),
@@ -286,35 +250,74 @@ class _HomePageState extends State<HomePage> {
               // ==================================================
               // ENTRAR
               // ==================================================
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/login',
-                  );
+              MouseRegion(
+                onEnter: (_) {
+                  setState(() => _entrarAtivo = true);
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: highContrast
-                      ? Colors.yellow
-                      : const Color(0xFF4CC9F0),
-                  foregroundColor: highContrast
-                      ? Colors.black
-                      : Colors.white,
-                  padding: EdgeInsets.symmetric(
-                    horizontal:
-                        fonteGrande ? 18 : 24,
-                    vertical:
-                        fonteGrande ? 10 : 12,
+                onExit: (_) {
+                  setState(() => _entrarAtivo = false);
+                },
+                child: GestureDetector(
+                  onTapDown: (_) {
+                    setState(() => _entrarAtivo = true);
+                  },
+                  onTapCancel: () {
+                    setState(() => _entrarAtivo = false);
+                  },
+                  onTapUp: (_) {
+                    setState(() => _entrarAtivo = false);
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: highContrast
+                          ? Colors.yellow
+                          : _entrarAtivo
+                              ? _getAccentColor()
+                              : Colors.transparent,
+                      border: Border.all(
+                        color: highContrast
+                            ? Colors.yellow
+                            : _getAccentColor(),
+                        width: 1.2,
+                      ),
+                      boxShadow: !highContrast && _entrarAtivo
+                          ? [
+                              BoxShadow(
+                                color: _getAccentColor()
+                                    .withValues(alpha: 0.45),
+                                blurRadius: 22,
+                                spreadRadius: 2,
+                              ),
+                            ]
+                          : [],
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(30),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 28,
+                          vertical: 13,
+                        ),
+                        child: Text(
+                          'Entrar',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: highContrast
+                                ? Colors.black
+                                : _entrarAtivo
+                                    ? (dark ? Colors.black : Colors.white)
+                                    : (dark ? Colors.white : Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10),
-                  ),
-                  elevation: 0,
-                ),
-                child: const Text(
-                  'Entrar',
                 ),
               ),
             ],
@@ -332,21 +335,21 @@ class _HomePageState extends State<HomePage> {
     bool dark,
     bool highContrast,
   ) {
+    final bool fonteGrande = widget.fontSizeScale >= 1.2;
+
     return Row(
       children: [
         Image.asset(
           _getLogoPath(),
-          width: 42,
-          height: 42,
+          width: 40,
+          height: 40,
           fit: BoxFit.contain,
         ),
-
-        const SizedBox(width: 10),
-
+        const SizedBox(width: 8),
         Expanded(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               FittedBox(
                 alignment: Alignment.centerLeft,
@@ -355,7 +358,7 @@ class _HomePageState extends State<HomePage> {
                   'INDUSTRIAL',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: highContrast
                         ? Colors.white
@@ -375,7 +378,7 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 10,
                     color: highContrast
                         ? Colors.yellow
-                        : const Color(0xFF4CC9F0),
+                        : _getAccentColor(),
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2,
                   ),
@@ -384,35 +387,73 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
         const SizedBox(width: 8),
-
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(
-              context,
-              '/login',
-            );
+        MouseRegion(
+          onEnter: (_) {
+            setState(() => _entrarAtivo = true);
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: highContrast
-                ? Colors.yellow
-                : const Color(0xFF4CC9F0),
-            foregroundColor: highContrast
-                ? Colors.black
-                : Colors.white,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 9,
+          onExit: (_) {
+            setState(() => _entrarAtivo = false);
+          },
+          child: Listener(
+            onPointerDown: (_) {
+              setState(() => _entrarAtivo = true);
+            },
+            onPointerUp: (_) {
+              setState(() => _entrarAtivo = false);
+            },
+            onPointerCancel: (_) {
+              setState(() => _entrarAtivo = false);
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeInOut,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: !highContrast && _entrarAtivo
+                    ? [
+                        BoxShadow(
+                          color: _getAccentColor()
+                              .withValues(alpha: 0.35),
+                          blurRadius: 16,
+                          spreadRadius: 1,
+                        ),
+                      ]
+                    : [],
+              ),
+              child: OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: highContrast
+                      ? Colors.black
+                      : _entrarAtivo
+                          ? (dark ? Colors.black : Colors.white)
+                          : (dark ? Colors.white : Colors.black),
+                  backgroundColor: highContrast
+                      ? Colors.yellow
+                      : _entrarAtivo
+                          ? _getAccentColor()
+                          : Colors.transparent,
+                  side: BorderSide(
+                    color: highContrast
+                        ? Colors.yellow
+                        : _getAccentColor(),
+                    width: 1.2,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: fonteGrande ? 12 : 16,
+                    vertical: fonteGrande ? 8 : 10,
+                  ),
+                  shape: const StadiumBorder(),
+                ),
+                child: const Text(
+                  'Entrar',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(9),
-            ),
-            elevation: 0,
-          ),
-          child: const Text(
-            'Entrar',
           ),
         ),
       ],
@@ -424,136 +465,200 @@ class _HomePageState extends State<HomePage> {
   // ============================================================
 
   Widget _buildHero() {
-    final bool dark =
-        widget.themeMode == AppThemeMode.dark;
-
+    final bool dark = widget.themeMode == AppThemeMode.dark;
     final bool highContrast =
         widget.themeMode == AppThemeMode.highContrast;
+    final bool isMobile = MediaQuery.of(context).size.width < 600;
+    final double titleSize = isMobile ? 38 : 48;
 
     return SizedBox(
       width: double.infinity,
-      height: 600,
+      height: isMobile ? 590 : 600,
       child: Stack(
+        fit: StackFit.expand,
         children: [
-          // ==================================================
-          // IMAGEM DE FUNDO
-          // ==================================================
-
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/parking.jpg',
-              fit: BoxFit.cover,
-            ),
+          Image.asset(
+            'assets/images/parking.jpg',
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
           ),
-
-          // ==================================================
-          // CAMADA SOBRE A IMAGEM
-          // ==================================================
-
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: highContrast
-                      ? [
-                          Colors.black.withOpacity(0.95),
-                          Colors.black.withOpacity(0.80),
-                        ]
-                      : dark
-                          ? [
-                              const Color(0xFF0A0F1C)
-                                  .withOpacity(0.95),
-                              const Color(0xFF0F1A35)
-                                  .withOpacity(0.70),
-                              Colors.transparent,
-                            ]
-                          : [
-                              Colors.white.withOpacity(0.92),
-                              Colors.white.withOpacity(0.65),
-                              Colors.transparent,
+                gradient: highContrast
+                    ? LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.98),
+                          Colors.black.withOpacity(0.88),
+                        ],
+                      )
+                    : dark
+                        ? LinearGradient(
+                            begin: isMobile
+                                ? Alignment.topCenter
+                                : Alignment.centerLeft,
+                            end: isMobile
+                                ? Alignment.bottomCenter
+                                : Alignment.centerRight,
+                            colors: isMobile
+                                ? [
+                                    const Color(0xFF0A0F1C)
+                                        .withOpacity(0.84),
+                                    const Color(0xFF0A0F1C)
+                                        .withOpacity(0.68),
+                                    const Color(0xFF0A0F1C)
+                                        .withOpacity(0.45),
+                                  ]
+                                : [
+                                    const Color(0xFF0A0F1C)
+                                        .withOpacity(0.98),
+                                    const Color(0xFF0F1A35)
+                                        .withOpacity(0.78),
+                                    Colors.transparent,
+                                  ],
+                          )
+                        : LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.94),
+                              Colors.white.withOpacity(0.78),
+                              Colors.white.withOpacity(0.58),
                             ],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
+                          ),
               ),
             ),
           ),
-
-          // ==================================================
-          // CONTEÚDO
-          // ==================================================
-
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 60,
-              vertical: 70,
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 24 : 60,
+              vertical: isMobile ? 34 : 70,
             ),
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              mainAxisAlignment:
-                  MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Industrial',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 48,
-                      height: 1.1,
-                      fontWeight: FontWeight.bold,
-                      color: highContrast
-                          ? Colors.white
-                          : dark
-                              ? Colors.white
-                              : const Color(0xFF182033),
+                Wrap(
+                  spacing: 9,
+                  runSpacing: 0,
+                  children: [
+                    Text(
+                      'Industrial',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: titleSize,
+                        height: 1.08,
+                        fontWeight: FontWeight.w800,
+                        color: highContrast
+                            ? Colors.white
+                            : dark
+                                ? Colors.white
+                                : const Color(0xFF182033),
+                        shadows: dark && !highContrast
+                            ? [
+                                Shadow(
+                                  color: _getAccentColor()
+                                      .withValues(alpha: 0.12),
+                                  blurRadius: 18,
+                                ),
+                              ]
+                            : null,
+                      ),
                     ),
-                  ),
-                ),
-
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Park',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 48,
-                      height: 1.1,
-                      fontWeight: FontWeight.bold,
-                      color: highContrast
-                          ? Colors.yellow
-                          : const Color(0xFF4CC9F0),
+                    Text(
+                      'Park',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: titleSize,
+                        height: 1.08,
+                        fontWeight: FontWeight.w800,
+                        color: highContrast
+                            ? Colors.yellow
+                            : _getAccentColor(),
+                        shadows: highContrast
+                            ? null
+                            : [
+                                Shadow(
+                                  color: _getAccentColor()
+                                      .withValues(alpha: 0.45),
+                                  blurRadius: 22,
+                                ),
+                              ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-
-                const SizedBox(height: 20),
-
+                const SizedBox(height: 22),
                 ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: 600,
+                  constraints: BoxConstraints(
+                    maxWidth: isMobile ? 420 : 650,
                   ),
                   child: Text(
-                    'Tecnologia para tornar o gerenciamento '
-                    'de estacionamentos mais simples, '
-                    'seguro e eficiente.',
+                    'Uma plataforma inteligente para gerenciamento, '
+                    'controle de acesso e monitoramento de estacionamentos '
+                    'industriais em tempo real.',
                     style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 18,
-                      height: 1.6,
+                      fontSize: isMobile ? 15 : 18,
+                      height: 1.65,
                       color: highContrast
                           ? Colors.white
                           : dark
-                              ? Colors.white70
+                              ? const Color(0xFFD0D8E8)
                               : const Color(0xFF182033),
                     ),
                   ),
                 ),
-
-                const SizedBox(height: 30),
+                const SizedBox(height: 28),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: highContrast
+                        ? []
+                        : [
+                            BoxShadow(
+                              color: _getAccentColor()
+                                  .withValues(alpha: 0.28),
+                              blurRadius: 22,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final targetContext = _featuresKey.currentContext;
+                      if (targetContext != null) {
+                        Scrollable.ensureVisible(
+                          targetContext,
+                          duration: const Duration(milliseconds: 550),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: highContrast
+                          ? Colors.yellow
+                          : _getAccentColor(),
+                      foregroundColor:
+                          highContrast ? Colors.black : Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isMobile ? 26 : 32,
+                        vertical: isMobile ? 15 : 17,
+                      ),
+                      shape: const StadiumBorder(),
+                      elevation: 0,
+                    ),
+                    child: const Text(
+                      'Saiba mais',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -574,6 +679,7 @@ class _HomePageState extends State<HomePage> {
         widget.themeMode == AppThemeMode.highContrast;
 
     return Container(
+      key: _featuresKey,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
         horizontal: 40,
@@ -717,7 +823,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     color: highContrast
                         ? Colors.yellow
-                        : const Color(0xFF4CC9F0),
+                        : _getAccentColor(),
                   ),
                 ),
               ],
@@ -790,14 +896,14 @@ class _HomePageState extends State<HomePage> {
             border: Border.all(
               color: highContrast
                   ? Colors.yellow
-                  : const Color(0xFF4CC9F0),
+                  : _getAccentColor(),
               width: 2,
             ),
             boxShadow: [
               BoxShadow(
                 color: highContrast
                     ? Colors.yellow.withOpacity(0.3)
-                    : const Color(0xFF4CC9F0)
+                    : _getAccentColor()
                         .withOpacity(0.25),
                 blurRadius: 15,
                 spreadRadius: 2,
@@ -840,7 +946,7 @@ class _HomePageState extends State<HomePage> {
             height: 1.4,
             color: highContrast
                 ? Colors.yellow
-                : const Color(0xFF4CC9F0),
+                : _getAccentColor(),
           ),
         ),
       ],
@@ -885,7 +991,7 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   color: highContrast
                       ? Colors.yellow
-                      : const Color(0xFF4CC9F0)
+                      : _getAccentColor()
                           .withOpacity(0.15),
                   borderRadius:
                       BorderRadius.circular(15),
@@ -894,7 +1000,7 @@ class _HomePageState extends State<HomePage> {
                   icon,
                   color: highContrast
                       ? Colors.black
-                      : const Color(0xFF4CC9F0),
+                      : _getAccentColor(),
                   size: 30,
                 ),
               ),
@@ -1002,96 +1108,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  // ============================================================
-  // CHAT
-  // ============================================================
-
-  Widget _buildChat() {
-    final bool highContrast =
-        widget.themeMode == AppThemeMode.highContrast;
-
-    return Positioned(
-      right: 20,
-      bottom: 150,
-      child: Container(
-        width: MediaQuery.of(context).size.width < 360
-            ? MediaQuery.of(context).size.width - 40
-            : 280,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: highContrast
-              ? Colors.black
-              : Theme.of(context)
-                  .scaffoldBackgroundColor,
-          borderRadius:
-              BorderRadius.circular(15),
-          border: highContrast
-              ? Border.all(
-                  color: Colors.white,
-                  width: 2,
-                )
-              : null,
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 15,
-              color: Colors.black26,
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Olá! 👋',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-                color: highContrast
-                    ? Colors.white
-                    : null,
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            Text(
-              'Como podemos ajudar?',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 13,
-                color: highContrast
-                    ? Colors.white
-                    : null,
-              ),
-            ),
-
-            const SizedBox(height: 15),
-
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: highContrast
-                    ? ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.yellow,
-                        foregroundColor:
-                            Colors.black,
-                      )
-                    : null,
-                child: const Text(
-                  'Preciso de ajuda',
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -1207,7 +1223,7 @@ class _HomePageState extends State<HomePage> {
 
                 activeColor: highContrast
                     ? Colors.yellow
-                    : const Color(0xFF4CC9F0),
+                    : _getAccentColor(),
 
                 onChanged: (value) {
                   widget.onThemeModeChanged(
@@ -1294,7 +1310,7 @@ class _HomePageState extends State<HomePage> {
                           .clamp(0.8, 1.4),
                       activeColor: highContrast
                           ? Colors.yellow
-                          : const Color(0xFF4CC9F0),
+                          : _getAccentColor(),
                       onChanged: (value) {
                         widget.onFontSizeChanged(
                           value,

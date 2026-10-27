@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?= base_url('css/sweetalert-theme.css') ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
     <title>Dashboard Super Administrativo</title>
 
     <style>
@@ -105,46 +106,46 @@
             border: 1px solid rgba(76, 201, 240, 0.3);
         }
 
-       /* BOTÃO LOGOUT (MODERNO EM AZUL) */
-.logout {
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    color: #4CC9F0;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
-}
+        /* BOTÃO LOGOUT */
+        .logout {
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            color: #4CC9F0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+        }
 
-.logout i {
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-}
+        .logout i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
 
-.logout:hover {
-    background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
-    color: #070b16;
-    border-color: #4CC9F0;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
-}
+        .logout:hover {
+            background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
+            color: #070b16;
+            border-color: #4CC9F0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
+        }
 
-.logout:hover i {
-    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
-}
+        .logout:hover i {
+            transform: translateX(3px);
+        }
 
-.logout:active {
-    transform: translateY(0);
-}
+        .logout:active {
+            transform: translateY(0);
+        }
 
         /* CONTEÚDO PRINCIPAL DO DASHBOARD */
         .main {
@@ -176,7 +177,7 @@
 
         .container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 1.5rem;
             width: 100%;
         }
@@ -468,7 +469,9 @@
             position: fixed;
             top: 80px;
             right: -320px;
-            width: 280px;
+            width: min(280px, calc(100vw - 32px));
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -523,6 +526,15 @@
             background: rgba(15, 23, 42, 0.08); 
             color: #0f172a; 
         }
+        body.light .logout {
+            background: rgba(15, 23, 42, 0.05);
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+        body.light .logout:hover {
+            background: #0f172a;
+            color: #fff;
+        }
         body.light .page-title h1 { color: #0f172a; }
         body.light .page-title p { color: #475569; }
         body.light .card { 
@@ -574,6 +586,10 @@
             color: #000000 !important;
             border: 2px solid #FFFF00 !important;
         }
+        body.high-contrast .logout:hover {
+            background: #FFFF00 !important;
+            color: #000000 !important;
+        }
         body.high-contrast .acc-btn i { color: #000000 !important; }
         body.high-contrast .driveway { background: #111111 !important; border-color: #FFFF00 !important; }
         body.high-contrast .traffic-indicator { background: #000000 !important; border-color: #FFFF00 !important; color: #FFFF00 !important; }
@@ -593,33 +609,108 @@
             .sidebar { display: none; }
         }
 
-/* ==========================================
-   SWEETALERT - ALTO CONTRASTE
-   ========================================== */
+        /* AJUSTES PARA EVITAR QUE O LAYOUT QUEBRE COM FONTES MAIORES */
+        .main,
+        .container,
+        .card,
+        .kpi-header,
+        .indicator-body,
+        .page-title,
+        .dashboard-legend,
+        .legend-item,
+        .panel-row {
+            min-width: 0;
+        }
 
-.swal-high-contrast {
-    border: 2px solid #ffff00 !important;
-    border-radius: 16px !important;
-}
+        .card h2,
+        .page-title h1,
+        .page-title p,
+        .mini,
+        .legend-item span,
+        .panel-row span {
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
 
-.swal-high-contrast-title,
-.swal-high-contrast-text {
-    color: #ffff00 !important;
-}
+        .kpi-header {
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
 
-.swal-high-contrast-confirm {
-    background: #ffff00 !important;
-    color: #000000 !important;
-    border: 2px solid #ffff00 !important;
-    font-weight: 700 !important;
-}
+        .mini,
+        .legend-item {
+            flex-wrap: wrap;
+        }
 
-.swal-high-contrast-cancel {
-    background: #000000 !important;
-    color: #ffff00 !important;
-    border: 2px solid #ffff00 !important;
-    font-weight: 700 !important;
-}
+        .panel-row {
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .panel-row span {
+            flex: 1 1 130px;
+        }
+
+        .acc-btn {
+            flex-shrink: 0;
+        }
+
+        .chart-container {
+            min-width: 0;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .span-2,
+            .span-4 {
+                grid-column: span 1;
+            }
+
+            .main {
+                padding: 1rem;
+            }
+
+            .page-title h1 {
+                font-size: 1.8rem;
+                letter-spacing: normal;
+            }
+
+            .dashboard-legend {
+                gap: 0.75rem;
+            }
+
+            .accessibility-panel.open {
+                right: 16px;
+            }
+        }
+
+        /* SWEETALERT - ALTO CONTRASTE */
+        .swal-high-contrast {
+            border: 2px solid #ffff00 !important;
+            border-radius: 16px !important;
+        }
+
+        .swal-high-contrast-title,
+        .swal-high-contrast-text {
+            color: #ffff00 !important;
+        }
+
+        .swal-high-contrast-confirm {
+            background: #ffff00 !important;
+            color: #000000 !important;
+            border: 2px solid #ffff00 !important;
+            font-weight: 700 !important;
+        }
+
+        .swal-high-contrast-cancel {
+            background: #000000 !important;
+            color: #ffff00 !important;
+            border: 2px solid #ffff00 !important;
+            font-weight: 700 !important;
+        }
     </style>
 </head>
 <body>
@@ -672,7 +763,7 @@
     </div>
 </section>
 
-<!-- NAVEGAÇÃO LATERAL SUPER ADMIN (ESTILO DO DASHBOARD-ADMIN) -->
+<!-- NAVEGAÇÃO LATERAL SUPER ADMIN -->
 <aside class="sidebar">
     <div>
         <div class="logo">
@@ -706,7 +797,7 @@
     </header>
 
     <div class="container">
-        <!-- LINHA 1: KPIS COM ICONES NO ESTILO DO ADMIN -->
+        <!-- KPIS -->
         <section class="card" aria-labelledby="lbl-total">
             <div class="kpi-header">
                 <h2 id="lbl-total">Total de Vagas</h2>
@@ -759,7 +850,7 @@
             </div>
         </section>
 
-        <!-- PAINEL DE GRÁFICOS COMPLETO (4 GRÁFICOS 2x2 DO SUPERADMIN) -->
+        <!-- GRÁFICOS -->
         <section class="card span-2" aria-labelledby="lbl-chart-geral">
             <div class="kpi-header">
                 <h2 id="lbl-chart-geral">Ocupação Geral</h2>
@@ -778,12 +869,13 @@
             </div>
         </section>
 
-        <section class="card span-2" aria-labelledby="lbl-chart-pcd">
+        <!-- NOVO GRÁFICO POLAR AREA: PRESENÇA DAS EMPRESAS POR CIDADE -->
+        <section class="card span-2" aria-labelledby="lbl-chart-empresas">
             <div class="kpi-header">
-                <h2 id="lbl-chart-pcd">Perfil das Vagas (Convencional vs PCD)</h2>
+                <h2 id="lbl-chart-empresas">Presença das Empresas por Cidade</h2>
             </div>
             <div class="chart-container">
-                <canvas id="pcdChart"></canvas>
+                <canvas id="empresasChart"></canvas>
             </div>
         </section>
 
@@ -838,11 +930,9 @@
 </script>
 
 <script>
-// Confirmador de Logout
 // ==========================================
 // CONFIRMAÇÃO DE LOGOUT - SWEETALERT
 // ==========================================
-
 const logoutBtn = document.getElementById('logoutBtn');
 
 if (logoutBtn) {
@@ -850,8 +940,6 @@ if (logoutBtn) {
         e.preventDefault();
 
         const logoutUrl = this.getAttribute('href');
-
-        // Detecta o modo atual da tela
         const isHighContrast = document.body.classList.contains('high-contrast');
         const isLight = document.body.classList.contains('light');
 
@@ -866,30 +954,21 @@ if (logoutBtn) {
             focusCancel: true
         };
 
-        // 🌙 MODO ESCURO
         if (!isLight && !isHighContrast) {
             config.background = '#1e293b';
             config.color = '#f8fafc';
             config.confirmButtonColor = '#4CC9F0';
             config.cancelButtonColor = '#475569';
-        }
-
-        // ☀️ MODO CLARO
-        else if (isLight && !isHighContrast) {
+        } else if (isLight && !isHighContrast) {
             config.background = '#ffffff';
             config.color = '#0f172a';
             config.confirmButtonColor = '#0284c7';
             config.cancelButtonColor = '#64748b';
-        }
-
-        // ⚠️ ALTO CONTRASTE
-        else if (isHighContrast) {
+        } else if (isHighContrast) {
             config.background = '#000000';
             config.color = '#ffff00';
             config.confirmButtonColor = '#ffff00';
             config.cancelButtonColor = '#000000';
-
-            // CSS específico para manter o padrão do alto contraste
             config.customClass = {
                 popup: 'swal-high-contrast',
                 title: 'swal-high-contrast-title',
@@ -1030,6 +1109,10 @@ const spotsBrutos = <?= json_encode($vagasMapa ?? $vagas_mapa ?? $vagas ?? []) ?
 const lineLabels = <?= json_encode($lineChartLabels ?? $grafico_fluxo_labels ?? ['08h', '10h', '12h', '14h', '16h']) ?>;
 const lineData = <?= json_encode($lineChartData ?? $grafico_fluxo ?? [0, 0, 0, 0, 0]) ?>;
 
+// DADOS DO BANCO PARA O GRÁFICO DE EMPRESAS POR CIDADE
+const empresasCidadeLabels = <?= json_encode($empresasCidadeLabels ?? ['São Paulo', 'Campinas', 'Curitiba', 'Belo Horizonte', 'Rio de Janeiro']) ?>;
+const empresasCidadeData   = <?= json_encode($empresasCidadeData ?? [5, 4, 3, 2, 2]) ?>;
+
 function obterLabelVaga(vaga, index) {
     let nome = vaga.VAG_LOCALIZACAO ?? vaga.localizacao ?? vaga.VAG_NUMERO ?? vaga.numero ?? vaga.VAG_CODIGO ?? vaga.codigo ?? vaga.NOME ?? vaga.nome;
     if (!nome) return `V${index + 1}`;
@@ -1084,16 +1167,10 @@ let occupied = 0;
 let unavailable = 0;
 
 const dadosSetores = {};
-let totalPCD = 0;
-let totalComum = 0;
 
 spots.forEach(vaga => {
     const statusCalculado = obterStatusVaga(vaga);
     const piso = extrairNomeDoPiso(vaga);
-    const isPcd = Boolean(vaga.pcd || vaga.VAG_PCD || vaga.PCD);
-
-    if (isPcd) totalPCD++;
-    else totalComum++;
 
     if (!dadosSetores[piso]) {
         dadosSetores[piso] = { livres: 0, ocupadas: 0, indisponiveis: 0 };
@@ -1251,19 +1328,18 @@ function desenharMapaEstacionamento(dadosBanco) {
 
 desenharMapaEstacionamento(spots);
 
-// RENDERIZAÇÃO DOS GRÁFICOS DO SUPERADMIN
-let chartOccupancy, chartPiso, chartPCD, chartLine;
+let chartOccupancy, chartPiso, chartEmpresas, chartLine;
 
 function obterCoresDeAcordoComTema() {
     const isHighContrast = document.body.classList.contains("high-contrast");
     const isLight = document.body.classList.contains("light");
 
     if (isHighContrast) {
-        return { text: '#FFFF00', grid: '#FFFF00', primary: '#FFFF00', occupied: '#FFFF00', free: '#333300', freeBorder: '#FFFF00', pcd: '#3498db' };
+        return { text: '#FFFF00', grid: '#FFFF00', primary: '#FFFF00', occupied: '#FFFF00', free: '#333300', freeBorder: '#FFFF00' };
     } else if (isLight) {
-        return { text: '#0f172a', grid: 'rgba(0,0,0,0.08)', primary: '#0284c7', occupied: '#ef4444', free: '#22c55e', freeBorder: 'transparent', pcd: '#0284c7' };
+        return { text: '#0f172a', grid: 'rgba(0,0,0,0.08)', primary: '#0284c7', occupied: '#ef4444', free: '#22c55e', freeBorder: 'transparent' };
     } else {
-        return { text: '#f8fafc', grid: 'rgba(255,255,255,0.08)', primary: '#38bdf8', occupied: '#ef4444', free: '#22c55e', freeBorder: 'transparent', pcd: '#38bdf8' };
+        return { text: '#f8fafc', grid: 'rgba(255,255,255,0.08)', primary: '#38bdf8', occupied: '#ef4444', free: '#22c55e', freeBorder: 'transparent' };
     }
 }
 
@@ -1272,10 +1348,10 @@ function renderizarGraficos() {
 
     if (chartOccupancy) chartOccupancy.destroy();
     if (chartPiso) chartPiso.destroy();
-    if (chartPCD) chartPCD.destroy();
+    if (chartEmpresas) chartEmpresas.destroy();
     if (chartLine) chartLine.destroy();
 
-    // 1. Ocupação Geral
+    // 1. OCUPAÇÃO GERAL
     chartOccupancy = new Chart(document.getElementById('occupancyChart'), {
         type: 'doughnut',
         data: {
@@ -1299,7 +1375,7 @@ function renderizarGraficos() {
         }
     });
 
-    // 2. Vagas por Setor / Piso
+    // 2. VAGAS POR SETOR
     const rótulosSetor = Object.keys(dadosSetores);
     const setorLivres = rótulosSetor.map(key => dadosSetores[key].livres);
     const setorOcupadas = rótulosSetor.map(key => dadosSetores[key].ocupadas);
@@ -1339,15 +1415,25 @@ function renderizarGraficos() {
         }
     });
 
-    // 3. Perfil das Vagas (Convencional vs PCD)
-    chartPCD = new Chart(document.getElementById('pcdChart'), {
-        type: 'pie',
+    // 3. NOVO GRÁFICO "DIFERENTÃO": PRESENÇA DAS EMPRESAS POR CIDADE (ÁREA POLAR RADIAL)
+    chartEmpresas = new Chart(document.getElementById('empresasChart'), {
+        type: 'polarArea',
         data: {
-            labels: ['Vagas Convencionais', 'Vagas PCD / Especiais'],
+            labels: empresasCidadeLabels,
             datasets: [{
-                data: [totalComum, totalPCD],
-                backgroundColor: [cores.text === '#FFFF00' ? '#FFFF00' : '#475569', cores.pcd],
-                borderWidth: document.body.classList.contains("high-contrast") ? 2 : 0
+                label: 'Empresas',
+                data: empresasCidadeData,
+                backgroundColor: [
+                    'rgba(56, 189, 248, 0.75)',  // Cyan Neon
+                    'rgba(129, 140, 248, 0.75)', // Indigo Neon
+                    'rgba(52, 211, 153, 0.75)',  // Verde Menta
+                    'rgba(251, 191, 36, 0.75)',  // Dourado/Âmbar
+                    'rgba(244, 63, 94, 0.75)',   // Rosa/Vermelho Neon
+                    'rgba(168, 85, 247, 0.75)',  // Roxo Neon
+                    'rgba(20, 184, 166, 0.75)'   // Teal
+                ],
+                borderColor: document.body.classList.contains("high-contrast") ? '#FFFF00' : 'rgba(15, 23, 42, 0.8)',
+                borderWidth: document.body.classList.contains("high-contrast") ? 2 : 1
             }]
         },
         options: {
@@ -1355,14 +1441,25 @@ function renderizarGraficos() {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    labels: { color: cores.text, font: { family: 'Plus Jakarta Sans', weight: 600 } }
+                    position: 'right',
+                    labels: {
+                        color: cores.text,
+                        font: { family: 'Plus Jakarta Sans', weight: 600, size: 11 },
+                        padding: 12
+                    }
+                }
+            },
+            scales: {
+                r: {
+                    grid: { color: cores.grid },
+                    ticks: { display: false },
+                    angleLines: { color: cores.grid }
                 }
             }
         }
     });
 
-    // 4. Fluxo de Horário
+    // 4. FLUXO DE HORÁRIO
     chartLine = new Chart(document.getElementById('lineChart'), {
         type: 'line',
         data: {
@@ -1389,20 +1486,48 @@ function renderizarGraficos() {
 
 renderizarGraficos();
 
-// ==========================================
-// ATUALIZAÇÃO AUTOMÁTICA DO DASHBOARD
-// ==========================================
-setInterval(() => {
-    window.location.reload();
-}, 3000);
+//setInterval(() => {
+    //window.location.reload();
+//}, 3000);
+
+// Função para atualizar os dados e redesenhar o mapa e KPIs de forma limpa (sem reload)
+function atualizarDashboardDinamicamente() {
+    // Substitua pela URL real da rota criada no Passo 1
+    const urlJson = '<?= base_url("dashboard/getDadosJson") ?>';
+
+    fetch(urlJson)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                // 1. Redesenha o mapa do estacionamento sem piscar a tela inteira
+                if (data.vagasMapa && Array.isArray(data.vagasMapa)) {
+                    desenharMapaEstacionamento(data.vagasMapa);
+                }
+
+                // 2. Atualiza os valores dos cards de KPIs instantaneamente
+                const cardsValores = document.querySelectorAll('.container .card .value');
+                if (cardsValores.length >= 4) {
+                    if (data.totalVagas !== undefined) cardsValores[0].innerText = data.totalVagas;
+                    if (data.livres !== undefined) cardsValores[1].innerText = data.livres;
+                    if (data.ocupadas !== undefined) cardsValores[2].innerText = data.ocupadas;
+                    if (data.taxa !== undefined) cardsValores[3].innerText = data.taxa + '%';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados atualizados do dashboard:', error);
+        });
+}
+
+// Configura para atualizar a cada 3 segundos via AJAX (substitui o window.location.reload)
+setInterval(atualizarDashboardDinamicamente, 1000);
+
 </script>
 
-<!-- SWEET ALERT ENTRADA DE USUÁRIOS -->
-
+</script>
 
 <script>
 (function () {
-
     const theme = localStorage.getItem('theme');
     const contrast = localStorage.getItem('contrast');
 
@@ -1410,15 +1535,10 @@ setInterval(() => {
     document.body.classList.remove('high-contrast');
 
     if (contrast === 'high') {
-
         document.body.classList.add('high-contrast');
-
     } else if (theme === 'light') {
-
         document.body.classList.add('light');
-
     }
-
 })();
 </script>
 </body>

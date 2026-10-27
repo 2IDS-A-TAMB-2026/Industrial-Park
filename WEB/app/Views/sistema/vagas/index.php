@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
 
 <title>Cadastro de Vagas</title>
 
@@ -208,7 +209,7 @@ body {
 }
 
 .logout:hover i {
-    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
+    transform: translateX(3px);
 }
 
 .logout:active {
@@ -250,7 +251,7 @@ body {
     color: #fff;
     letter-spacing: -.8px;
     line-height: 1.2;
-    white-space: nowrap; /* Evita que o texto quebre em duas linhas */
+    white-space: nowrap;
 }
 
 .page-title p {
@@ -447,6 +448,8 @@ select option {
 
 button[type=submit],
 .btn-submit {
+    grid-column: 1 / -1;
+
     width: 100%;
 
     padding: 13px 16px;
@@ -889,6 +892,17 @@ body.light .menu a.active {
     color: #0f172a;
 }
 
+body.light .logout {
+    background: rgba(15, 23, 42, 0.05);
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+body.light .logout:hover {
+    background: #0f172a;
+    color: #fff;
+}
+
 body.light .page-title h1 {
     color: #0f172a;
 }
@@ -1021,7 +1035,7 @@ body.light .acc-btn:hover i {
 
 
 /* =========================================================
-   ALTO CONTRASTE (IGUAL AO DASHBOARD)
+   ALTO CONTRASTE
 ========================================================= */
 
 body.high-contrast {
@@ -1147,7 +1161,7 @@ img {
     }
 
     .form-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .main {
@@ -1167,9 +1181,15 @@ img {
     }
 }
 
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* ==========================================
-   SWEETALERT - ALTO CONTRASTE
+   SWEETALERT - TEMAS ADAPTÁVEIS
    ========================================== */
 
 .swal-high-contrast {
@@ -1194,6 +1214,40 @@ img {
     color: #ffff00 !important;
     border: 2px solid #ffff00 !important;
     font-weight: 700 !important;
+}
+
+/* Estilos dinâmicos para campos internos do SweetAlert */
+body.light .swal2-popup .swal2-input,
+body.light .swal2-popup .swal2-select {
+    color: #0f172a !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+body.light .swal2-popup label {
+    color: #334155 !important;
+}
+
+body:not(.light):not(.high-contrast) .swal2-popup .swal2-input,
+body:not(.light):not(.high-contrast) .swal2-popup .swal2-select {
+    color: #f8fafc !important;
+    background-color: #0f172a !important;
+    border: 1px solid #475569 !important;
+}
+
+body:not(.light):not(.high-contrast) .swal2-popup label {
+    color: #cbd5e1 !important;
+}
+
+body.high-contrast .swal2-popup .swal2-input,
+body.high-contrast .swal2-popup .swal2-select {
+    color: #ffff00 !important;
+    background-color: #000000 !important;
+    border: 1px solid #ffff00 !important;
+}
+
+body.high-contrast .swal2-popup label {
+    color: #ffff00 !important;
 }
 </style>
 </head>
@@ -1432,7 +1486,7 @@ img {
     <!-- LOGOUT -->
 
     <a
-        href="#"
+        href="<?= base_url('/logout') ?>"
         class="logout"
         id="logoutBtn"
     >
@@ -1475,63 +1529,6 @@ img {
         ================================================= -->
 
         <div class="card">
-
-
-            <!-- SWEETALERT ERRO -->
-
-            <?php if(session()->getFlashdata('erro')) : ?>
-
-                <script>
-
-                    Swal.fire({
-
-                        icon: 'error',
-
-                        title: 'Erro!',
-
-                        text:
-                            <?= json_encode(session()->getFlashdata('erro')) ?>,
-
-                        confirmButtonColor: '#0284c7',
-
-                        background: '#1e293b',
-
-                        color: '#fff'
-
-                    });
-
-                </script>
-
-            <?php endif; ?>
-
-
-            <!-- SWEETALERT SUCESSO -->
-
-            <?php if(session()->getFlashdata('sucesso')) : ?>
-
-                <script>
-
-                    Swal.fire({
-
-                        icon: 'success',
-
-                        title: 'Sucesso!',
-
-                        text:
-                            <?= json_encode(session()->getFlashdata('sucesso')) ?>,
-
-                        confirmButtonColor: '#0284c7',
-
-                        background: '#1e293b',
-
-                        color: '#fff'
-
-                    });
-
-                </script>
-
-            <?php endif; ?>
-
 
             <h2>
                 Adicionar Nova Vaga
@@ -1633,31 +1630,25 @@ img {
                     </div>
 
 
-                    <!-- CNPJ -->
+        <!-- CNPJ FIXO DA EMPRESA -->
 
-                    <div class="form-group">
-
-                        <label for="cnpj">
-                            CNPJ da Empresa
-                        </label>
-
-                        <input
-                            type="text"
-                            id="cnpj"
-                            name="FK_EMP_CNPJ"
-                            placeholder="00.000.000/0000-00"
-                            maxlength="18"
-                        >
-
-                        <span
-                            id="erroCnpj"
-                            class="erro"
-                        ></span>
-
-                    </div>
+<!-- CNPJ FIXO DA EMPRESA -->
 
 
-                </div>
+<div class="form-group">
+    <label for="cnpj">CNPJ da Empresa</label>
+
+    <input
+        type="text"
+        id="cnpj"
+        name="FK_EMP_CNPJ"
+        value="56.748.302/7358-29"
+        readonly
+        aria-describedby="erroCnpj"
+    >
+
+    <span id="erroCnpj" class="erro"></span>
+</div>
 
 
                 <!-- BOTÃO -->
@@ -1676,11 +1667,13 @@ img {
 
                 </button>
 
+                </div><!-- Fim do form-grid -->
+
 
             </form>
 
         </div>
-
+        <br>
 
         <!-- =================================================
              CARD TABELA
@@ -1930,6 +1923,90 @@ img {
 
 <script>
 
+/* =========================================================
+   FUNÇÃO AUXILIAR PARA SWEETALERT ADAPTÁVEL
+========================================================= */
+
+function getSwalThemeConfig() {
+    const isHighContrast = document.body.classList.contains('high-contrast');
+    const isLight = document.body.classList.contains('light');
+
+    if (isHighContrast) {
+        return {
+            background: '#000000',
+            color: '#ffff00',
+            confirmButtonColor: '#ffff00',
+            cancelButtonColor: '#000000',
+            customClass: {
+                popup: 'swal-high-contrast',
+                title: 'swal-high-contrast-title',
+                htmlContainer: 'swal-high-contrast-text',
+                confirmButton: 'swal-high-contrast-confirm',
+                cancelButton: 'swal-high-contrast-cancel'
+            }
+        };
+    } else if (isLight) {
+        return {
+            background: '#ffffff',
+            color: '#0f172a',
+            confirmButtonColor: '#0284c7',
+            cancelButtonColor: '#64748b'
+        };
+    } else {
+        // Modo escuro por padrão
+        return {
+            background: '#1e293b',
+            color: '#f8fafc',
+            confirmButtonColor: '#0284c7',
+            cancelButtonColor: '#475569'
+        };
+    }
+}
+
+function fireCustomSwal(options) {
+    const themeConfig = getSwalThemeConfig();
+
+    if (document.body.classList.contains('high-contrast')) {
+        delete options.confirmButtonColor;
+        delete options.cancelButtonColor;
+    }
+
+    return Swal.fire({
+        ...themeConfig,
+        ...options,
+        customClass: {
+            ...(themeConfig.customClass || {}),
+            ...(options.customClass || {})
+        }
+    });
+}
+
+
+/* =========================================================
+   SWEETALERT FLASHDATA (MENSAGENS DO PHP)
+========================================================= */
+
+<?php if(session()->getFlashdata('erro')) : ?>
+    fireCustomSwal({
+        icon: 'error',
+        title: 'Erro!',
+        text: <?= json_encode(session()->getFlashdata('erro')) ?>
+    });
+<?php endif; ?>
+
+<?php if(session()->getFlashdata('sucesso')) : ?>
+    fireCustomSwal({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: <?= json_encode(session()->getFlashdata('sucesso')) ?>
+    });
+<?php endif; ?>
+
+
+/* =========================================================
+   CONFIRMAÇÃO DE LOGOUT
+========================================================= */
+
 const logoutBtn = document.getElementById('logoutBtn');
 
 if (logoutBtn) {
@@ -1938,11 +2015,7 @@ if (logoutBtn) {
 
         const logoutUrl = this.getAttribute('href');
 
-        // Detecta o modo atual da tela
-        const isHighContrast = document.body.classList.contains('high-contrast');
-        const isLight = document.body.classList.contains('light');
-
-        let config = {
+        fireCustomSwal({
             title: 'Deseja sair?',
             text: 'Você será desconectado do sistema.',
             icon: 'question',
@@ -1951,42 +2024,7 @@ if (logoutBtn) {
             cancelButtonText: 'Cancelar',
             reverseButtons: true,
             focusCancel: true
-        };
-
-        // 🌙 MODO ESCURO
-        if (!isLight && !isHighContrast) {
-            config.background = '#1e293b';
-            config.color = '#f8fafc';
-            config.confirmButtonColor = '#4CC9F0';
-            config.cancelButtonColor = '#475569';
-        }
-
-        // ☀️ MODO CLARO
-        else if (isLight && !isHighContrast) {
-            config.background = '#ffffff';
-            config.color = '#0f172a';
-            config.confirmButtonColor = '#0284c7';
-            config.cancelButtonColor = '#64748b';
-        }
-
-        // ⚠️ ALTO CONTRASTE
-        else if (isHighContrast) {
-            config.background = '#000000';
-            config.color = '#ffff00';
-            config.confirmButtonColor = '#ffff00';
-            config.cancelButtonColor = '#000000';
-
-            // CSS específico para manter o padrão do alto contraste
-            config.customClass = {
-                popup: 'swal-high-contrast',
-                title: 'swal-high-contrast-title',
-                htmlContainer: 'swal-high-contrast-text',
-                confirmButton: 'swal-high-contrast-confirm',
-                cancelButton: 'swal-high-contrast-cancel'
-            };
-        }
-
-        Swal.fire(config).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = logoutUrl;
             }
@@ -2203,7 +2241,7 @@ document
                         this.href;
 
 
-                    Swal.fire({
+                    fireCustomSwal({
 
                         title: "Excluir vaga?",
 
@@ -2282,7 +2320,7 @@ document
                         linha.children[3].innerText;
 
 
-                    Swal.fire({
+                    fireCustomSwal({
 
                         title: "Detalhes da Vaga",
 
@@ -2336,9 +2374,6 @@ document
 
                         confirmButtonText:
                             "Fechar",
-
-                        confirmButtonColor:
-                            "#0284c7",
 
                         scrollbarPadding: false,
 
@@ -2397,7 +2432,7 @@ document
 
                     const {
                         value: formValues
-                    } = await Swal.fire({
+                    } = await fireCustomSwal({
 
                         title:
                             "Editar Vaga",
@@ -2420,7 +2455,6 @@ document
                                         style="
                                             font-size:.85rem;
                                             font-weight:600;
-                                            color:#0f172a;
                                         "
                                     >
                                         Setor
@@ -2446,7 +2480,6 @@ document
                                         style="
                                             font-size:.85rem;
                                             font-weight:600;
-                                            color:#0f172a;
                                         "
                                     >
                                         Localização
@@ -2472,7 +2505,6 @@ document
                                         style="
                                             font-size:.85rem;
                                             font-weight:600;
-                                            color:#0f172a;
                                         "
                                     >
                                         Status
@@ -2537,12 +2569,6 @@ document
 
                         cancelButtonText:
                             "Cancelar",
-
-                        confirmButtonColor:
-                            "#0284c7",
-
-                        cancelButtonColor:
-                            "#475569",
 
                         scrollbarPadding: false,
 
@@ -2665,7 +2691,7 @@ document
                                     'success'
                                 ) {
 
-                                    Swal.fire({
+                                    fireCustomSwal({
 
                                         title:
                                             "Sucesso!",
@@ -2675,9 +2701,6 @@ document
 
                                         icon:
                                             "success",
-
-                                        confirmButtonColor:
-                                            "#0284c7",
 
                                         scrollbarPadding:
                                             false,
@@ -2695,7 +2718,7 @@ document
 
                                 } else {
 
-                                    Swal.fire({
+                                    fireCustomSwal({
 
                                         title:
                                             "Erro!",
@@ -2719,7 +2742,7 @@ document
                         .catch(
                             () => {
 
-                                Swal.fire({
+                                fireCustomSwal({
 
                                     title:
                                         "Erro!",
@@ -2996,6 +3019,7 @@ themeBtn.addEventListener(
     "click",
     () => {
 
+        document.body.classList.remove("high-contrast");
         document.body.classList.toggle(
             "light"
         );
@@ -3072,6 +3096,7 @@ contrastBtn.addEventListener(
     "click",
     () => {
 
+        document.body.classList.remove("light");
         document.body.classList.toggle(
             "high-contrast"
         );

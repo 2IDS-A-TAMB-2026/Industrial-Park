@@ -6,7 +6,7 @@ const char* ssid = "WIFI-EDUC";
 const char* password = "ac3ce7ss0-EDUC";
 
 const char* serverUrl =
-    "http://10.141.130.92/INDUSTRIAL_PARK/public/api/vagas";
+    "http://10.141.131.94/INDUSTRIAL_PARK/public/api/vagas";
 
 #define TRIG 14
 #define ECHO 12

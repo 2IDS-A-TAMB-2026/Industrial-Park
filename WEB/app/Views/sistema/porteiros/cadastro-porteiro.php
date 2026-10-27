@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
 
 <title>Cadastro de Porteiros</title>
 
@@ -843,6 +844,17 @@ body.light .menu a.active {
     color: #0f172a;
 }
 
+body.light .logout {
+    background: rgba(15, 23, 42, 0.05);
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+body.light .logout:hover {
+    background: #0f172a;
+    color: #fff;
+}
+
 body.light .page-title h1 {
     color: #0f172a;
 }
@@ -975,7 +987,7 @@ body.light .acc-btn:hover i {
 
 
 /* =========================================================
-   ALTO CONTRASTE (ATUALIZADO)
+   ALTO CONTRASTE
 ========================================================= */
 
 body.high-contrast { 
@@ -1118,7 +1130,7 @@ img {
 }
 
 /* ==========================================
-   SWEETALERT - ALTO CONTRASTE
+   SWEETALERT - TEMAS ADAPTÁVEIS
    ========================================== */
 
 .swal-high-contrast {
@@ -1144,6 +1156,38 @@ img {
     border: 2px solid #ffff00 !important;
     font-weight: 700 !important;
 }
+
+/* Estilos dinâmicos para campos internos do SweetAlert */
+body.light .swal2-popup .swal2-input {
+    color: #0f172a !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+body.light .swal2-popup label {
+    color: #334155 !important;
+}
+
+body:not(.light):not(.high-contrast) .swal2-popup .swal2-input {
+    color: #f8fafc !important;
+    background-color: #0f172a !important;
+    border: 1px solid #475569 !important;
+}
+
+body:not(.light):not(.high-contrast) .swal2-popup label {
+    color: #cbd5e1 !important;
+}
+
+body.high-contrast .swal2-popup .swal2-input {
+    color: #ffff00 !important;
+    background-color: #000000 !important;
+    border: 1px solid #ffff00 !important;
+}
+
+body.high-contrast .swal2-popup label {
+    color: #ffff00 !important;
+}
+
 </style>
 </head>
 
@@ -1426,63 +1470,6 @@ img {
 
         <div class="card">
 
-
-            <!-- SWEETALERT ERRO -->
-
-            <?php if(session()->getFlashdata('erro')) : ?>
-
-                <script>
-
-                    Swal.fire({
-
-                        icon: 'error',
-
-                        title: 'Erro!',
-
-                        text:
-                            <?= json_encode(session()->getFlashdata('erro')) ?>,
-
-                        confirmButtonColor: '#0284c7',
-
-                        background: '#1e293b',
-
-                        color: '#fff'
-
-                    });
-
-                </script>
-
-            <?php endif; ?>
-
-
-            <!-- SWEETALERT SUCESSO -->
-
-            <?php if(session()->getFlashdata('sucesso')) : ?>
-
-                <script>
-
-                    Swal.fire({
-
-                        icon: 'success',
-
-                        title: 'Sucesso!',
-
-                        text:
-                            <?= json_encode(session()->getFlashdata('sucesso')) ?>,
-
-                        confirmButtonColor: '#0284c7',
-
-                        background: '#1e293b',
-
-                        color: '#fff'
-
-                    });
-
-                </script>
-
-            <?php endif; ?>
-
-
             <h2>
                 Cadastrar Novo Porteiro
             </h2>
@@ -1615,45 +1602,37 @@ img {
 
                     <!-- EMPRESA -->
 
-                    <div class="form-group">
+<!-- EMPRESA FIXA: SENAI TAMBAÚ -->
 
-                        <label for="usu_empresa">
-                            Empresa
-                        </label>
+<div class="form-group">
 
-                        <select
-                            id="usu_empresa"
-                            name="FK_EMP_CNPJ"
-                        >
+    <label for="usu_empresa">
+        Empresa
+    </label>
 
-                            <option value="">
-                                Selecione uma empresa
-                            </option>
+    <input
+        type="text"
+        id="usu_empresa"
+        value="SENAI Tambaú"
+        readonly
+        aria-readonly="true"
+    >
 
-                            <?php if(!empty($empresas)): ?>
+    <input
+        type="hidden"
+        id="usu_cnpj"
+        name="FK_EMP_CNPJ"
+        value="<?= esc($cnpjSenai ?? '') ?>"
+    >
 
-                                <?php foreach($empresas as $empresa): ?>
+    <small style="color: #94a3b8; display: block; margin-top: 6px;">
+        <i class="fa-solid fa-lock"></i>
+        Empresa definida pelo sistema.
+    </small>
 
-                                    <option value="<?= $empresa['EMP_CNPJ'] ?>">
-                                        <?= $empresa['EMP_NOME'] ?>
-                                    </option>
+    <span id="erroEmpresa" class="erro"></span>
 
-                                <?php endforeach; ?>
-
-                            <?php endif; ?>
-
-                        </select>
-
-                        <span
-                            id="erroEmpresa"
-                            class="erro"
-                        ></span>
-
-                    </div>
-
-
-                </div>
-
+</div>
 
                 <!-- BOTÃO -->
 
@@ -1727,7 +1706,7 @@ img {
                     <?php if(!empty($porteiros)) : ?>
 
 
-                        <?php foreach($porteiros as $porteiro) : ?>
+                        <?php foreach($porteiros as$porteiro) : ?>
 
 
                             <tr>
@@ -1901,6 +1880,104 @@ img {
 <script>
 
 /* =========================================================
+   FUNÇÃO AUXILIAR PARA SWEETALERT ADAPTÁVEL
+========================================================= */
+
+function getSwalThemeConfig() {
+    const isHighContrast = document.body.classList.contains('high-contrast');
+    const isLight = document.body.classList.contains('light');
+
+    if (isHighContrast) {
+        return {
+            background: '#000000',
+            color: '#ffff00',
+            confirmButtonColor: '#ffff00',
+            cancelButtonColor: '#000000',
+            customClass: {
+                popup: 'swal-high-contrast',
+                title: 'swal-high-contrast-title',
+                htmlContainer: 'swal-high-contrast-text',
+                confirmButton: 'swal-high-contrast-confirm',
+                cancelButton: 'swal-high-contrast-cancel'
+            }
+        };
+    } else if (isLight) {
+        return {
+            background: '#ffffff',
+            color: '#0f172a',
+            confirmButtonColor: '#0284c7',
+            cancelButtonColor: '#64748b'
+        };
+    } else {
+        // Modo escuro padrão
+        return {
+            background: '#1e293b',
+            color: '#f8fafc',
+            confirmButtonColor: '#0284c7',
+            cancelButtonColor: '#475569'
+        };
+    }
+}
+
+function fireCustomSwal(options) {
+    const themeConfig = getSwalThemeConfig();
+
+    // Em alto contraste, preserva as cores acessíveis dos botões
+    if (document.body.classList.contains('high-contrast')) {
+        delete options.confirmButtonColor;
+        delete options.cancelButtonColor;
+    }
+
+    return Swal.fire({
+        ...themeConfig,
+        ...options,
+        customClass: {
+            ...(themeConfig.customClass || {}),
+            ...(options.customClass || {})
+        }
+    });
+}
+
+
+/* =========================================================
+   SWEETALERT FLASHDATA (MENSAGENS DO PHP)
+========================================================= */
+
+<?php if(session()->getFlashdata('erro')) : ?>
+    fireCustomSwal({
+        icon: 'error',
+        title: 'Erro!',
+        text: <?= json_encode(session()->getFlashdata('erro')) ?>
+    });
+<?php endif; ?>
+
+<?php if(session()->getFlashdata('sucesso')) : ?>
+    fireCustomSwal({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: <?= json_encode(session()->getFlashdata('sucesso')) ?>
+    });
+<?php endif; ?>
+
+
+/* =========================================================
+   BLOQUEIO E VALIDAÇÃO DE DATA FUTURA (NASCIMENTO)
+========================================================= */
+
+const usuDataInput = document.getElementById("usu_data");
+
+if (usuDataInput) {
+    const hoje = new Date();
+    const yyyy = hoje.getFullYear();
+    const mm = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoje.getDate()).padStart(2, '0');
+    
+    // Define o atributo 'max' no input para bloquear datas futuras no selecionador nativo
+    usuDataInput.max = `${yyyy}-${mm}-${dd}`;
+}
+
+
+/* =========================================================
    MÁSCARA CPF
 ========================================================= */
 
@@ -2034,6 +2111,26 @@ if (form) {
             });
 
 
+            // Validação de data no futuro
+            const dataInput = document.getElementById("usu_data");
+            const erroData = document.getElementById("erroData");
+
+            if (dataInput && dataInput.value.trim() !== "") {
+                const hoje = new Date();
+                const yyyy = hoje.getFullYear();
+                const mm = String(hoje.getMonth() + 1).padStart(2, '0');
+                const dd = String(hoje.getDate()).padStart(2, '0');
+                const hojeStr = `${yyyy}-${mm}-${dd}`;
+
+                if (dataInput.value > hojeStr) {
+                    erroData.innerText = "A data de nascimento não pode ser no futuro";
+                    dataInput.classList.remove("bordaVerde");
+                    dataInput.classList.add("bordaVermelha");
+                    valido = false;
+                }
+            }
+
+
             if (valido) {
 
                 form.submit();
@@ -2058,10 +2155,7 @@ if (logoutBtn) {
 
         const logoutUrl = this.getAttribute('href');
 
-        const isHighContrast = document.body.classList.contains('high-contrast');
-        const isLight = document.body.classList.contains('light');
-
-        let config = {
+        fireCustomSwal({
             title: 'Deseja sair?',
             text: 'Você será desconectado do sistema.',
             icon: 'question',
@@ -2070,36 +2164,7 @@ if (logoutBtn) {
             cancelButtonText: 'Cancelar',
             reverseButtons: true,
             focusCancel: true
-        };
-
-        if (!isLight && !isHighContrast) {
-            config.background = '#1e293b';
-            config.color = '#f8fafc';
-            config.confirmButtonColor = '#4CC9F0';
-            config.cancelButtonColor = '#475569';
-        }
-        else if (isLight && !isHighContrast) {
-            config.background = '#ffffff';
-            config.color = '#0f172a';
-            config.confirmButtonColor = '#0284c7';
-            config.cancelButtonColor = '#64748b';
-        }
-        else if (isHighContrast) {
-            config.background = '#000000';
-            config.color = '#ffff00';
-            config.confirmButtonColor = '#ffff00';
-            config.cancelButtonColor = '#000000';
-
-            config.customClass = {
-                popup: 'swal-high-contrast',
-                title: 'swal-high-contrast-title',
-                htmlContainer: 'swal-high-contrast-text',
-                confirmButton: 'swal-high-contrast-confirm',
-                cancelButton: 'swal-high-contrast-cancel'
-            };
-        }
-
-        Swal.fire(config).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = logoutUrl;
             }
@@ -2128,7 +2193,7 @@ document
                         this.href;
 
 
-                    Swal.fire({
+                    fireCustomSwal({
 
                         title: "Excluir porteiro?",
 
@@ -2190,7 +2255,7 @@ document
                     e.preventDefault();
 
 
-                    Swal.fire({
+                    fireCustomSwal({
 
                         title: "Detalhes do Porteiro",
 
@@ -2245,9 +2310,6 @@ document
                         confirmButtonText:
                             "Fechar",
 
-                        confirmButtonColor:
-                            "#0284c7",
-
                         scrollbarPadding: false,
 
                         heightAuto: false
@@ -2291,7 +2353,7 @@ document
 
                     const {
                         value: formValues
-                    } = await Swal.fire({
+                    } = await fireCustomSwal({
 
                         title:
                             "Editar Porteiro",
@@ -2314,7 +2376,6 @@ document
                                         style="
                                             font-size:.85rem;
                                             font-weight:600;
-                                            color:#0f172a;
                                         "
                                     >
                                         Nome
@@ -2340,7 +2401,6 @@ document
                                         style="
                                             font-size:.85rem;
                                             font-weight:600;
-                                            color:#0f172a;
                                         "
                                     >
                                         E-mail
@@ -2372,12 +2432,6 @@ document
 
                         cancelButtonText:
                             "Cancelar",
-
-                        confirmButtonColor:
-                            "#0284c7",
-
-                        cancelButtonColor:
-                            "#475569",
 
                         scrollbarPadding: false,
 
@@ -2459,7 +2513,7 @@ document
                         .then(
                             () => {
 
-                                Swal.fire({
+                                fireCustomSwal({
 
                                     title:
                                         "Sucesso!",
@@ -2469,9 +2523,6 @@ document
 
                                     icon:
                                         "success",
-
-                                    confirmButtonColor:
-                                        "#0284c7",
 
                                     scrollbarPadding:
                                         false,
@@ -2493,7 +2544,7 @@ document
                         .catch(
                             () => {
 
-                                Swal.fire({
+                                fireCustomSwal({
 
                                     title:
                                         "Erro!",

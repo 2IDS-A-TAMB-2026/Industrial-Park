@@ -9,6 +9,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
 
 <title>Perfil do Usuário - Admin</title>
 
@@ -141,7 +142,7 @@ body {
 }
 
 /* =========================================================
-   LOGOUT
+   LOGOUT (MODERNO EM AZUL)
 ========================================================= */
 
 .logout {
@@ -149,30 +150,18 @@ body {
     text-align: center;
     text-decoration: none;
     border-radius: 14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(76, 201, 240, 0.15) 0%,
-            rgba(76, 201, 240, 0.05) 100%
-        );
-
+    background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
     border: 1px solid rgba(76, 201, 240, 0.3);
     color: #4CC9F0;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
-
-    transition:
-        all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-
-    box-shadow:
-        0 4px 12px rgba(76, 201, 240, 0.08);
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
 }
 
 .logout i {
@@ -181,19 +170,11 @@ body {
 }
 
 .logout:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #4CC9F0 0%,
-            #4361EE 100%
-        );
-
+    background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
     color: #070b16;
     border-color: #4CC9F0;
     transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 20px rgba(76, 201, 240, 0.35);
+    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
 }
 
 .logout:hover i {
@@ -737,6 +718,17 @@ body.light .menu a.active {
     color: #0f172a;
 }
 
+body.light .logout {
+    background: rgba(15, 23, 42, 0.05);
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+body.light .logout:hover {
+    background: #0f172a;
+    color: #fff;
+}
+
 body.light .page-title h1 {
     color: #1c2541;
 }
@@ -911,7 +903,8 @@ body.high-contrast .file-upload-btn {
         2px solid #FFFF00 !important;
 }
 
-body.high-contrast .file-upload-btn i {
+body.high-contrast .file-upload-btn i,
+body.high-contrast .logout i {
     color: #000000 !important;
 }
 

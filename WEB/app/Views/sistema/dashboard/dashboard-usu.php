@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="5">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('css/sweetalert-theme.css') ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
     <title>Dashboard do Usuário</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -115,46 +114,46 @@
         border: 1px solid rgba(76, 201, 240, 0.3);
     }
 
-       /* BOTÃO LOGOUT (MODERNO EM AZUL) */
-.logout {
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    color: #4CC9F0;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
-}
+    /* BOTÃO LOGOUT */
+    .logout {
+        padding: 12px 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
+        border: 1px solid rgba(76, 201, 240, 0.3);
+        color: #4CC9F0;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+    }
 
-.logout i {
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-}
+    .logout i {
+        font-size: 1rem;
+        transition: transform 0.3s ease;
+    }
 
-.logout:hover {
-    background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
-    color: #070b16;
-    border-color: #4CC9F0;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
-}
+    .logout:hover {
+        background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
+        color: #070b16;
+        border-color: #4CC9F0;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
+    }
 
-.logout:hover i {
-    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
-}
+    .logout:hover i {
+        transform: translateX(3px);
+    }
 
-.logout:active {
-    transform: translateY(0);
-}
+    .logout:active {
+        transform: translateY(0);
+    }
 
     /* CONTEÚDO PRINCIPAL */
     .main {
@@ -547,6 +546,17 @@
         color: #0f172a; 
     }
 
+    body.light .logout {
+        background: rgba(15, 23, 42, 0.05);
+        border-color: #cbd5e1;
+        color: #0f172a;
+    }
+
+    body.light .logout:hover {
+        background: #0f172a;
+        color: #fff;
+    }
+
     body.light .page-title h1 { color: #0f172a; }
     body.light .page-title p { color: #475569; }
 
@@ -652,6 +662,11 @@
         border: 2px solid #FFFF00 !important;
     }
 
+    body.high-contrast .logout:hover {
+        background: #FFFF00 !important;
+        color: #000000 !important;
+    }
+
     body.high-contrast .acc-btn i { color: #000000 !important; }
 
     body.high-contrast .driveway {
@@ -746,7 +761,6 @@
 <body>
 
 <?php if(session()->getFlashdata('erro')): ?>
-
 <script>
 Swal.fire({
     icon:'error',
@@ -754,11 +768,9 @@ Swal.fire({
     text:'<?= session()->getFlashdata('erro') ?>'
 });
 </script>
-
 <?php endif; ?>
 
 <?php if(session()->getFlashdata('sucesso')): ?>
-
 <script>
 Swal.fire({
     icon:'success',
@@ -766,19 +778,9 @@ Swal.fire({
     text:'<?= session()->getFlashdata('sucesso') ?>'
 });
 </script>
-
 <?php endif; ?>
 
 <?php
-/*
-|--------------------------------------------------------------------------
-| DADOS DO USUÁRIO LOGADO
-|--------------------------------------------------------------------------
-| Mesma lógica utilizada na tela de Perfil.
-| Primeiro tenta pegar do array $usuario e depois da sessão.
-|--------------------------------------------------------------------------
-*/
-
 $u_nome = $usuario['USU_NOME']
     ?? session()->get('USR_NOME')
     ?? session()->get('nome')
@@ -788,12 +790,6 @@ $u_tipo = $usuario['USU_TIPO']
     ?? session()->get('USU_TIPO')
     ?? session()->get('tipo')
     ?? 'USUARIO';
-
-/*
-|--------------------------------------------------------------------------
-| NOME AMIGÁVEL DO TIPO DE CONTA
-|--------------------------------------------------------------------------
-*/
 
 $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
     'USUARIO'  => 'Usuário Comum',
@@ -805,36 +801,33 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
 ?>
 
 <!-- BOTÃO DE ACESSIBILIDADE -->
-
 <button
  class="main-acc-btn"
  id="mainAccBtn"
  title="Opções de Acessibilidade"
  aria-label="Abrir painel de acessibilidade"
  aria-expanded="false"
- aria-controls="accPanel"> <i class="fa-solid fa-universal-access" aria-hidden="true"></i> </button>
+ aria-controls="accPanel">
+ <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+</button>
 
 <!-- PAINEL LATERAL DE ACESSIBILIDADE -->
-
 <section
     class="accessibility-panel"
     id="accPanel"
     aria-label="Painel de Acessibilidade"
     aria-hidden="true">
 
-
 <h3>Acessibilidade</h3>
 
 <div class="panel-row">
     <span>Tamanho da Letra:</span>
-
     <div style="display:flex; gap:6px;">
         <button
             class="acc-btn"
             id="decreaseText"
             title="Diminuir texto"
             aria-label="Diminuir tamanho da fonte">-</button>
-
         <button
             class="acc-btn"
             id="increaseText"
@@ -845,7 +838,6 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
 
 <div class="panel-row">
     <span>Alto Contraste:</span>
-
     <button
         class="acc-btn"
         id="contrastBtn"
@@ -857,7 +849,6 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
 
 <div class="panel-row">
     <span>Ouvir Texto:</span>
-
     <button
         class="acc-btn"
         id="audioBtn"
@@ -869,7 +860,6 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
 
 <div class="panel-row">
     <span>Tema Claro/Escuro:</span>
-
     <button
         class="acc-btn"
         id="themeBtn"
@@ -881,7 +871,6 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
 
 <div class="panel-row">
     <span>Tradutor VLibras:</span>
-
     <button
         class="acc-btn"
         id="vlibrasBtn"
@@ -890,17 +879,11 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
         Libras
     </button>
 </div>
-
-
 </section>
 
 <!-- MENU LATERAL -->
-
 <aside class="sidebar">
-
-
 <div>
-
     <div class="logo">
         <img
             id="logoImg"
@@ -908,48 +891,28 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
             data-light="<?= base_url('/images/LogoModoClaro.png') ?>"
             class="logo-img"
             alt="Logotipo Industrial Park">
-
         <span>Industrial Park</span>
     </div>
 
-    <!-- NOME DA PESSOA LOGADA -->
     <div class="user">
-
         <h2><?= esc($u_nome) ?></h2>
-
-        <p>
-            Perfil: <?= esc($u_tipo_exibicao) ?>
-        </p>
-
+        <p>Perfil: <?= esc($u_tipo_exibicao) ?></p>
     </div>
 
     <nav class="menu" aria-label="Menu Principal">
-
         <a
             href="<?= base_url('/dashboard-usu') ?>"
             class="active"
             aria-current="page">
-
-            <i
-                class="fa-solid fa-house"
-                aria-hidden="true"></i>
-
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
             <span>Dashboard</span>
-
         </a>
 
         <a href="<?= base_url('/perfil-usuario') ?>">
-
-            <i
-                class="fa-solid fa-user"
-                aria-hidden="true"></i>
-
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
             <span>Editar Perfil</span>
-
         </a>
-
     </nav>
-
 </div>
 
 <a
@@ -957,1558 +920,644 @@ $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
     class="logout"
     id="logoutBtn"
     aria-label="Sair da conta">
-
-    <i
-        class="fa-solid fa-right-from-bracket"
-        aria-hidden="true"></i>
-
+    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
     <span>Logout</span>
-
 </a>
-
 </aside>
 
 <!-- CONTEÚDO PRINCIPAL -->
-
 <main class="main">
-
 <header class="page-title">
-
     <h1>Dashboard do Usuário</h1>
-
-    <p>
-        Visualize informações do estacionamento e acompanhe suas atividades em tempo real.
-    </p>
-
+    <p>Visualize informações do estacionamento e acompanhe suas atividades em tempo real.</p>
 </header>
 
 <div class="container">
+    <!-- TOTAL DE VAGAS -->
+    <section class="card" aria-labelledby="lbl-total">
+        <div class="kpi-header">
+            <h2 id="lbl-total">Total de Vagas</h2>
+            <div class="kpi-icon-wrapper kpi-icon-blue">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+        </div>
+        <div class="indicator-body">
+            <div class="value" style="color: #38bdf8;"><?= $totalVagas ?></div>
+            <div class="mini">Vagas cadastradas</div>
+        </div>
+    </section>
 
     <!-- VAGAS LIVRES -->
     <section class="card" aria-labelledby="lbl-livres">
-
         <div class="kpi-header">
-
-            <h2 id="lbl-livres">
-                Vagas Livres
-            </h2>
-
+            <h2 id="lbl-livres">Vagas Livres</h2>
             <div class="kpi-icon-wrapper kpi-icon-green">
                 <i class="fa-solid fa-square-check"></i>
             </div>
-
         </div>
-
         <div class="indicator-body">
-
-            <div
-                class="value"
-                style="color: #4ade80;">
-
-                <?= $livres ?>
-
-            </div>
-
+            <div class="value" style="color: #4ade80;"><?= $livres ?></div>
             <div class="mini">
-
-                <i
-                    class="fa-solid fa-circle"
-                    style="font-size: 8px; color: #4ade80;"></i>
-
+                <i class="fa-solid fa-circle" style="font-size: 8px; color: #4ade80;"></i>
                 Disponíveis para uso
-
             </div>
-
         </div>
-
     </section>
 
     <!-- VAGAS OCUPADAS -->
     <section class="card" aria-labelledby="lbl-ocupadas">
-
         <div class="kpi-header">
-
-            <h2 id="lbl-ocupadas">
-                Vagas Ocupadas
-            </h2>
-
+            <h2 id="lbl-ocupadas">Vagas Ocupadas</h2>
             <div class="kpi-icon-wrapper kpi-icon-red">
                 <i class="fa-solid fa-car-side"></i>
             </div>
-
         </div>
-
         <div class="indicator-body">
-
-            <div
-                class="value"
-                style="color: #f87171;">
-
-                <?= $ocupadas ?>
-
-            </div>
-
+            <div class="value" style="color: #f87171;"><?= $ocupadas ?></div>
             <div class="mini">
-
-                <i
-                    class="fa-solid fa-circle"
-                    style="font-size: 8px; color: #f87171;"></i>
-
+                <i class="fa-solid fa-circle" style="font-size: 8px; color: #f87171;"></i>
                 Em uso no momento
-
             </div>
-
         </div>
-
-    </section>
-
-    <!-- GRÁFICO -->
-    <section
-        class="card chart-side-card"
-        aria-labelledby="lbl-fluxo">
-
-        <div class="kpi-header">
-
-            <h2 id="lbl-fluxo">
-                Fluxo por Horários
-            </h2>
-
-            <div class="kpi-icon-wrapper kpi-icon-amber">
-                <i class="fa-solid fa-chart-line"></i>
-            </div>
-
-        </div>
-
-        <div class="chart-wrapper">
-
-            <canvas
-                id="lineChart"
-                role="img"
-                aria-label="Gráfico de linha do fluxo de veículos por horário">
-            </canvas>
-
-        </div>
-
-    </section>
-
-    <!-- TOTAL DE VAGAS -->
-    <section class="card" aria-labelledby="lbl-total">
-
-        <div class="kpi-header">
-
-            <h2 id="lbl-total">
-                Total de Vagas
-            </h2>
-
-            <div class="kpi-icon-wrapper kpi-icon-blue">
-                <i class="fa-solid fa-layer-group"></i>
-            </div>
-
-        </div>
-
-        <div class="indicator-body">
-
-            <div
-                class="value"
-                style="color: #38bdf8;">
-
-                <?= $totalVagas ?>
-
-            </div>
-
-            <div class="mini">
-                Vagas cadastradas
-            </div>
-
-        </div>
-
     </section>
 
     <!-- TAXA DE OCUPAÇÃO -->
     <section class="card" aria-labelledby="lbl-taxa">
-
         <div class="kpi-header">
-
-            <h2 id="lbl-taxa">
-                Taxa de Ocupação
-            </h2>
-
+            <h2 id="lbl-taxa">Taxa de Ocupação</h2>
             <div class="kpi-icon-wrapper kpi-icon-amber">
                 <i class="fa-solid fa-chart-pie"></i>
             </div>
-
         </div>
-
         <div class="indicator-body">
-
-            <div
-                class="value"
-                style="color: #fbbf24;">
-
-                <?= $taxa ?>%
-
-            </div>
-
-            <div class="mini">
-                Percentual atual
-            </div>
-
+            <div class="value" style="color: #fbbf24;"><?= $taxa ?>%</div>
+            <div class="mini">Percentual atual</div>
         </div>
+    </section>
 
+    <!-- GRÁFICO -->
+    <section class="card chart-side-card" aria-labelledby="lbl-fluxo">
+        <div class="kpi-header">
+            <h2 id="lbl-fluxo">Fluxo por Horários</h2>
+            <div class="kpi-icon-wrapper kpi-icon-amber">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="lineChart" role="img" aria-label="Gráfico de linha do fluxo de veículos por horário"></canvas>
+        </div>
     </section>
 
     <!-- MAPA -->
-    <section
-        class="card span-4"
-        aria-labelledby="lbl-mapa">
-
-        <div
-            class="kpi-header"
-            style="margin-bottom: 1.2rem;">
-
-            <h2 id="lbl-mapa">
-                Mapa do Estacionamento
-            </h2>
-
+    <section class="card span-4" aria-labelledby="lbl-mapa">
+        <div class="kpi-header" style="margin-bottom: 1.2rem;">
+            <h2 id="lbl-mapa">Mapa do Estacionamento</h2>
         </div>
 
-        <div
-            class="dashboard-legend"
-            role="region"
-            aria-label="Legenda do mapa">
-
+        <div class="dashboard-legend" role="region" aria-label="Legenda do mapa">
             <div class="legend-item">
-
                 <span class="led-indicator-dot led-green"></span>
-
-                <img
-                    src="<?= base_url('/images/CarroVerde.png') ?>"
-                    alt=""
-                    class="legend-car-img"
-                    aria-hidden="true">
-
-                <span>
-                    Vaga Livre (Verde)
-                </span>
-
+                <img src="<?= base_url('/images/CarroVerde.png') ?>" alt="" class="legend-car-img" aria-hidden="true">
+                <span>Vaga Livre (Verde)</span>
             </div>
-
             <div class="legend-item">
-
                 <span class="led-indicator-dot led-red"></span>
-
-                <img
-                    src="<?= base_url('/images/CarroVermelho.png') ?>"
-                    alt=""
-                    class="legend-car-img"
-                    aria-hidden="true">
-
-                <span>
-                    Vaga Ocupada (Vermelha)
-                </span>
-
+                <img src="<?= base_url('/images/CarroVermelho.png') ?>" alt="" class="legend-car-img" aria-hidden="true">
+                <span>Vaga Ocupada (Vermelha)</span>
             </div>
-
             <div class="legend-item">
-
                 <span class="led-indicator-dot led-gray"></span>
-
-                <img
-                    src="<?= base_url('/images/CarroCinza.png') ?>"
-                    alt=""
-                    class="legend-car-img"
-                    aria-hidden="true">
-
-                <span>
-                    Vaga Indisponível (Cinza)
-                </span>
-
+                <img src="<?= base_url('/images/CarroCinza.png') ?>" alt="" class="legend-car-img" aria-hidden="true">
+                <span>Vaga Indisponível (Cinza)</span>
             </div>
-
         </div>
 
-        <div
-            id="parkingLot"
-            role="region"
-            aria-live="polite">
-        </div>
-
+        <div id="parkingLot" role="region" aria-live="polite"></div>
     </section>
-
 </div>
-
 </main>
 
 <!-- VLIBRAS -->
-
 <div vw class="enabled">
-
 <div vw-access-button class="active"></div>
-
 <div vw-plugin-wrapper>
     <div class="vw-plugin-top-wrapper"></div>
 </div>
-
 </div>
 
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-
 <script>
 new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
 
 <script>
-
-/* ==========================================
-   CONFIRMAÇÃO DE LOGOUT
-========================================== */
-
 const logoutBtn = document.getElementById('logoutBtn');
 
 if (logoutBtn) {
-
     logoutBtn.addEventListener('click', function(e) {
-
         e.preventDefault();
-
         const logoutUrl = this.getAttribute('href');
-
-        const isHighContrast =
-            document.body.classList.contains('high-contrast');
-
-        const isLight =
-            document.body.classList.contains('light');
+        const isHighContrast = document.body.classList.contains('high-contrast');
+        const isLight = document.body.classList.contains('light');
 
         let config = {
-
             title: 'Deseja sair?',
             text: 'Você será desconectado do sistema.',
             icon: 'question',
-
             showCancelButton: true,
-
             confirmButtonText: 'Sim, sair',
             cancelButtonText: 'Cancelar',
-
             reverseButtons: true,
             focusCancel: true
-
         };
 
         if (!isLight && !isHighContrast) {
-
             config.background = '#1e293b';
             config.color = '#f8fafc';
-
             config.confirmButtonColor = '#4CC9F0';
             config.cancelButtonColor = '#475569';
-
-        }
-
-        else if (isLight && !isHighContrast) {
-
+        } else if (isLight && !isHighContrast) {
             config.background = '#ffffff';
             config.color = '#0f172a';
-
             config.confirmButtonColor = '#0284c7';
             config.cancelButtonColor = '#64748b';
-
-        }
-
-        else if (isHighContrast) {
-
+        } else if (isHighContrast) {
             config.background = '#000000';
             config.color = '#ffff00';
-
             config.confirmButtonColor = '#ffff00';
             config.cancelButtonColor = '#000000';
-
             config.customClass = {
-
                 popup: 'swal-high-contrast',
                 title: 'swal-high-contrast-title',
                 htmlContainer: 'swal-high-contrast-text',
                 confirmButton: 'swal-high-contrast-confirm',
                 cancelButton: 'swal-high-contrast-cancel'
-
             };
-
         }
 
         Swal.fire(config).then((result) => {
-
             if (result.isConfirmed) {
-
                 window.location.href = logoutUrl;
-
             }
-
         });
-
     });
-
 }
-
-
-/* ==========================================
-   ACESSIBILIDADE
-========================================== */
 
 const mainAccBtn = document.getElementById("mainAccBtn");
 const accPanel = document.getElementById("accPanel");
 const body = document.body;
 
 function togglePanel(open) {
-
-    const isOpen =
-        open !== undefined
-            ? open
-            : !accPanel.classList.contains("open");
-
+    const isOpen = open !== undefined ? open : !accPanel.classList.contains("open");
     accPanel.classList.toggle("open", isOpen);
-
-    accPanel.setAttribute(
-        "aria-hidden",
-        !isOpen
-    );
-
-    mainAccBtn.setAttribute(
-        "aria-expanded",
-        isOpen
-    );
-
+    accPanel.setAttribute("aria-hidden", !isOpen);
+    mainAccBtn.setAttribute("aria-expanded", isOpen);
 }
 
 mainAccBtn.addEventListener("click", (e) => {
-
     e.stopPropagation();
-
     togglePanel();
-
 });
 
 document.addEventListener("click", (e) => {
-
-    if (
-        !accPanel.contains(e.target) &&
-        e.target !== mainAccBtn
-    ) {
-
+    if (!accPanel.contains(e.target) && e.target !== mainAccBtn) {
         togglePanel(false);
-
     }
-
 });
 
 document.addEventListener("keydown", (e) => {
-
-    if (
-        e.key === "Escape" &&
-        accPanel.classList.contains("open")
-    ) {
-
+    if (e.key === "Escape" && accPanel.classList.contains("open")) {
         togglePanel(false);
-
     }
-
 });
 
-
-/* ==========================================
-   TAMANHO DA FONTE
-========================================== */
-
-let currentFontSize =
-    parseFloat(localStorage.getItem("fontSize")) || 16;
+let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
 
 const updateFontSize = (size) => {
-
-    document.documentElement.style.fontSize =
-        size + "px";
-
-    localStorage.setItem(
-        "fontSize",
-        size
-    );
-
+    document.documentElement.style.fontSize = size + "px";
+    localStorage.setItem("fontSize", size);
 };
 
 updateFontSize(currentFontSize);
 
 document.getElementById("increaseText").addEventListener("click", () => {
-
     if (currentFontSize < 24) {
-
         currentFontSize += 1;
-
         updateFontSize(currentFontSize);
-
     }
-
 });
 
 document.getElementById("decreaseText").addEventListener("click", () => {
-
     if (currentFontSize > 13) {
-
         currentFontSize -= 1;
-
         updateFontSize(currentFontSize);
-
     }
-
 });
 
-
-/* ==========================================
-   TROCA DE IMAGENS
-========================================== */
-
 function trocarImagens(modo) {
-
-    const imagens =
-        document.querySelectorAll(
-            "img.logo-img, #logoImg"
-        );
-
+    const imagens = document.querySelectorAll("img.logo-img, #logoImg");
     imagens.forEach(img => {
-
         if (!img.getAttribute("data-dark")) {
-
-            img.setAttribute(
-                "data-dark",
-                img.src
-            );
-
+            img.setAttribute("data-dark", img.src);
         }
+        const lightSrc = img.getAttribute("data-light");
+        let novaSrc = modo === "light" ? lightSrc : img.getAttribute("data-dark");
 
-        const lightSrc =
-            img.getAttribute("data-light");
-
-        let novaSrc =
-            modo === "light"
-                ? lightSrc
-                : img.getAttribute("data-dark");
-
-        if (
-            novaSrc &&
-            img.src !== novaSrc
-        ) {
-
+        if (novaSrc && img.src !== novaSrc) {
             img.classList.add("img-fade");
-
             setTimeout(() => {
-
                 img.src = novaSrc;
-
                 img.onload = () => {
-
-                    img.classList.remove(
-                        "img-fade"
-                    );
-
+                    img.classList.remove("img-fade");
                 };
-
             }, 200);
-
         }
-
     });
-
 }
 
-
-/* ==========================================
-   GRÁFICO
-========================================== */
-
 let chartInstance = null;
+const lineLabels = <?= json_encode($lineChartLabels ?? []) ?>;
+const lineData = <?= json_encode($lineChartData ?? []) ?>;
 
-const lineLabels =
-    <?= json_encode($lineChartLabels ?? []) ?>;
-
-const lineData =
-    <?= json_encode($lineChartData ?? []) ?>;
-
-function renderOrUpdateChart(
-    color = '#fbbf24',
-    gridColor = 'rgba(255, 255, 255, 0.08)'
-) {
-
-    const canvas =
-        document.getElementById('lineChart');
-
+function renderOrUpdateChart(color = '#fbbf24', gridColor = 'rgba(255, 255, 255, 0.08)') {
+    const canvas = document.getElementById('lineChart');
     if (!canvas) return;
-
-    const ctx =
-        canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
     if (chartInstance) {
-
         chartInstance.destroy();
-
     }
 
     chartInstance = new Chart(ctx, {
-
         type: 'line',
-
         data: {
-
             labels: lineLabels,
-
             datasets: [{
-
                 label: 'Movimentações',
-
                 data: lineData,
-
                 borderColor: color,
-
-                backgroundColor:
-                    color === '#FFFF00'
-                        ? 'rgba(255, 255, 0, 0.15)'
-                        : 'rgba(251, 191, 36, 0.12)',
-
+                backgroundColor: color === '#FFFF00' ? 'rgba(255, 255, 0, 0.15)' : 'rgba(251, 191, 36, 0.12)',
                 fill: true,
-
                 tension: 0.4,
-
                 borderWidth: 3,
-
                 pointRadius: 4,
-
                 pointBackgroundColor: color
-
             }]
-
         },
-
         options: {
-
             responsive: true,
-
             maintainAspectRatio: false,
-
             plugins: {
-
-                legend: {
-                    display: false
-                }
-
+                legend: { display: false }
             },
-
             scales: {
-
                 x: {
-
-                    grid: {
-                        display: false
-                    },
-
-                    ticks: {
-
-                        color:
-                            body.classList.contains("light")
-                                ? '#64748b'
-                                : '#94a3b8'
-
-                    }
-
+                    grid: { display: false },
+                    ticks: { color: body.classList.contains("light") ? '#64748b' : '#94a3b8' }
                 },
-
                 y: {
-
                     beginAtZero: true,
-
-                    grid: {
-                        color: gridColor
-                    },
-
-                    ticks: {
-
-                        color:
-                            body.classList.contains("light")
-                                ? '#64748b'
-                                : '#94a3b8'
-
-                    }
-
+                    grid: { color: gridColor },
+                    ticks: { color: body.classList.contains("light") ? '#64748b' : '#94a3b8' }
                 }
-
             }
-
         }
-
     });
-
 }
 
 function updateThemeColors() {
-
-    if (
-        body.classList.contains("high-contrast")
-    ) {
-
-        renderOrUpdateChart(
-            '#FFFF00',
-            'rgba(255, 255, 0, 0.2)'
-        );
-
+    if (body.classList.contains("high-contrast")) {
+        renderOrUpdateChart('#FFFF00', 'rgba(255, 255, 0, 0.2)');
+    } else if (body.classList.contains("light")) {
+        renderOrUpdateChart('#0284c7', 'rgba(0, 0, 0, 0.06)');
+    } else {
+        renderOrUpdateChart('#fbbf24', 'rgba(255, 255, 255, 0.08)');
     }
-
-    else if (
-        body.classList.contains("light")
-    ) {
-
-        renderOrUpdateChart(
-            '#0284c7',
-            'rgba(0, 0, 0, 0.06)'
-        );
-
-    }
-
-    else {
-
-        renderOrUpdateChart(
-            '#fbbf24',
-            'rgba(255, 255, 255, 0.08)'
-        );
-
-    }
-
 }
 
+const themeBtn = document.getElementById("themeBtn");
+const themeIcon = themeBtn.querySelector("i");
 
-/* ==========================================
-   TEMA
-========================================== */
-
-const themeBtn =
-    document.getElementById("themeBtn");
-
-const themeIcon =
-    themeBtn.querySelector("i");
-
-if (
-    localStorage.getItem("theme") === "light"
-) {
-
+if (localStorage.getItem("theme") === "light") {
     body.classList.add("light");
-
-    themeIcon.classList.replace(
-        "fa-moon",
-        "fa-sun"
-    );
-
+    themeIcon.classList.replace("fa-moon", "fa-sun");
     trocarImagens("light");
-
 }
 
 themeBtn.addEventListener("click", () => {
-
     body.classList.remove("high-contrast");
-
     body.classList.toggle("light");
 
-    if (
-        body.classList.contains("light")
-    ) {
-
-        themeIcon.classList.replace(
-            "fa-moon",
-            "fa-sun"
-        );
-
-        localStorage.setItem(
-            "theme",
-            "light"
-        );
-
+    if (body.classList.contains("light")) {
+        themeIcon.classList.replace("fa-moon", "fa-sun");
+        localStorage.setItem("theme", "light");
         trocarImagens("light");
-
     } else {
-
-        themeIcon.classList.replace(
-            "fa-sun",
-            "fa-moon"
-        );
-
-        localStorage.setItem(
-            "theme",
-            "dark"
-        );
-
+        themeIcon.classList.replace("fa-sun", "fa-moon");
+        localStorage.setItem("theme", "dark");
         trocarImagens("dark");
-
     }
-
     updateThemeColors();
-
 });
 
+const contrastBtn = document.getElementById("contrastBtn");
 
-/* ==========================================
-   ALTO CONTRASTE
-========================================== */
-
-const contrastBtn =
-    document.getElementById("contrastBtn");
-
-if (
-    localStorage.getItem("contrast") === "high"
-) {
-
+if (localStorage.getItem("contrast") === "high") {
     body.classList.add("high-contrast");
-
 }
 
 contrastBtn.addEventListener("click", () => {
-
     body.classList.remove("light");
-
     body.classList.toggle("high-contrast");
-
-    localStorage.setItem(
-        "contrast",
-        body.classList.contains("high-contrast")
-            ? "high"
-            : "normal"
-    );
-
+    localStorage.setItem("contrast", body.classList.contains("high-contrast") ? "high" : "normal");
     trocarImagens("dark");
-
     updateThemeColors();
-
 });
-
-
-/* ==========================================
-   INICIALIZAÇÃO DO GRÁFICO
-========================================== */
 
 updateThemeColors();
 
-
-/* ==========================================
-   LEITURA DE TELA
-========================================== */
-
-const audioBtn =
-    document.getElementById("audioBtn");
-
-let synth =
-    window.speechSynthesis;
-
+const audioBtn = document.getElementById("audioBtn");
+let synth = window.speechSynthesis;
 let isSpeaking = false;
 
 audioBtn.addEventListener("click", () => {
-
     if (isSpeaking) {
-
         synth.cancel();
-
         isSpeaking = false;
+        audioBtn.classList.remove("audio-active");
+    } else {
+        let textoParaLer = "Resumo do Dashboard do Usuário. ";
+        textoParaLer += "Usuário logado: <?= esc($u_nome) ?>. ";
+        textoParaLer += "Vagas livres: <?= $livres ?>. ";
+        textoParaLer += "Vagas ocupadas: <?= $ocupadas ?>. ";
+        textoParaLer += "Total de vagas: <?= $totalVagas ?>. ";
+        textoParaLer += "Taxa de ocupação: <?= $taxa ?> por cento. ";
 
-        audioBtn.classList.remove(
-            "audio-active"
-        );
-
-    }
-
-    else {
-
-        let textoParaLer =
-            "Resumo do Dashboard do Usuário. ";
-
-        textoParaLer +=
-            "Usuário logado: <?= esc($u_nome) ?>. ";
-
-        textoParaLer +=
-            "Vagas livres: <?= $livres ?>. ";
-
-        textoParaLer +=
-            "Vagas ocupadas: <?= $ocupadas ?>. ";
-
-        textoParaLer +=
-            "Total de vagas: <?= $totalVagas ?>. ";
-
-        textoParaLer +=
-            "Taxa de ocupação: <?= $taxa ?> por cento. ";
-
-        if (
-            textoParaLer.trim() !== ""
-        ) {
-
-            const utterance =
-                new SpeechSynthesisUtterance(
-                    textoParaLer
-                );
-
+        if (textoParaLer.trim() !== "") {
+            const utterance = new SpeechSynthesisUtterance(textoParaLer);
             utterance.lang = "pt-BR";
-
             utterance.onend = () => {
-
-                audioBtn.classList.remove(
-                    "audio-active"
-                );
-
+                audioBtn.classList.remove("audio-active");
                 isSpeaking = false;
-
             };
-
             synth.speak(utterance);
-
-            audioBtn.classList.add(
-                "audio-active"
-            );
-
+            audioBtn.classList.add("audio-active");
             isSpeaking = true;
-
         }
-
     }
-
 });
 
-window.addEventListener(
-    'beforeunload',
-    () => {
-        synth.cancel();
+window.addEventListener('beforeunload', () => {
+    synth.cancel();
+});
+
+document.getElementById("vlibrasBtn").addEventListener("click", () => {
+    const vLibrasBtn = document.querySelector('[vw-access-button]');
+    if (vLibrasBtn) {
+        vLibrasBtn.click();
     }
-);
+});
 
-
-/* ==========================================
-   VLIBRAS
-========================================== */
-
-document.getElementById("vlibrasBtn").addEventListener(
-    "click",
-    () => {
-
-        const vLibrasBtn =
-            document.querySelector('[vw-access-button]');
-
-        if (vLibrasBtn) {
-
-            vLibrasBtn.click();
-
-        }
-
-    }
-);
-
-
-/* ==========================================
-   RENDERIZAÇÃO DO MAPA
-========================================== */
-
-const imgBaseUrl =
-    '<?= base_url('') ?>';
-
-const spotsBrutos =
-    <?= json_encode($vagasMapa ?? []) ?>;
+const imgBaseUrl = '<?= base_url('') ?>';
+const spotsBrutos = <?= json_encode($vagasMapa ?? []) ?>;
 
 function obterLabelVaga(vaga, index) {
-
-    let nome =
-        vaga.VAG_LOCALIZACAO ??
-        vaga.localizacao ??
-        vaga.VAG_ID ??
-        vaga.id ??
-        vaga.VAG_NUMERO ??
-        vaga.numero ??
-        vaga.VAG_CODIGO ??
-        vaga.codigo ??
-        vaga.NOME ??
-        vaga.nome;
-
+    let nome = vaga.VAG_LOCALIZACAO ?? vaga.localizacao ?? vaga.VAG_ID ?? vaga.id ?? vaga.VAG_NUMERO ?? vaga.numero ?? vaga.VAG_CODIGO ?? vaga.codigo ?? vaga.NOME ?? vaga.nome;
     if (!nome) {
-
         return `V${index + 1}`;
-
     }
-
     return String(nome).trim();
-
 }
 
-const spots =
-    spotsBrutos.filter(vaga => {
-
-        const label =
-            obterLabelVaga(vaga, 0)
-                .toLowerCase();
-
-        return (
-            label !== 'sp' &&
-            label !== 'setor principal' &&
-            label !== ''
-        );
-
+function filtrarVagasValidas(dados) {
+    if (!Array.isArray(dados)) return [];
+    return dados.filter(vaga => {
+        const label = obterLabelVaga(vaga, 0).toLowerCase();
+        return (label !== 'sp' && label !== 'setor principal' && label !== '');
     });
-
+}
 
 function obterStatusVaga(vaga) {
-
     if (!vaga) return 'livre';
+    let rawStatus = vaga.status ?? vaga.VAG_STATUS ?? vaga.STATUS ?? vaga.VAG_SITUACAO ?? vaga.situacao ?? vaga.SITUACAO ?? '';
 
-    let rawStatus =
-        vaga.status ??
-        vaga.VAG_STATUS ??
-        vaga.STATUS ??
-        vaga.VAG_SITUACAO ??
-        vaga.situacao ??
-        vaga.SITUACAO ??
-        '';
-
-    if (
-        vaga.VAG_DISPONIVEL === 0 ||
-        vaga.VAG_DISPONIVEL === '0' ||
-        vaga.disponivel === 0 ||
-        vaga.disponivel === '0'
-    ) {
-
+    if (vaga.VAG_DISPONIVEL === 0 || vaga.VAG_DISPONIVEL === '0' || vaga.disponivel === 0 || vaga.disponivel === '0') {
         return 'indisponivel';
-
     }
 
-    let st =
-        String(rawStatus)
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase()
-            .trim();
+    let st = String(rawStatus).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
-    if (
-        [
-            'indisponivel',
-            'unavailable',
-            'manutencao',
-            'bloqueado',
-            'bloqueada',
-            'inativo',
-            'inativa',
-            'disabled'
-        ].includes(st)
-    ) {
-
+    if (['indisponivel', 'unavailable', 'manutencao', 'bloqueado', 'bloqueada', 'inativo', 'inativa', 'disabled'].includes(st)) {
         return 'indisponivel';
-
     }
 
-    if (
-        [
-            'ocupado',
-            'ocupada',
-            'occupied',
-            'em uso',
-            'busy'
-        ].includes(st)
-    ) {
-
+    if (['ocupado', 'ocupada', 'occupied', 'em uso', 'busy'].includes(st)) {
         return 'ocupado';
-
     }
 
     return 'livre';
-
 }
-
 
 function extrairNomeDoPiso(vaga) {
-
-    if (
-        vaga.PISO &&
-        vaga.PISO.toLowerCase() !==
-        "setor principal"
-    ) {
-
+    if (vaga.PISO && vaga.PISO.toLowerCase() !== "setor principal") {
         return vaga.PISO.trim();
-
     }
-
-    const texto =
-        vaga.VAG_LOCALIZACAO ||
-        vaga.localizacao ||
-        vaga.PISO ||
-        "";
-
-    const match =
-        texto.match(
-            /(Piso\s*\d+|PISO\s*\d+)/i
-        );
-
+    const texto = vaga.VAG_LOCALIZACAO || vaga.localizacao || vaga.PISO || "";
+    const match = texto.match(/(Piso\s*\d+|PISO\s*\d+)/i);
     if (match) {
-
-        return match[0]
-            .toUpperCase()
-            .replace("PISO", "Piso ");
-
+        return match[0].toUpperCase().replace("PISO", "Piso ");
     }
-
-    return vaga.PISO ||
-        vaga.piso ||
-        "Piso Principal";
-
+    return vaga.PISO || vaga.piso || "Piso Principal";
 }
-
 
 function desenharMapaEstacionamento(dadosBanco) {
-
-    const mainContainer =
-        document.getElementById(
-            'parkingLot'
-        );
-
+    const mainContainer = document.getElementById('parkingLot');
     if (!mainContainer) return;
-
     mainContainer.innerHTML = '';
 
-    if (
-        !dadosBanco ||
-        dadosBanco.length === 0
-    ) {
+    const dadosFiltrados = filtrarVagasValidas(dadosBanco);
 
-        mainContainer.innerHTML =
-            '<p style="color: #94a3b8; text-align: center; padding: 30px; font-size: 16px;">Nenhuma vaga válida cadastrada.</p>';
-
+    if (!dadosFiltrados || dadosFiltrados.length === 0) {
+        mainContainer.innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 30px; font-size: 16px;">Nenhuma vaga válida cadastrada.</p>';
         return;
-
     }
 
-    const vagasPorPiso =
-        dadosBanco.reduce(
-            (acc, vaga) => {
-
-                let pisoNome =
-                    extrairNomeDoPiso(vaga);
-
-                if (!acc[pisoNome]) {
-
-                    acc[pisoNome] = [];
-
-                }
-
-                acc[pisoNome].push(vaga);
-
-                return acc;
-
-            },
-            {}
-        );
-
-
-    const pisosOrdenados =
-        Object.keys(vagasPorPiso)
-            .sort((a, b) => {
-
-                const numA =
-                    parseInt(
-                        a.replace(/\D/g, '')
-                    ) || 0;
-
-                const numB =
-                    parseInt(
-                        b.replace(/\D/g, '')
-                    ) || 0;
-
-                return numA - numB;
-
-            });
-
-
-    pisosOrdenados.forEach(
-        nomeDoPiso => {
-
-            const vagasDestePiso =
-                vagasPorPiso[nomeDoPiso];
-
-            const totalVagasPiso =
-                vagasDestePiso.length;
-
-            const metade =
-                Math.ceil(
-                    totalVagasPiso / 2
-                );
-
-
-            const floorSection =
-                document.createElement('div');
-
-            floorSection.className =
-                'floor-section';
-
-
-            const floorTitle =
-                document.createElement('h3');
-
-            floorTitle.className =
-                'floor-title';
-
-            floorTitle.innerHTML =
-                `<span><i class="fa-solid fa-layer-group" aria-hidden="true"></i> SETOR DE ESTACIONAMENTO</span> ${nomeDoPiso}`;
-
-            floorSection.appendChild(
-                floorTitle
-            );
-
-
-            const parkingContainer =
-                document.createElement('div');
-
-            parkingContainer.className =
-                'parking-container';
-
-
-            const parkingAisle =
-                document.createElement('div');
-
-            parkingAisle.className =
-                'parking-aisle';
-
-
-            const filaSuperiorDiv =
-                document.createElement('div');
-
-            filaSuperiorDiv.className =
-                'spots-row row-top';
-
-
-            const drivewayDiv =
-                document.createElement('div');
-
-            drivewayDiv.className =
-                'driveway';
-
-            drivewayDiv.innerHTML = `
-                <div class="traffic-indicator">
-                    <i class="fa-solid fa-circle-arrow-right" style="color: #22c55e;" aria-hidden="true"></i>
-                    ENTRADA
-                </div>
-
-                <div class="traffic-indicator">
-                    <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
-                    SENTIDO ÚNICO
-                </div>
-
-                <div class="traffic-indicator">
-                    SAÍDA
-                    <i class="fa-solid fa-circle-arrow-right" style="color: #ef4444;" aria-hidden="true"></i>
-                </div>
-            `;
-
-
-            const filaInferiorDiv =
-                document.createElement('div');
-
-            filaInferiorDiv.className =
-                'spots-row row-bottom';
-
-
-            vagasDestePiso.forEach(
-                (vagaReal, index) => {
-
-                    const statusCalculado =
-                        obterStatusVaga(
-                            vagaReal
-                        );
-
-                    let isOcupado =
-                        statusCalculado ===
-                        'ocupado';
-
-                    let isIndisponivel =
-                        statusCalculado ===
-                        'indisponivel';
-
-                    let isPcd =
-                        vagaReal.pcd ||
-                        vagaReal.VAG_PCD ||
-                        vagaReal.PCD ||
-                        false;
-
-                    let labelVaga =
-                        obterLabelVaga(
-                            vagaReal,
-                            index
-                        );
-
-
-                    let statusText =
-                        'Livre';
-
-                    let statusColor =
-                        '#22c55e';
-
-                    let carImgName =
-                        '/images/CarroVerde.png';
-
-                    let ledClass =
-                        'led-green';
-
-
-                    if (isOcupado) {
-
-                        statusText =
-                            'Ocupado';
-
-                        statusColor =
-                            '#ef4444';
-
-                        carImgName =
-                            '/images/CarroVermelho.png';
-
-                        ledClass =
-                            'led-red';
-
-                    }
-
-                    else if (
-                        isIndisponivel
-                    ) {
-
-                        statusText =
-                            'Indisponível';
-
-                        statusColor =
-                            '#64748b';
-
-                        carImgName =
-                            '/images/CarroCinza.png';
-
-                        ledClass =
-                            'led-gray';
-
-                    }
-
-
-                    const vagaDiv =
-                        document.createElement(
-                            'div'
-                        );
-
-                    vagaDiv.className =
-                        `spot ${isPcd ? 'pcd' : ''}`;
-
-                    vagaDiv.setAttribute(
-                        'tabindex',
-                        '0'
-                    );
-
-                    vagaDiv.setAttribute(
-                        'aria-label',
-                        `${labelVaga}: ${statusText}${isPcd ? ', vaga reservada para PCD' : ''}`
-                    );
-
-
-                    const sensorLed =
-                        document.createElement(
-                            'div'
-                        );
-
-                    sensorLed.className =
-                        `sensor-led ${
-                            isPcd &&
-                            !isOcupado &&
-                            !isIndisponivel
-                                ? 'led-blue'
-                                : ledClass
-                        }`;
-
-                    vagaDiv.appendChild(
-                        sensorLed
-                    );
-
-
-                    if (isPcd) {
-
-                        const pcdGround =
-                            document.createElement(
-                                'i'
-                            );
-
-                        pcdGround.className =
-                            'fa-solid fa-wheelchair spot-pcd-ground';
-
-                        pcdGround.setAttribute(
-                            'aria-hidden',
-                            'true'
-                        );
-
-                        vagaDiv.appendChild(
-                            pcdGround
-                        );
-
-                    }
-
-
-                    const idSpan =
-                        document.createElement(
-                            'span'
-                        );
-
-                    idSpan.className =
-                        'spot-id-paint';
-
-                    idSpan.innerText =
-                        labelVaga;
-
-                    vagaDiv.appendChild(
-                        idSpan
-                    );
-
-
-                    const statusSpan =
-                        document.createElement(
-                            'span'
-                        );
-
-                    statusSpan.className =
-                        'spot-status-tag';
-
-                    statusSpan.innerText =
-                        statusText;
-
-                    statusSpan.style.color =
-                        statusColor;
-
-                    vagaDiv.appendChild(
-                        statusSpan
-                    );
-
-
-                    const carroImg =
-                        document.createElement(
-                            'img'
-                        );
-
-                    carroImg.src =
-                        imgBaseUrl +
-                        carImgName;
-
-                    carroImg.className =
-                        'car-body';
-
-                    carroImg.alt = '';
-
-                    carroImg.setAttribute(
-                        'aria-hidden',
-                        'true'
-                    );
-
-                    vagaDiv.appendChild(
-                        carroImg
-                    );
-
-
-                    if (index < metade) {
-
-                        filaSuperiorDiv.appendChild(
-                            vagaDiv
-                        );
-
-                    } else {
-
-                        filaInferiorDiv.appendChild(
-                            vagaDiv
-                        );
-
-                    }
-
-                }
-            );
-
-
-            parkingAisle.appendChild(
-                filaSuperiorDiv
-            );
-
-            parkingAisle.appendChild(
-                drivewayDiv
-            );
-
-            parkingAisle.appendChild(
-                filaInferiorDiv
-            );
-
-
-            parkingContainer.appendChild(
-                parkingAisle
-            );
-
-            floorSection.appendChild(
-                parkingContainer
-            );
-
-            mainContainer.appendChild(
-                floorSection
-            );
-
+    const vagasPorPiso = dadosFiltrados.reduce((acc, vaga) => {
+        let pisoNome = extrairNomeDoPiso(vaga);
+        if (!acc[pisoNome]) {
+            acc[pisoNome] = [];
         }
-    );
+        acc[pisoNome].push(vaga);
+        return acc;
+    }, {});
 
+    const pisosOrdenados = Object.keys(vagasPorPiso).sort((a, b) => {
+        const numA = parseInt(a.replace(/\D/g, '')) || 0;
+        const numB = parseInt(b.replace(/\D/g, '')) || 0;
+        return numA - numB;
+    });
+
+    pisosOrdenados.forEach(nomeDoPiso => {
+        const vagasDestePiso = vagasPorPiso[nomeDoPiso];
+        const totalVagasPiso = vagasDestePiso.length;
+        const metade = Math.ceil(totalVagasPiso / 2);
+
+        const floorSection = document.createElement('div');
+        floorSection.className = 'floor-section';
+
+        const floorTitle = document.createElement('h3');
+        floorTitle.className = 'floor-title';
+        floorTitle.innerHTML = `<span><i class="fa-solid fa-layer-group" aria-hidden="true"></i> SETOR DE ESTACIONAMENTO</span> ${nomeDoPiso}`;
+        floorSection.appendChild(floorTitle);
+
+        const parkingContainer = document.createElement('div');
+        parkingContainer.className = 'parking-container';
+
+        const parkingAisle = document.createElement('div');
+        parkingAisle.className = 'parking-aisle';
+
+        const filaSuperiorDiv = document.createElement('div');
+        filaSuperiorDiv.className = 'spots-row row-top';
+
+        const drivewayDiv = document.createElement('div');
+        drivewayDiv.className = 'driveway';
+        drivewayDiv.innerHTML = `
+            <div class="traffic-indicator">
+                <i class="fa-solid fa-circle-arrow-right" style="color: #22c55e;" aria-hidden="true"></i>
+                ENTRADA
+            </div>
+            <div class="traffic-indicator">
+                <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                SENTIDO ÚNICO
+            </div>
+            <div class="traffic-indicator">
+                SAÍDA
+                <i class="fa-solid fa-circle-arrow-right" style="color: #ef4444;" aria-hidden="true"></i>
+            </div>
+        `;
+
+        const filaInferiorDiv = document.createElement('div');
+        filaInferiorDiv.className = 'spots-row row-bottom';
+
+        vagasDestePiso.forEach((vagaReal, index) => {
+            const statusCalculado = obterStatusVaga(vagaReal);
+            let isOcupado = statusCalculado === 'ocupado';
+            let isIndisponivel = statusCalculado === 'indisponivel';
+            let isPcd = vagaReal.pcd || vagaReal.VAG_PCD || vagaReal.PCD || false;
+            let labelVaga = obterLabelVaga(vagaReal, index);
+
+            let statusText = 'Livre';
+            let statusColor = '#22c55e';
+            let carImgName = '/images/CarroVerde.png';
+            let ledClass = 'led-green';
+
+            if (isOcupado) {
+                statusText = 'Ocupado';
+                statusColor = '#ef4444';
+                carImgName = '/images/CarroVermelho.png';
+                ledClass = 'led-red';
+            } else if (isIndisponivel) {
+                statusText = 'Indisponível';
+                statusColor = '#64748b';
+                carImgName = '/images/CarroCinza.png';
+                ledClass = 'led-gray';
+            }
+
+            const vagaDiv = document.createElement('div');
+            vagaDiv.className = `spot ${isPcd ? 'pcd' : ''}`;
+            vagaDiv.setAttribute('tabindex', '0');
+            vagaDiv.setAttribute('aria-label', `${labelVaga}: ${statusText}${isPcd ? ', vaga reservada para PCD' : ''}`);
+
+            const sensorLed = document.createElement('div');
+            sensorLed.className = `sensor-led ${isPcd && !isOcupado && !isIndisponivel ? 'led-blue' : ledClass}`;
+            vagaDiv.appendChild(sensorLed);
+
+            if (isPcd) {
+                const pcdGround = document.createElement('i');
+                pcdGround.className = 'fa-solid fa-wheelchair spot-pcd-ground';
+                pcdGround.setAttribute('aria-hidden', 'true');
+                vagaDiv.appendChild(pcdGround);
+            }
+
+            const idSpan = document.createElement('span');
+            idSpan.className = 'spot-id-paint';
+            idSpan.innerText = labelVaga;
+            vagaDiv.appendChild(idSpan);
+
+            const statusSpan = document.createElement('span');
+            statusSpan.className = 'spot-status-tag';
+            statusSpan.innerText = statusText;
+            statusSpan.style.color = statusColor;
+            vagaDiv.appendChild(statusSpan);
+
+            const carroImg = document.createElement('img');
+            carroImg.src = imgBaseUrl + carImgName;
+            carroImg.className = 'car-body';
+            carroImg.alt = '';
+            carroImg.setAttribute('aria-hidden', 'true');
+            vagaDiv.appendChild(carroImg);
+
+            if (index < metade) {
+                filaSuperiorDiv.appendChild(vagaDiv);
+            } else {
+                filaInferiorDiv.appendChild(vagaDiv);
+            }
+        });
+
+        parkingAisle.appendChild(filaSuperiorDiv);
+        parkingAisle.appendChild(drivewayDiv);
+        parkingAisle.appendChild(filaInferiorDiv);
+        parkingContainer.appendChild(parkingAisle);
+        floorSection.appendChild(parkingContainer);
+        mainContainer.appendChild(floorSection);
+    });
 }
 
+desenharMapaEstacionamento(spotsBrutos);
 
-desenharMapaEstacionamento(
-    spots
-);
+// Função para atualizar os dados e redesenhar o mapa e KPIs via AJAX (sem recarregar a tela)
+function atualizarDashboardDinamicamente() {
+    const urlJson = '<?= base_url("dashboard/getDadosJson") ?>';
 
+    fetch(urlJson)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                if (data.vagasMapa && Array.isArray(data.vagasMapa)) {
+                    desenharMapaEstacionamento(data.vagasMapa);
+                }
+
+                const cardsValores = document.querySelectorAll('.container .card .value');
+                if (cardsValores.length >= 4) {
+                    if (data.totalVagas !== undefined) cardsValores[0].innerText = data.totalVagas;
+                    if (data.livres !== undefined) cardsValores[1].innerText = data.livres;
+                    if (data.ocupadas !== undefined) cardsValores[2].innerText = data.ocupadas;
+                    if (data.taxa !== undefined) cardsValores[3].innerText = data.taxa + '%';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados atualizados do dashboard:', error);
+        });
+}
+
+setInterval(atualizarDashboardDinamicamente, 1000);
 </script>
 
 <script>
-
-/* ==========================================
-   RESTAURA TEMA SALVO
-========================================== */
-
 (function () {
+    const theme = localStorage.getItem('theme');
+    const contrast = localStorage.getItem('contrast');
 
-    const theme =
-        localStorage.getItem('theme');
-
-    const contrast =
-        localStorage.getItem('contrast');
-
-    document.body.classList.remove(
-        'light'
-    );
-
-    document.body.classList.remove(
-        'high-contrast'
-    );
+    document.body.classList.remove('light');
+    document.body.classList.remove('high-contrast');
 
     if (contrast === 'high') {
-
-        document.body.classList.add(
-            'high-contrast'
-        );
-
+        document.body.classList.add('high-contrast');
+    } else if (theme === 'light') {
+        document.body.classList.add('light');
     }
-
-    else if (theme === 'light') {
-
-        document.body.classList.add(
-            'light'
-        );
-
-    }
-
 })();
-
-
-/* ==========================================
-   ATUALIZAÇÃO AUTOMÁTICA
-========================================== */
-
-setInterval(() => {
-
-    window.location.reload();
-
-}, 3000);
-
 </script>
 
 </body>

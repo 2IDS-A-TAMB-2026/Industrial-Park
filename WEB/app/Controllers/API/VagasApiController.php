@@ -99,6 +99,7 @@ class VagasApiController extends BaseController
 
         // Verifica se a vaga existe
         $vaga = $vagasModel->find($id);
+        
 
         if (!$vaga) {
             return $this->response
@@ -122,14 +123,16 @@ class VagasApiController extends BaseController
         // ==========================================
 
         $dados = [];
+        $dados['VAG_SETOR'] = $vaga['VAG_SETOR'];
+        $dados['VAG_LOCALIZACAO'] = $vaga['VAG_LOCALIZACAO'];
 
-        if (isset($json['VAG_SETOR'])) {
-            $dados['VAG_SETOR'] = $json['VAG_SETOR'];
-        }
+        // if (isset($json['VAG_SETOR'])) {
+        //     $dados['VAG_SETOR'] = $json['VAG_SETOR'];
+        // }
 
-        if (isset($json['VAG_LOCALIZACAO'])) {
-            $dados['VAG_LOCALIZACAO'] = $json['VAG_LOCALIZACAO'];
-        }
+        // if (isset($json['VAG_LOCALIZACAO'])) {
+        //     $dados['VAG_LOCALIZACAO'] = $json['VAG_LOCALIZACAO'];
+        // }
 
         if (isset($json['VAG_STATUS'])) {
             $dados['VAG_STATUS'] = $json['VAG_STATUS'];

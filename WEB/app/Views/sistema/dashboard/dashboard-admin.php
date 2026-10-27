@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?= base_url('css/sweetalert-theme.css') ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
     <title>Dashboard Administrativo</title>
 
     <style>
@@ -139,7 +140,7 @@
 }
 
 .logout:hover i {
-    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
+    transform: translateX(3px);
 }
 
 .logout:active {
@@ -181,7 +182,6 @@
             width: 100%;
         }
 
-        /* CARDS COM DESTAQUE E CONTRASTE MELHORADOS */
         .card {
             background: #2b3a53;
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -259,7 +259,6 @@
         .span-2 { grid-column: span 2; }
         .span-4 { grid-column: span 4; }
 
-        /* GRÁFICOS */
         .chart-container {
             position: relative;
             flex-grow: 1;
@@ -268,7 +267,6 @@
             margin-top: 0.5rem;
         }
 
-        /* LEGENDA DO MAPA */
         .dashboard-legend {
             display: flex;
             gap: 1.5rem;
@@ -291,7 +289,6 @@
         .led-blue { background: #0284c7; box-shadow: 0 0 12px rgba(2, 132, 199, 0.8); }
         .led-gray { background: #64748b; box-shadow: 0 0 12px rgba(100, 116, 139, 0.6); }
 
-        /* SEÇÃO DO ESTACIONAMENTO */
         #parkingLot { width: 100%; display: flex; flex-direction: column; gap: 2rem; }
         .floor-section { width: 100%; }
 
@@ -439,7 +436,6 @@
             gap: 0.5rem;
         }
 
-        /* BOTÃO E PAINEL DE ACESSIBILIDADE */
         .main-acc-btn {
             position: fixed;
             top: 24px;
@@ -506,7 +502,6 @@
         .acc-btn:hover { background: #38bdf8; color: #070b16; }
         .acc-btn:hover i { color: #070b16; }
 
-        /* MODO CLARO */
         body.light {
             background: #f1f5f9;
             color: #0f172a;
@@ -522,6 +517,15 @@
         body.light .menu a:hover, body.light .menu a.active { 
             background: rgba(15, 23, 42, 0.08); 
             color: #0f172a; 
+        }
+        body.light .logout {
+            background: rgba(15, 23, 42, 0.05);
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+        body.light .logout:hover {
+            background: #0f172a;
+            color: #fff;
         }
         body.light .page-title h1 { color: #0f172a; }
         body.light .page-title p { color: #475569; }
@@ -540,7 +544,6 @@
         body.light .traffic-indicator { background: #ffffff; border-color: #cbd5e1; color: #475569; }
         body.light .spot-id-paint { color: rgba(15, 23, 42, 0.4); }
 
-        /* MODO ALTO-CONTRASTE */
         body.high-contrast { background: #000000 !important; color: #FFFF00 !important; }
         body.high-contrast .sidebar,
         body.high-contrast .card,
@@ -574,6 +577,10 @@
             color: #000000 !important;
             border: 2px solid #FFFF00 !important;
         }
+        body.high-contrast .logout:hover {
+            background: #FFFF00 !important;
+            color: #000000 !important;
+        }
         body.high-contrast .acc-btn i { color: #000000 !important; }
         body.high-contrast .driveway { background: #111111 !important; border-color: #FFFF00 !important; }
         body.high-contrast .traffic-indicator { background: #000000 !important; border-color: #FFFF00 !important; color: #FFFF00 !important; }
@@ -593,6 +600,224 @@
             .sidebar { display: none; }
         }
 
+        .swal-high-contrast {
+            border: 2px solid #ffff00 !important;
+            border-radius: 16px !important;
+        }
+
+        .swal-high-contrast-title,
+        .swal-high-contrast-text {
+            color: #ffff00 !important;
+        }
+
+        .swal-high-contrast-confirm {
+            background: #ffff00 !important;
+            color: #000000 !important;
+            border: 2px solid #ffff00 !important;
+            font-weight: 700 !important;
+        }
+
+        .swal-high-contrast-cancel {
+            background: #000000 !important;
+            color: #ffff00 !important;
+            border: 2px solid #ffff00 !important;
+            font-weight: 700 !important;
+        }
+        
+    /* CORREÇÃO DE LAYOUT AO AUMENTAR A FONTE */
+
+    /* Evita que textos ultrapassem os elementos */
+    html {
+        overflow-wrap: break-word;
+    }
+
+    body {
+        min-width: 0;
+    }
+
+    .main {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    /* Permite que os cards se adaptem ao conteúdo */
+    .container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+    }
+
+    .card {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .card h2 {
+        min-width: 0;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+    }
+
+    .kpi-header {
+        min-width: 0;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .kpi-icon-wrapper {
+        flex-shrink: 0;
+    }
+
+    .indicator-body {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .value {
+        max-width: 100%;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .mini {
+        min-width: 0;
+        max-width: 100%;
+        flex-wrap: wrap;
+        line-height: 1.5;
+    }
+
+    /* Mantém os gráficos dentro dos cards */
+    .chart-container {
+        min-width: 0;
+        max-width: 100%;
+        height: 300px;
+    }
+
+    /* Permite que a legenda se adapte */
+    .dashboard-legend {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+
+    .legend-item {
+        min-width: 0;
+        max-width: 100%;
+        flex-wrap: wrap;
+        overflow-wrap: anywhere;
+    }
+
+    /* Preserva o mapa sem quebrar as vagas */
+    .parking-container {
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .parking-aisle {
+        min-width: 850px;
+    }
+
+    .floor-title {
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: 8px;
+        line-height: 1.6;
+    }
+
+    /* Evita que o painel de acessibilidade saia da tela */
+    .accessibility-panel {
+        width: min(280px, calc(100vw - 32px));
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+
+    .accessibility-panel.open {
+        right: 16px;
+    }
+
+    .panel-row {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .panel-row span {
+        min-width: 0;
+        line-height: 1.5;
+    }
+
+    /* Ajustes para telas menores */
+    @media (max-width: 1200px) {
+        .container {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .span-2,
+        .span-4 {
+            grid-column: span 2;
+        }
+
+        .main {
+            margin-left: 0;
+            width: 100%;
+            padding: 1.5rem;
+        }
+
+        .sidebar {
+            display: none;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1rem;
+        }
+
+        .span-2,
+        .span-4 {
+            grid-column: span 1;
+        }
+
+        .main {
+            padding: 1rem;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .page-title p {
+            line-height: 1.6;
+        }
+
+        .card {
+            padding: 1rem;
+        }
+
+        .chart-container {
+            height: 260px;
+        }
+
+        .accessibility-panel.open {
+            right: 16px;
+        }
+
+        .main-acc-btn {
+            right: 16px;
+            top: 16px;
+        }
+    }
+
+    /* Mantém a legibilidade no alto contraste */
+    body.high-contrast .card,
+    body.high-contrast .dashboard-legend,
+    body.high-contrast .floor-title {
+        overflow-wrap: anywhere;
+    }
+
     </style>
 </head>
 <body>
@@ -605,12 +830,10 @@
 <script>Swal.fire({icon:'success',title:'Sucesso',text:'<?= session()->getFlashdata('sucesso') ?>'});</script>
 <?php endif; ?>
 
-<!-- BOTÃO DE ACESSIBILIDADE FLUTUANTE -->
 <button class="main-acc-btn" id="mainAccBtn" title="Opções de Acessibilidade" aria-label="Abrir painel de acessibilidade" aria-expanded="false" aria-controls="accPanel">
     <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
 </button>
 
-<!-- PAINEL LATERAL DE ACESSIBILIDADE -->
 <section class="accessibility-panel" id="accPanel" aria-label="Painel de Acessibilidade" aria-hidden="true">
     <h3>Acessibilidade</h3>
     
@@ -645,7 +868,6 @@
     </div>
 </section>
 
-<!-- MENU LATERAL DA ADMINISTRAÇÃO (INTACTO) -->
 <aside class="sidebar">
     <div>
         <div class="logo">
@@ -672,7 +894,6 @@
     </a>
 </aside>
 
-<!-- CONTEÚDO PRINCIPAL (REORGANIZADO) -->
 <main class="main">
     <header class="page-title">
         <h1>Painel Administrativo</h1>
@@ -680,17 +901,16 @@
     </header>
 
     <div class="container">
-        <!-- LINHA 1: 4 KPIS -->
         <section class="card" aria-labelledby="lbl-ocupadas">
             <div class="kpi-header">
-                <h2 id="lbl-ocupadas">Vagas Ocupadas</h2>
-                <div class="kpi-icon-wrapper kpi-icon-red">
+                <h2 id="lbl-ocupadas">Total de Vagas</h2>
+                <div class="kpi-icon-wrapper kpi-icon-blue">
                     <i class="fa-solid fa-car-side"></i>
                 </div>
             </div>
             <div class="indicator-body">
-                <div class="value" id="occupiedCount" style="color: #f87171;">0</div>
-                <div class="mini"><i class="fa-solid fa-circle" style="font-size: 8px; color: #f87171;"></i> Em uso no momento</div>
+                <div class="value" id="occupiedCount" style="color: #38bdf8;">0</div>
+                <div class="mini"><i class="fa-solid fa-circle" style="font-size: 8px; color: #38bdf8;"></i> Em uso no momento</div>
             </div>
         </section>
 
@@ -709,13 +929,13 @@
 
         <section class="card" aria-labelledby="lbl-total">
             <div class="kpi-header">
-                <h2 id="lbl-total">Total de Vagas</h2>
-                <div class="kpi-icon-wrapper kpi-icon-blue">
+                <h2 id="lbl-total">Vagas Ocupadas</h2>
+                <div class="kpi-icon-wrapper kpi-icon-red">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
             </div>
             <div class="indicator-body">
-                <div class="value" id="totalCount" style="color: #38bdf8;">0</div>
+                <div class="value" id="totalCount" style="color: #f87171;">0</div>
                 <div class="mini">Vagas cadastradas</div>
             </div>
         </section>
@@ -733,7 +953,6 @@
             </div>
         </section>
 
-        <!-- LINHA 2: 2 GRÁFICOS LADO A LADO (2 COLUNAS CADA) -->
         <section class="card span-2" aria-labelledby="lbl-chart-geral">
             <div class="kpi-header">
                 <h2 id="lbl-chart-geral">Ocupação Geral</h2>
@@ -752,7 +971,6 @@
             </div>
         </section>
 
-        <!-- LINHA 3: MAPA DO ESTACIONAMENTO -->
         <section class="card span-4" aria-labelledby="lbl-mapa">
             <div class="kpi-header" style="margin-bottom: 1.2rem;">
                 <h2 id="lbl-mapa">Mapa do Estacionamento</h2>
@@ -781,7 +999,6 @@
     </div>
 </main>
 
-<!-- INTEGRACÃO WIDGET VLIBRAS -->
 <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
@@ -794,11 +1011,6 @@
 </script>
 
 <script>
-// Confirmador de Logout
-// ==========================================
-// CONFIRMAÇÃO DE LOGOUT - SWEETALERT
-// ==========================================
-
 const logoutBtn = document.getElementById('logoutBtn');
 
 if (logoutBtn) {
@@ -806,8 +1018,6 @@ if (logoutBtn) {
         e.preventDefault();
 
         const logoutUrl = this.getAttribute('href');
-
-        // Detecta o modo atual da tela
         const isHighContrast = document.body.classList.contains('high-contrast');
         const isLight = document.body.classList.contains('light');
 
@@ -822,30 +1032,21 @@ if (logoutBtn) {
             focusCancel: true
         };
 
-        // 🌙 MODO ESCURO
         if (!isLight && !isHighContrast) {
             config.background = '#1e293b';
             config.color = '#f8fafc';
             config.confirmButtonColor = '#4CC9F0';
             config.cancelButtonColor = '#475569';
-        }
-
-        // ☀️ MODO CLARO
-        else if (isLight && !isHighContrast) {
+        } else if (isLight && !isHighContrast) {
             config.background = '#ffffff';
             config.color = '#0f172a';
             config.confirmButtonColor = '#0284c7';
             config.cancelButtonColor = '#64748b';
-        }
-
-        // ⚠️ ALTO CONTRASTE
-        else if (isHighContrast) {
+        } else if (isHighContrast) {
             config.background = '#000000';
             config.color = '#ffff00';
             config.confirmButtonColor = '#ffff00';
             config.cancelButtonColor = '#000000';
-
-            // CSS específico para manter o padrão do alto contraste
             config.customClass = {
                 popup: 'swal-high-contrast',
                 title: 'swal-high-contrast-title',
@@ -863,7 +1064,6 @@ if (logoutBtn) {
     });
 }
 
-// ACESSIBILIDADE E PAINEL LATERAL
 const mainAccBtn = document.getElementById("mainAccBtn");
 const accPanel = document.getElementById("accPanel");
 const body = document.body;
@@ -879,7 +1079,6 @@ mainAccBtn.addEventListener("click", (e) => { e.stopPropagation(); togglePanel()
 document.addEventListener("click", (e) => { if (!accPanel.contains(e.target) && e.target !== mainAccBtn) togglePanel(false); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape" && accPanel.classList.contains("open")) togglePanel(false); });
 
-// Redimensionamento de Fonte
 let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
 const updateFontSize = (size) => {
     document.documentElement.style.fontSize = size + "px";
@@ -894,7 +1093,6 @@ document.getElementById("decreaseText").addEventListener("click", () => {
     if(currentFontSize > 13) { currentFontSize -= 1; updateFontSize(currentFontSize); }
 });
 
-// Troca de Imagem do Logo conforme tema
 function trocarImagens(modo){
     const imagens = document.querySelectorAll("img.logo-img, #logoImg");
     imagens.forEach(img => {
@@ -912,7 +1110,6 @@ function trocarImagens(modo){
     });
 }
 
-// Alternar Tema Claro/Escuro
 const themeBtn = document.getElementById("themeBtn");
 const themeIcon = themeBtn.querySelector("i");
 
@@ -937,7 +1134,6 @@ themeBtn.addEventListener("click", () => {
     renderizarGraficos();
 });
 
-// Alternar Alto-Contraste
 const contrastBtn = document.getElementById("contrastBtn");
 if(localStorage.getItem("contrast") === "high"){ body.classList.add("high-contrast"); }
 
@@ -948,7 +1144,6 @@ contrastBtn.addEventListener("click", () => {
     renderizarGraficos();
 });
 
-// Leitura de Tela (Text-to-Speech)
 const audioBtn = document.getElementById("audioBtn");
 let synth = window.speechSynthesis;
 let isSpeaking = false;
@@ -975,7 +1170,6 @@ audioBtn.addEventListener("click", () => {
     }
 });
 
-// Ativador direto para VLibras
 document.getElementById("vlibrasBtn").addEventListener("click", () => {
     const vLibrasBtn = document.querySelector('[vw-access-button]');
     if (vLibrasBtn) {
@@ -985,7 +1179,6 @@ document.getElementById("vlibrasBtn").addEventListener("click", () => {
 
 window.addEventListener('beforeunload', () => { synth.cancel(); });
 
-/* DADOS E LOGICA PHP DO ADMINISTRATIVO */
 const imgBaseUrl = '<?= base_url('') ?>';
 const spotsBrutos = <?= json_encode($vagasMapa ?? []) ?>;
 const lineLabels = <?= json_encode($lineChartLabels ?? ['08h', '10h', '12h', '14h', '16h']) ?>;
@@ -1195,7 +1388,6 @@ function desenharMapaEstacionamento(dadosBanco) {
 
 desenharMapaEstacionamento(spots);
 
-// GRÁFICOS DO PAINEL ADMINISTRATIVO
 let chart1, chart3;
 
 function obterCoresDeAcordoComTema() {
@@ -1256,21 +1448,47 @@ function renderizarGraficos() {
 
 renderizarGraficos();
 
-// ==========================================
-// ATUALIZAÇÃO AUTOMÁTICA DO DASHBOARD
-// ==========================================
-setInterval(() => {
-    window.location.reload();
-}, 3000);
+//setInterval(() => {
+   // window.location.reload();
+//}, 3000);
+
+// Função para atualizar os dados e redesenhar o mapa e KPIs de forma limpa (sem reload)
+function atualizarDashboardDinamicamente() {
+    // Substitua pela URL real da rota criada no Passo 1
+    const urlJson = '<?= base_url("dashboard/getDadosJson") ?>';
+
+    fetch(urlJson)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                // 1. Redesenha o mapa do estacionamento sem piscar a tela inteira
+                if (data.vagasMapa && Array.isArray(data.vagasMapa)) {
+                    desenharMapaEstacionamento(data.vagasMapa);
+                }
+
+                // 2. Atualiza os valores dos cards de KPIs instantaneamente
+                const cardsValores = document.querySelectorAll('.container .card .value');
+                if (cardsValores.length >= 4) {
+                    if (data.totalVagas !== undefined) cardsValores[0].innerText = data.totalVagas;
+                    if (data.livres !== undefined) cardsValores[1].innerText = data.livres;
+                    if (data.ocupadas !== undefined) cardsValores[2].innerText = data.ocupadas;
+                    if (data.taxa !== undefined) cardsValores[3].innerText = data.taxa + '%';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados atualizados do dashboard:', error);
+        });
+}
+
+// Configura para atualizar a cada 3 segundos via AJAX (substitui o window.location.reload)
+setInterval(atualizarDashboardDinamicamente, 1000);
+
 </script>
-
-
-<!-- SWEET ALERT ENTRADA DE USUÁRIOS -->
-
+</script>
 
 <script>
 (function () {
-
     const theme = localStorage.getItem('theme');
     const contrast = localStorage.getItem('contrast');
 
@@ -1278,15 +1496,10 @@ setInterval(() => {
     document.body.classList.remove('high-contrast');
 
     if (contrast === 'high') {
-
         document.body.classList.add('high-contrast');
-
     } else if (theme === 'light') {
-
         document.body.classList.add('light');
-
     }
-
 })();
 </script>
 </body>

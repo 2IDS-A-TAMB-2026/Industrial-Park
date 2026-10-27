@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // CORES PRINCIPAIS
-  static const Color primary = Color(0xFF4CC9F0);
-  static const Color primaryDark = Color(0xFF3AB0D6);
 
-  // MODO CLARO
-  static const lightBg = Color(0xFFF8FAFC);
-  static const lightLeftPanel = Color(0xFFFFFFFF);
-  static const lightRightPanel = Color(0xFFF1F5F9);
-  static const lightText = Color(0xFF0F172A);
-  static const lightTextSecondary = Color(0xFF475569);
-  static const lightPrimary = Color(0xFF2563EB);
-  static const lightAccent = Color(0xFF38BDF8);
+  // Cores principais
+  static const Color primary = Color(0xFF00F0FF);
+  static const Color primaryDark = Color(0xFF0099FF);
+  static const Color accentBlue = Color(0xFF0088FF);
+
+  // Fundo e cartões
+  static const Color background = Color(0xFF0A0F1C);
+  static const Color card = Color(0xFF11182B);
+
+  // Brilho neon
+  static const Color neonGlow = Color(0x6600F0FF);
+
+
+  // Modo claro — inspirado no site
+static const Color lightBackground = Color(0xFFF8FAFC);
+static const Color lightSurface = Color(0xFFFFFFFF);
+static const Color lightText = Color(0xFF10182B);
+static const Color lightTextSecondary = Color(0xFF52627A);
+static const Color lightPrimary = Color(0xFF0645B5);
+static const Color lightAccent = Color(0xFF0099FF);
 
 
   // MODO ESCURO

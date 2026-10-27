@@ -79,7 +79,7 @@ class DashboardController extends BaseController
             $dadosFluxo = [];
         }
 
-        // FALLBACK: Se o filtro específico retornar vazio, tenta buscar dados globais da tabela DADOS
+        // FALLBACK: Se o filtro específico retornar vazio, tenta buscar dados globais
         if (empty($dadosEntradas) || empty($dadosFluxo)) {
             try {
                 if (empty($dadosEntradas)) {
@@ -98,6 +98,27 @@ class DashboardController extends BaseController
                 $dadosEntradas = [];
                 $dadosFluxo = [];
             }
+        }
+
+        // 3. BUSCA DE EMPRESAS POR CIDADE (NOVO GRÁFICO POLAR AREA)
+        $empresasCidadeLabels = [];
+        $empresasCidadeData = [];
+        try {
+            $builderEmpresas = $db->table('EMPRESA')
+                ->select('EMP_CIDADE as cidade, COUNT(EMP_CNPJ) as total')
+                ->groupBy('EMP_CIDADE')
+                ->orderBy('total', 'DESC');
+
+            $resEmpresas = $builderEmpresas->get()->getResultArray();
+            foreach ($resEmpresas as $re) {
+                if (!empty($re['cidade'])) {
+                    $empresasCidadeLabels[] = $re['cidade'];
+                    $empresasCidadeData[]   = (int)$re['total'];
+                }
+            }
+        } catch (\Exception $e) {
+            $empresasCidadeLabels = [];
+            $empresasCidadeData   = [];
         }
 
         // Formatação das entradas por dias da semana
@@ -124,22 +145,23 @@ class DashboardController extends BaseController
             }
         }
 
-        // Garante valores seguros padrão caso o banco não tenha nenhum registro de sensores
         if (empty($fluxoLabels)) {
             $fluxoLabels = ['08h', '10h', '12h', '14h', '16h'];
             $fluxoValores = [0, 0, 0, 0, 0];
         }
 
         return [
-            'totalVagas'      => $total,
-            'vagasMapa'       => $vagasMapa,
-            'livres'          => $livres,
-            'ocupadas'        => $ocupadas,
-            'taxa'            => $taxa,
-            'barChartLabels'  => array_keys($entradasFormatadas),
-            'barChartData'    => array_values($entradasFormatadas),
-            'lineChartLabels' => $fluxoLabels,
-            'lineChartData'   => $fluxoValores
+            'totalVagas'           => $total,
+            'vagasMapa'            => $vagasMapa,
+            'livres'               => $livres,
+            'ocupadas'             => $ocupadas,
+            'taxa'                 => $taxa,
+            'barChartLabels'       => array_keys($entradasFormatadas),
+            'barChartData'         => array_values($entradasFormatadas),
+            'lineChartLabels'      => $fluxoLabels,
+            'lineChartData'        => $fluxoValores,
+            'empresasCidadeLabels' => $empresasCidadeLabels,
+            'empresasCidadeData'   => $empresasCidadeData
         ];
     }
 

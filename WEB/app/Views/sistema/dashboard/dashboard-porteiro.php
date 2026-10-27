@@ -7,14 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('css/sweetalert-theme.css') ?>">
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>Dashboard do Porteiro</title>
 
     <style>
-        /* =========================================================
-           RESET
-        ========================================================= */
         * {
             margin: 0;
             padding: 0;
@@ -27,9 +25,6 @@
             transition: font-size 0.2s ease;
         }
 
-        /* =========================================================
-           BODY
-        ========================================================= */
         body {
             display: flex;
             min-height: 100vh;
@@ -44,43 +39,31 @@
             outline-offset: 3px !important;
         }
 
-        /* =========================================================
-           SIDEBAR — PADRONIZADA COM O PERFIL DO PORTEIRO
-        ========================================================= */
         .sidebar {
             width: 280px;
             height: 100vh;
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(20px);
             padding: 28px 24px;
-
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-
             position: fixed;
             left: 0;
             top: 0;
-
             border-right: 1px solid rgba(255, 255, 255, 0.08);
-
             z-index: 10;
-
             transition: all 0.3s ease;
         }
 
-        /* LOGO */
         .logo {
             font-size: 1.25rem;
             font-weight: 700;
             color: #4CC9F0;
-
             margin-bottom: 35px;
-
             display: flex;
             align-items: center;
             gap: 12px;
-
             letter-spacing: -0.5px;
         }
 
@@ -90,7 +73,6 @@
             object-fit: contain;
         }
 
-        /* USUÁRIO */
         .user {
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -109,24 +91,17 @@
             margin-top: 2px;
         }
 
-        /* MENU */
         .menu a {
             display: flex;
             align-items: center;
             gap: 12px;
-
             padding: 12px 16px;
             margin-bottom: 8px;
-
             border-radius: 12px;
-
             text-decoration: none;
-
             color: #94a3b8;
-
             font-size: 0.9rem;
             font-weight: 500;
-
             transition: all 0.25s ease;
         }
 
@@ -148,64 +123,61 @@
                 rgba(76, 201, 240, 0.25),
                 rgba(76, 201, 240, 0.08)
             );
-
             color: #4CC9F0;
-
             border: 1px solid rgba(76, 201, 240, 0.3);
         }
 
-        /* LOGOUT */
+        /* BOTÃO LOGOUT PADRONIZADO */
         .logout {
-            width: 100%;
-
-            padding: 12px;
-
+            padding: 12px 20px;
             text-align: center;
             text-decoration: none;
-
-            border-radius: 12px;
-
-            background: rgba(76, 201, 240, 0.1);
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
             border: 1px solid rgba(76, 201, 240, 0.3);
-
             color: #4CC9F0;
-
             font-weight: 600;
             font-size: 0.9rem;
-
             cursor: pointer;
-
-            transition: all 0.3s ease;
-
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+        }
+
+        .logout i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
         }
 
         .logout:hover {
-            background: #4CC9F0;
+            background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
             color: #070b16;
-
-            box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+            border-color: #4CC9F0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
         }
 
-        /* =========================================================
-           CONTEÚDO PRINCIPAL
-        ========================================================= */
+        .logout:hover i {
+            transform: translateX(3px);
+        }
+
+        .logout:active {
+            transform: translateY(0);
+        }
+
         .main {
             flex: 1;
             margin-left: 280px;
-
             padding: 40px 48px;
-
             width: calc(100% - 280px);
             min-height: 100vh;
         }
 
         .page-title {
             margin-bottom: 32px;
-
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -215,7 +187,6 @@
             font-size: 2.2rem;
             font-weight: 800;
             color: #ffffff;
-
             letter-spacing: -0.8px;
             line-height: 1.2;
         }
@@ -226,9 +197,6 @@
             font-weight: 500;
         }
 
-        /* =========================================================
-           CARDS
-        ========================================================= */
         .container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -238,22 +206,16 @@
 
         .card {
             background: #2b3a53;
-
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
-
             padding: 1.5rem;
-
             color: #f8fafc;
-
             box-shadow:
                 0 10px 25px -5px rgba(0, 0, 0, 0.3),
                 0 8px 10px -6px rgba(0, 0, 0, 0.2);
-
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-
             transition:
                 transform 0.25s ease,
                 border-color 0.25s ease,
@@ -263,9 +225,7 @@
 
         .card:hover {
             transform: translateY(-3px);
-
             border-color: rgba(56, 189, 248, 0.4);
-
             box-shadow:
                 0 15px 30px -10px rgba(0, 0, 0, 0.4),
                 0 0 15px rgba(56, 189, 248, 0.15);
@@ -275,32 +235,25 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             margin-bottom: 1rem;
         }
 
         .card h2 {
             font-size: 0.85rem;
             color: #cbd5e1;
-
             font-weight: 700;
-
             text-transform: uppercase;
             letter-spacing: 1px;
-
             margin: 0;
         }
 
         .kpi-icon-wrapper {
             width: 42px;
             height: 42px;
-
             border-radius: 12px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             font-size: 1.1rem;
         }
 
@@ -338,19 +291,15 @@
         .value {
             font-size: 2.5rem;
             font-weight: 800;
-
             line-height: 1;
             letter-spacing: -1px;
-
             margin-bottom: 0.5rem;
         }
 
         .mini {
             color: #94a3b8;
-
             font-size: 0.825rem;
             font-weight: 500;
-
             display: flex;
             align-items: center;
             gap: 6px;
@@ -360,25 +309,16 @@
             grid-column: span 4;
         }
 
-        /* =========================================================
-           LEGENDA
-        ========================================================= */
         .dashboard-legend {
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
-
             background: #0f172a;
-
             padding: 1rem 1.25rem;
-
             border-radius: 14px;
-
             margin-bottom: 1.5rem;
-
             font-size: 0.85rem;
             color: #e2e8f0;
-
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -386,7 +326,6 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
-
             font-weight: 600;
         }
 
@@ -399,9 +338,7 @@
         .led-indicator-dot {
             width: 10px;
             height: 10px;
-
             border-radius: 50%;
-
             display: inline-block;
         }
 
@@ -425,15 +362,10 @@
             box-shadow: 0 0 12px rgba(100, 116, 139, 0.6);
         }
 
-        /* =========================================================
-           MAPA
-        ========================================================= */
         #parkingLot {
             width: 100%;
-
             display: flex;
             flex-direction: column;
-
             gap: 2rem;
         }
 
@@ -444,21 +376,15 @@
         .floor-title {
             font-size: 0.875rem;
             color: #f8fafc;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 1px;
-
             background: #0f172a;
-
             padding: 0.85rem 1.25rem;
-
             border-radius: 14px 14px 0 0;
-
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: none;
         }
@@ -466,9 +392,7 @@
         .floor-title span {
             font-size: 0.75rem;
             color: #38bdf8;
-
             font-weight: 600;
-
             display: flex;
             align-items: center;
             gap: 6px;
@@ -476,69 +400,48 @@
 
         .parking-container {
             background-color: #0b1120;
-
             background-image:
                 radial-gradient(
                     rgba(255, 255, 255, 0.06) 1px,
                     transparent 0
                 );
-
             background-size: 16px 16px;
-
             padding: 1.75rem;
-
             border-radius: 0 0 14px 14px;
-
             border: 1px solid rgba(255, 255, 255, 0.1);
-
             overflow-x: auto;
-
             width: 100%;
-
             box-sizing: border-box;
-
             box-shadow: inset 0 4px 20px rgba(0,0,0,0.5);
-
             position: relative;
         }
 
         .parking-aisle {
             display: flex;
             flex-direction: column;
-
             min-width: 850px;
         }
 
         .spots-row {
             display: flex;
-
             width: 100%;
-
             justify-content: flex-start;
-
             gap: 0.85rem;
         }
 
         .spot {
             flex: 1;
-
             max-width: 130px;
             height: 145px;
-
             position: relative;
-
             display: flex;
             flex-direction: column;
-
             justify-content: center;
             align-items: center;
-
             transition:
                 background 0.2s,
                 border-color 0.2s;
-
             border-radius: 8px;
-
             background: rgba(255, 255, 255, 0.03);
         }
 
@@ -560,12 +463,9 @@
 
         .sensor-led {
             position: absolute;
-
             width: 8px;
             height: 8px;
-
             border-radius: 50%;
-
             z-index: 5;
         }
 
@@ -584,24 +484,17 @@
 
         .spot-pcd-ground {
             position: absolute;
-
             font-size: 1.5rem;
-
             color: rgba(56, 189, 248, 0.3);
-
             z-index: 1;
         }
 
         .spot-id-paint {
             position: absolute;
-
             font-family: 'Share Tech Mono', monospace;
-
             color: rgba(255, 255, 255, 0.5);
-
             font-size: 0.85rem;
             font-weight: bold;
-
             letter-spacing: 1px;
         }
 
@@ -615,12 +508,9 @@
 
         .spot-status-tag {
             position: absolute;
-
             font-size: 0.6rem;
             font-weight: 700;
-
             text-transform: uppercase;
-
             letter-spacing: 0.5px;
         }
 
@@ -635,15 +525,10 @@
         .car-body {
             height: 65px;
             width: auto;
-
             position: absolute;
-
             z-index: 3;
-
             filter: drop-shadow(0 8px 12px rgba(0,0,0,0.6));
-
             transition: transform 0.3s ease;
-
             object-fit: contain;
         }
 
@@ -658,136 +543,86 @@
         .driveway {
             height: 70px;
             width: 100%;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             padding: 0 1.5rem;
-
             margin: 1rem 0;
-
             background: #070b14;
-
             border-top: 1px dashed rgba(255, 255, 255, 0.15);
             border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
-
             position: relative;
         }
 
         .driveway::before {
             content: '';
-
             position: absolute;
-
             left: 0;
             top: 50%;
-
             width: 100%;
             height: 2px;
-
             border-top: 2px dashed rgba(245, 158, 11, 0.5);
-
             transform: translateY(-50%);
         }
 
         .traffic-indicator {
             position: relative;
-
             z-index: 2;
-
             background: rgba(15, 23, 42, 0.95);
-
             padding: 0.3rem 0.8rem;
-
             border-radius: 20px;
-
             border: 1px solid rgba(255, 255, 255, 0.12);
-
             font-size: 0.68rem;
-
             color: #94a3b8;
-
             font-weight: 700;
-
             letter-spacing: 1px;
-
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        /* =========================================================
-           ACESSIBILIDADE
-        ========================================================= */
         .main-acc-btn {
             position: fixed;
-
             top: 24px;
             right: 24px;
-
             background: #0284c7 !important;
-
             border: none;
-
             color: #ffffff;
-
             font-size: 1.2rem;
-
             width: 44px;
             height: 44px;
-
             border-radius: 50%;
-
             cursor: pointer;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             transition: all 0.3s ease;
-
             box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
-
             z-index: 9999;
         }
 
         .main-acc-btn:hover {
             transform: scale(1.08) rotate(15deg);
-
             box-shadow: 0 10px 25px rgba(2, 132, 199, 0.5);
         }
 
         .accessibility-panel {
             position: fixed;
-
             top: 80px;
             right: -320px;
-
             width: 280px;
-
             background: rgba(15, 23, 42, 0.95);
-
             backdrop-filter: blur(20px);
-
             border: 1px solid rgba(255, 255, 255, 0.1);
-
             border-radius: 16px;
-
             padding: 20px;
-
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-
             z-index: 9998;
-
             transition:
                 right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-
             display: flex;
             flex-direction: column;
-
             gap: 16px;
-
             color: #ffffff;
         }
 
@@ -797,11 +632,8 @@
 
         .accessibility-panel h3 {
             font-size: 0.95rem;
-
             border-bottom: 1px solid rgba(255,255,255,0.1);
-
             padding-bottom: 8px;
-
             color: #fff;
         }
 
@@ -819,25 +651,16 @@
 
         .acc-btn {
             background: rgba(255,255,255,0.08);
-
             border: 1px solid rgba(255,255,255,0.15);
-
             color: #ffffff;
-
             padding: 6px 12px;
-
             border-radius: 8px;
-
             cursor: pointer;
-
             transition: 0.2s;
-
             font-size: 0.85rem;
-
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             gap: 5px;
         }
 
@@ -854,9 +677,6 @@
             color: #070b16;
         }
 
-        /* =========================================================
-           MODO CLARO
-        ========================================================= */
         body.light {
             background: #f1f5f9;
             color: #0f172a;
@@ -891,6 +711,17 @@
             color: #0f172a;
         }
 
+        body.light .logout {
+            background: rgba(15, 23, 42, 0.05);
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+
+        body.light .logout:hover {
+            background: #0f172a;
+            color: #fff;
+        }
+
         body.light .page-title h1 {
             color: #0f172a;
         }
@@ -901,12 +732,9 @@
 
         body.light .card {
             background: #ffffff;
-
             border-color: #e2e8f0;
-
             box-shadow:
                 0 10px 25px -5px rgba(0,0,0,0.05);
-
             color: #0f172a;
         }
 
@@ -932,9 +760,7 @@
 
         body.light .parking-container {
             background: #f8fafc;
-
             border-color: #cbd5e1;
-
             box-shadow:
                 inset 0 2px 8px rgba(0,0,0,0.05);
         }
@@ -954,9 +780,6 @@
             color: rgba(15, 23, 42, 0.4);
         }
 
-        /* =========================================================
-           ALTO CONTRASTE
-        ========================================================= */
         body.high-contrast {
             background: #000000 !important;
             color: #FFFF00 !important;
@@ -969,11 +792,8 @@
         body.high-contrast .floor-title,
         body.high-contrast .parking-container {
             background: #000000 !important;
-
             border: 2px solid #FFFF00 !important;
-
             color: #FFFF00 !important;
-
             box-shadow: none !important;
         }
 
@@ -1008,6 +828,11 @@
             background: #FFFF00 !important;
             color: #000000 !important;
             border: 2px solid #FFFF00 !important;
+        }
+
+        body.high-contrast .logout:hover {
+            background: #FFFF00 !important;
+            color: #000000 !important;
         }
 
         body.high-contrast .acc-btn i {
@@ -1049,13 +874,9 @@
             z-index: 9995 !important;
         }
 
-        /* =========================================================
-           RESPONSIVIDADE
-        ========================================================= */
         @media(max-width:1200px) {
-
             .container {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .span-4 {
@@ -1072,6 +893,110 @@
                 display: none;
             }
         }
+
+        .main,
+        .container,
+        .card,
+        .kpi-header,
+        .indicator-body,
+        .page-title,
+        .dashboard-legend,
+        .legend-item,
+        .accessibility-panel,
+        .panel-row {
+            min-width: 0;
+        }
+
+        .container {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .card h2,
+        .mini,
+        .page-title h1,
+        .page-title p,
+        .legend-item span,
+        .panel-row span {
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .kpi-header {
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .value {
+            line-height: 1.2;
+            overflow-wrap: anywhere;
+        }
+
+        .sidebar {
+            overflow-y: auto;
+        }
+
+        .accessibility-panel {
+            width: min(280px, calc(100vw - 32px));
+            max-height: calc(100vh - 96px);
+            overflow-y: auto;
+        }
+
+        .panel-row {
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .panel-row > span {
+            flex: 1 1 120px;
+        }
+
+        @media(max-width:1200px) {
+            .container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media(max-width:600px) {
+            .container {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .span-4 {
+                grid-column: span 1;
+            }
+
+            .main {
+                padding: 1rem;
+            }
+
+            .page-title h1 {
+                overflow-wrap: anywhere;
+            }
+        }
+
+        .swal-high-contrast {
+            border: 2px solid #ffff00 !important;
+            border-radius: 16px !important;
+        }
+
+        .swal-high-contrast-title,
+        .swal-high-contrast-text {
+            color: #ffff00 !important;
+        }
+
+        .swal-high-contrast-confirm {
+            background: #ffff00 !important;
+            color: #000000 !important;
+            border: 2px solid #ffff00 !important;
+            font-weight: 700 !important;
+        }
+
+        .swal-high-contrast-cancel {
+            background: #000000 !important;
+            color: #ffff00 !important;
+            border: 2px solid #ffff00 !important;
+            font-weight: 700 !important;
+        }
     </style>
 </head>
 
@@ -1084,6 +1009,9 @@ $tot_vagas = $totalVagas ?? count($vagas_dados);
 $tot_livres = $livres ?? 0;
 $tot_ocupadas = $ocupadas ?? 0;
 $pct_taxa = $taxa ?? 0;
+
+$u_nome = $usuario['USU_NOME'] ?? session()->get('USU_NOME') ?? session()->get('USR_NOME') ?? session()->get('nome') ?? 'Porteiro';
+$u_tipo = $usuario['USU_TIPO'] ?? session()->get('USU_TIPO') ?? session()->get('tipo') ?? 'Porteiro';
 ?>
 
 <?php if(session()->getFlashdata('erro')): ?>
@@ -1106,9 +1034,6 @@ Swal.fire({
 </script>
 <?php endif; ?>
 
-<!-- =========================================================
-     BOTÃO DE ACESSIBILIDADE
-========================================================= -->
 <button
     class="main-acc-btn"
     id="mainAccBtn"
@@ -1124,9 +1049,6 @@ Swal.fire({
 
 </button>
 
-<!-- =========================================================
-     PAINEL DE ACESSIBILIDADE
-========================================================= -->
 <section
     class="accessibility-panel"
     id="accPanel"
@@ -1239,10 +1161,7 @@ Swal.fire({
 
 </section>
 
-<!-- =========================================================
-     MENU LATERAL
-     PADRÃO EXATO DO PERFIL DO PORTEIRO
-========================================================= -->
+<!-- MENU LATERAL DA PÁGINA DE PERFIL IGUALADO -->
 <aside class="sidebar">
 
     <div>
@@ -1263,11 +1182,11 @@ Swal.fire({
         <div class="user">
 
             <h2>
-                <?= session()->get('USR_NOME') ?? 'Porteiro' ?>
+                <?= esc($u_nome) ?>
             </h2>
 
             <p>
-                Perfil: Porteiro
+                Perfil: <?= esc($u_tipo) ?>
             </p>
 
         </div>
@@ -1322,9 +1241,6 @@ Swal.fire({
 
 </aside>
 
-<!-- =========================================================
-     CONTEÚDO PRINCIPAL
-========================================================= -->
 <main class="main">
 
     <header class="page-title">
@@ -1341,7 +1257,6 @@ Swal.fire({
 
     <div class="container">
 
-        <!-- TOTAL -->
         <section
             class="card"
             aria-labelledby="lbl-total">
@@ -1378,7 +1293,6 @@ Swal.fire({
 
         </section>
 
-        <!-- LIVRES -->
         <section
             class="card"
             aria-labelledby="lbl-livres">
@@ -1422,7 +1336,6 @@ Swal.fire({
 
         </section>
 
-        <!-- OCUPADAS -->
         <section
             class="card"
             aria-labelledby="lbl-ocupadas">
@@ -1466,7 +1379,6 @@ Swal.fire({
 
         </section>
 
-        <!-- TAXA -->
         <section
             class="card"
             aria-labelledby="lbl-taxa">
@@ -1503,7 +1415,6 @@ Swal.fire({
 
         </section>
 
-        <!-- MAPA -->
         <section
             class="card span-4"
             aria-labelledby="lbl-mapa">
@@ -1585,1270 +1496,381 @@ Swal.fire({
 
 </main>
 
-<!-- =========================================================
-     VLIBRAS
-========================================================= -->
 <div vw class="enabled">
-
-    <div
-        vw-access-button
-        class="active">
-    </div>
-
+    <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
-
         <div class="vw-plugin-top-wrapper"></div>
-
     </div>
-
 </div>
 
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 
 <script>
-new window.VLibras.Widget(
-    'https://vlibras.gov.br/app'
-);
+new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
 
 <script>
-/* =========================================================
-   LOGOUT
-========================================================= */
+const logoutBtn = document.getElementById('logoutBtn');
 
-document
-    .getElementById("logoutBtn")
-    .addEventListener("click", function(e) {
-
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
         e.preventDefault();
 
-        Swal.fire({
-            title: "Deseja fazer logout?",
-            text: "Você será desconectado com segurança do sistema.",
-            icon: "warning",
+        const isHighContrast = document.body.classList.contains('high-contrast');
+        const isLight = document.body.classList.contains('light');
+
+        let config = {
+            title: 'Deseja sair?',
+            text: 'Você será desconectado da sua conta.',
+            icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: "Sim, sair",
-            cancelButtonText: "Cancelar"
-        }).then((result) => {
+            confirmButtonText: 'Sim, sair',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            focusCancel: true
+        };
 
-            if(result.isConfirmed) {
+        if (!isLight && !isHighContrast) {
+            config.background = '#1e293b';
+            config.color = '#f8fafc';
+            config.confirmButtonColor = '#4CC9F0';
+            config.cancelButtonColor = '#475569';
+        } else if (isLight && !isHighContrast) {
+            config.background = '#ffffff';
+            config.color = '#0f172a';
+            config.confirmButtonColor = '#0284c7';
+            config.cancelButtonColor = '#64748b';
+        } else if (isHighContrast) {
+            config.background = '#000000';
+            config.color = '#ffff00';
+            config.confirmButtonColor = '#ffff00';
+            config.cancelButtonColor = '#000000';
+            config.customClass = {
+                popup: 'swal-high-contrast',
+                title: 'swal-high-contrast-title',
+                htmlContainer: 'swal-high-contrast-text',
+                confirmButton: 'swal-high-contrast-confirm',
+                cancelButton: 'swal-high-contrast-cancel'
+            };
+        }
 
-                window.location.href =
-                    "<?= base_url('/logout') ?>";
-
+        Swal.fire(config).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "<?= base_url('/logout') ?>";
             }
-
         });
-
     });
+}
 
-
-/* =========================================================
-   ACESSIBILIDADE
-========================================================= */
-
-const mainAccBtn =
-    document.getElementById("mainAccBtn");
-
-const accPanel =
-    document.getElementById("accPanel");
-
-const body =
-    document.body;
-
+const mainAccBtn = document.getElementById("mainAccBtn");
+const accPanel = document.getElementById("accPanel");
+const body = document.body;
 
 function togglePanel(open) {
-
-    const isOpen =
-        open !== undefined
-            ? open
-            : !accPanel.classList.contains("open");
-
-    accPanel.classList.toggle(
-        "open",
-        isOpen
-    );
-
-    accPanel.setAttribute(
-        "aria-hidden",
-        !isOpen
-    );
-
-    mainAccBtn.setAttribute(
-        "aria-expanded",
-        isOpen
-    );
+    const isOpen = open !== undefined ? open : !accPanel.classList.contains("open");
+    accPanel.classList.toggle("open", isOpen);
+    accPanel.setAttribute("aria-hidden", !isOpen);
+    mainAccBtn.setAttribute("aria-expanded", isOpen);
 }
 
+mainAccBtn.addEventListener("click", (e) => { e.stopPropagation(); togglePanel(); });
+document.addEventListener("click", (e) => { if (!accPanel.contains(e.target) && e.target !== mainAccBtn) togglePanel(false); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && accPanel.classList.contains("open")) togglePanel(false); });
 
-mainAccBtn.addEventListener(
-    "click",
-    (e) => {
-
-        e.stopPropagation();
-
-        togglePanel();
-
-    }
-);
-
-
-document.addEventListener(
-    "click",
-    (e) => {
-
-        if(
-            !accPanel.contains(e.target) &&
-            e.target !== mainAccBtn
-        ) {
-
-            togglePanel(false);
-
-        }
-
-    }
-);
-
-
-document.addEventListener(
-    "keydown",
-    (e) => {
-
-        if(
-            e.key === "Escape" &&
-            accPanel.classList.contains("open")
-        ) {
-
-            togglePanel(false);
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   TAMANHO DA FONTE
-========================================================= */
-
-let currentFontSize =
-    parseFloat(
-        localStorage.getItem("fontSize")
-    ) || 16;
-
-
+let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
 const updateFontSize = (size) => {
-
-    document.documentElement.style.fontSize =
-        size + "px";
-
-    localStorage.setItem(
-        "fontSize",
-        size
-    );
-
+    document.documentElement.style.fontSize = size + "px";
+    localStorage.setItem("fontSize", size);
 };
-
-
 updateFontSize(currentFontSize);
 
+document.getElementById("increaseText").addEventListener("click", () => {
+    if(currentFontSize < 24) { currentFontSize += 1; updateFontSize(currentFontSize); }
+});
+document.getElementById("decreaseText").addEventListener("click", () => {
+    if(currentFontSize > 13) { currentFontSize -= 1; updateFontSize(currentFontSize); }
+});
 
-document
-    .getElementById("increaseText")
-    .addEventListener("click", () => {
+const themeBtn = document.getElementById("themeBtn");
+const themeIcon = themeBtn.querySelector("i");
 
-        if(currentFontSize < 24) {
-
-            currentFontSize += 1;
-
-            updateFontSize(
-                currentFontSize
-            );
-
-        }
-
-    });
-
-
-document
-    .getElementById("decreaseText")
-    .addEventListener("click", () => {
-
-        if(currentFontSize > 13) {
-
-            currentFontSize -= 1;
-
-            updateFontSize(
-                currentFontSize
-            );
-
-        }
-
-    });
-
-
-/* =========================================================
-   TEMA CLARO / ESCURO
-========================================================= */
-
-const themeBtn =
-    document.getElementById("themeBtn");
-
-const themeIcon =
-    themeBtn.querySelector("i");
-
-
-if(
-    localStorage.getItem("theme") === "light"
-) {
-
+if(localStorage.getItem("theme") === "light"){
     body.classList.add("light");
-
-    themeIcon.classList.replace(
-        "fa-moon",
-        "fa-sun"
-    );
-
+    themeIcon.classList.replace("fa-moon", "fa-sun");
     trocarImagens("light");
-
 }
 
-
-themeBtn.addEventListener(
-    "click",
-    () => {
-
-        body.classList.remove(
-            "high-contrast"
-        );
-
-        body.classList.toggle(
-            "light"
-        );
-
-
-        if(
-            body.classList.contains("light")
-        ) {
-
-            themeIcon.classList.replace(
-                "fa-moon",
-                "fa-sun"
-            );
-
-            localStorage.setItem(
-                "theme",
-                "light"
-            );
-
-            trocarImagens("light");
-
-        } else {
-
-            themeIcon.classList.replace(
-                "fa-sun",
-                "fa-moon"
-            );
-
-            localStorage.setItem(
-                "theme",
-                "dark"
-            );
-
-            trocarImagens("dark");
-
-        }
-
+themeBtn.addEventListener("click", () => {
+    body.classList.remove("high-contrast");
+    body.classList.toggle("light");
+    if(body.classList.contains("light")){
+        themeIcon.classList.replace("fa-moon", "fa-sun");
+        localStorage.setItem("theme", "light");
+        trocarImagens("light");
+    } else {
+        themeIcon.classList.replace("fa-sun", "fa-moon");
+        localStorage.setItem("theme", "dark");
+        trocarImagens("dark");
     }
-);
+});
 
+const contrastBtn = document.getElementById("contrastBtn");
+if(localStorage.getItem("contrast") === "high"){ body.classList.add("high-contrast"); }
 
-/* =========================================================
-   ALTO CONTRASTE
-========================================================= */
+contrastBtn.addEventListener("click", () => {
+    body.classList.remove("light");
+    body.classList.toggle("high-contrast");
+    localStorage.setItem("contrast", body.classList.contains("high-contrast") ? "high" : "normal");
+});
 
-const contrastBtn =
-    document.getElementById("contrastBtn");
-
-
-if(
-    localStorage.getItem("contrast") === "high"
-) {
-
-    body.classList.add(
-        "high-contrast"
-    );
-
-}
-
-
-contrastBtn.addEventListener(
-    "click",
-    () => {
-
-        body.classList.remove(
-            "light"
-        );
-
-        body.classList.toggle(
-            "high-contrast"
-        );
-
-        localStorage.setItem(
-            "contrast",
-            body.classList.contains(
-                "high-contrast"
-            )
-                ? "high"
-                : "normal"
-        );
-
-    }
-);
-
-
-/* =========================================================
-   LEITURA DE TEXTO
-========================================================= */
-
-const audioBtn =
-    document.getElementById("audioBtn");
-
-let synth =
-    window.speechSynthesis;
-
+const audioBtn = document.getElementById("audioBtn");
+let synth = window.speechSynthesis;
 let isSpeaking = false;
 
-
-audioBtn.addEventListener(
-    "click",
-    () => {
-
-        if(isSpeaking) {
-
-            synth.cancel();
-
-            isSpeaking = false;
-
-            audioBtn.classList.remove(
-                "audio-active"
-            );
-
-        } else {
-
-            let texto =
-                `Resumo do Dashboard do Porteiro. ` +
-                `Total de vagas: <?= $tot_vagas ?>. ` +
-                `Vagas livres: <?= $tot_livres ?>. ` +
-                `Vagas ocupadas: <?= $tot_ocupadas ?>. ` +
-                `Taxa de ocupação: <?= $pct_taxa ?> por cento.`;
-
-            const utterance =
-                new SpeechSynthesisUtterance(
-                    texto
-                );
-
-            utterance.lang =
-                "pt-BR";
-
-            utterance.onend =
-                () => {
-
-                    audioBtn.classList.remove(
-                        "audio-active"
-                    );
-
-                    isSpeaking = false;
-
-                };
-
-            synth.speak(
-                utterance
-            );
-
-            audioBtn.classList.add(
-                "audio-active"
-            );
-
-            isSpeaking = true;
-
-        }
-
-    }
-);
-
-
-window.addEventListener(
-    'beforeunload',
-    () => {
-
+audioBtn.addEventListener("click", () => {
+    if (isSpeaking) {
         synth.cancel();
-
+        isSpeaking = false;
+        audioBtn.classList.remove("audio-active");
+    } else {
+        let texto = `Resumo do Dashboard do Porteiro. Total de vagas: <?= $tot_vagas ?>. Vagas livres: <?= $tot_livres ?>. Vagas ocupadas: <?= $tot_ocupadas ?>. Taxa de ocupação: <?= $pct_taxa ?> por cento.`;
+        const utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = "pt-BR";
+        utterance.onend = () => { audioBtn.classList.remove("audio-active"); isSpeaking = false; };
+        synth.speak(utterance);
+        audioBtn.classList.add("audio-active");
+        isSpeaking = true;
     }
-);
+});
 
-
-/* =========================================================
-   TROCA DE LOGO
-========================================================= */
+window.addEventListener('beforeunload', () => { synth.cancel(); });
 
 function trocarImagens(modo) {
-
-    const imagens =
-        document.querySelectorAll(
-            "img.logo-img, #logoImg"
-        );
-
-
+    const imagens = document.querySelectorAll("img.logo-img, #logoImg");
     imagens.forEach(img => {
+        if(!img.getAttribute("data-dark")) { img.setAttribute("data-dark", img.src); }
+        const lightSrc = img.getAttribute("data-light");
+        let novaSrc = modo === "light" ? lightSrc : img.getAttribute("data-dark");
 
-        if(
-            !img.getAttribute("data-dark")
-        ) {
-
-            img.setAttribute(
-                "data-dark",
-                img.src
-            );
-
+        if(novaSrc && img.src !== novaSrc) {
+            img.classList.add("img-fade");
+            setTimeout(() => {
+                img.src = novaSrc;
+                img.onload = () => { img.classList.remove("img-fade"); };
+            }, 200);
         }
-
-
-        const lightSrc =
-            img.getAttribute(
-                "data-light"
-            );
-
-
-        let novaSrc =
-            modo === "light"
-                ? lightSrc
-                : img.getAttribute(
-                    "data-dark"
-                );
-
-
-        if(
-            novaSrc &&
-            img.src !== novaSrc
-        ) {
-
-            img.classList.add(
-                "img-fade"
-            );
-
-
-            setTimeout(
-                () => {
-
-                    img.src =
-                        novaSrc;
-
-                    img.onload =
-                        () => {
-
-                            img.classList.remove(
-                                "img-fade"
-                            );
-
-                        };
-
-                },
-                200
-            );
-
-        }
-
     });
-
 }
 
-
-/* =========================================================
-   MAPA DO ESTACIONAMENTO
-========================================================= */
-
-const imgBaseUrl =
-    '<?= base_url('') ?>';
-
-const spotsBanco =
-    <?= json_encode($vagas_dados) ?>;
-
+const imgBaseUrl = '<?= base_url('') ?>';
+const spotsBanco = <?= json_encode($vagas_dados) ?>;
 
 const spotsFallback = [
-
-    {
-        VAG_ID: 1,
-        VAG_SETOR: 'A',
-        VAG_STATUS: 'Livre',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 1
-    },
-
-    {
-        VAG_ID: 2,
-        VAG_SETOR: 'A',
-        VAG_STATUS: 'Ocupado',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 1
-    },
-
-    {
-        VAG_ID: 3,
-        VAG_SETOR: 'A',
-        VAG_STATUS: 'Livre',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 1,
-        PCD: true
-    },
-
-    {
-        VAG_ID: 4,
-        VAG_SETOR: 'A',
-        VAG_STATUS: 'Indisponivel',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 0
-    },
-
-    {
-        VAG_ID: 5,
-        VAG_SETOR: 'B',
-        VAG_STATUS: 'Livre',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 1
-    },
-
-    {
-        VAG_ID: 6,
-        VAG_SETOR: 'B',
-        VAG_STATUS: 'Ocupado',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 1
-    },
-
-    {
-        VAG_ID: 7,
-        VAG_SETOR: 'B',
-        VAG_STATUS: 'Livre',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 1
-    },
-
-    {
-        VAG_ID: 8,
-        VAG_SETOR: 'B',
-        VAG_STATUS: 'Livre',
-        PISO: 'Piso 1',
-        VAG_DISPONIVEL: 1
-    }
-
+    { VAG_ID: 1, VAG_SETOR: 'A', VAG_STATUS: 'Livre', PISO: 'Piso 1', VAG_DISPONIVEL: 1 },
+    { VAG_ID: 2, VAG_SETOR: 'A', VAG_STATUS: 'Ocupado', PISO: 'Piso 1', VAG_DISPONIVEL: 1 },
+    { VAG_ID: 3, VAG_SETOR: 'A', VAG_STATUS: 'Livre', PISO: 'Piso 1', VAG_DISPONIVEL: 1, PCD: true },
+    { VAG_ID: 4, VAG_SETOR: 'A', VAG_STATUS: 'Indisponivel', PISO: 'Piso 1', VAG_DISPONIVEL: 0 },
+    { VAG_ID: 5, VAG_SETOR: 'B', VAG_STATUS: 'Livre', PISO: 'Piso 1', VAG_DISPONIVEL: 1 },
+    { VAG_ID: 6, VAG_SETOR: 'B', VAG_STATUS: 'Ocupado', PISO: 'Piso 1', VAG_DISPONIVEL: 1 },
+    { VAG_ID: 7, VAG_SETOR: 'B', VAG_STATUS: 'Livre', PISO: 'Piso 1', VAG_DISPONIVEL: 1 },
+    { VAG_ID: 8, VAG_SETOR: 'B', VAG_STATUS: 'Livre', PISO: 'Piso 1', VAG_DISPONIVEL: 1 }
 ];
 
+const spotsValidos = (spotsBanco && spotsBanco.length > 0) ? spotsBanco : spotsFallback;
 
-const spotsValidos =
-    (
-        spotsBanco &&
-        spotsBanco.length > 0
-    )
-        ? spotsBanco
-        : spotsFallback;
-
-
-/* =========================================================
-   LABEL DA VAGA
-========================================================= */
-
-function obterLabelVaga(
-    vaga,
-    index
-) {
-
-    if(!vaga)
-        return `V${index + 1}`;
-
-
-    if(
-        vaga.VAG_SETOR &&
-        vaga.VAG_ID
-    ) {
-
-        return `${vaga.VAG_SETOR}${vaga.VAG_ID}`.trim();
-
-    }
-
-
-    let nome =
-        vaga.VAG_LOCALIZACAO ??
-        vaga.localizacao ??
-        vaga.VAG_NUMERO ??
-        vaga.numero ??
-        vaga.VAG_CODIGO ??
-        vaga.codigo ??
-        vaga.NOME ??
-        vaga.nome;
-
-
-    return nome
-        ? String(nome).trim()
-        : `V${index + 1}`;
-
+function obterLabelVaga(vaga, index) {
+    if(!vaga) return `V${index + 1}`;
+    if(vaga.VAG_SETOR && vaga.VAG_ID) { return `${vaga.VAG_SETOR}${vaga.VAG_ID}`.trim(); }
+    let nome = vaga.VAG_LOCALIZACAO ?? vaga.localizacao ?? vaga.VAG_NUMERO ?? vaga.numero ?? vaga.VAG_CODIGO ?? vaga.codigo ?? vaga.NOME ?? vaga.nome;
+    return nome ? String(nome).trim() : `V${index + 1}`;
 }
-
-
-/* =========================================================
-   STATUS DA VAGA
-========================================================= */
 
 function obterStatusVaga(vaga) {
-
-    if(!vaga)
-        return 'livre';
-
-
-    if(
-        vaga.VAG_DISPONIVEL === 0 ||
-        vaga.VAG_DISPONIVEL === '0' ||
-        vaga.disponivel === 0 ||
-        vaga.disponivel === '0'
-    ) {
-
+    if(!vaga) return 'livre';
+    if(vaga.VAG_DISPONIVEL === 0 || vaga.VAG_DISPONIVEL === '0' || vaga.disponivel === 0 || vaga.disponivel === '0') {
         return 'indisponivel';
-
     }
-
-
-    let st =
-        String(
-            vaga.VAG_STATUS ??
-            vaga.status ??
-            vaga.STATUS ??
-            vaga.VAG_SITUACAO ??
-            vaga.situacao ??
-            ''
-        )
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    if(
-        [
-            'indisponivel',
-            'unavailable',
-            'manutencao',
-            'bloqueado',
-            'bloqueada',
-            'inativo',
-            'disabled'
-        ].includes(st)
-    ) {
-
+    let st = String(vaga.VAG_STATUS ?? vaga.status ?? vaga.STATUS ?? vaga.VAG_SITUACAO ?? vaga.situacao ?? '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    if(['indisponivel', 'unavailable', 'manutencao', 'bloqueado', 'bloqueada', 'inativo', 'disabled'].includes(st)) {
         return 'indisponivel';
-
     }
-
-
-    if(
-        [
-            'ocupado',
-            'ocupada',
-            'occupied',
-            'em uso',
-            'busy'
-        ].includes(st)
-    ) {
-
+    if(['ocupado', 'ocupada', 'occupied', 'em uso', 'busy'].includes(st)) {
         return 'ocupado';
-
     }
-
-
     return 'livre';
-
 }
-
-
-/* =========================================================
-   PISO
-========================================================= */
 
 function extrairNomeDoPiso(vaga) {
-
-    if(!vaga)
-        return "Piso Principal";
-
-
-    let pisoRaw =
-        String(
-            vaga.PISO ??
-            vaga.piso ??
-            vaga.VAG_PISO ??
-            ""
-        ).trim();
-
-
-    if(
-        pisoRaw &&
-        pisoRaw.toLowerCase() !==
-        "setor principal"
-    ) {
-
-        return pisoRaw;
-
-    }
-
-
-    const texto =
-        String(
-            vaga.VAG_LOCALIZACAO ||
-            vaga.localizacao ||
-            vaga.VAG_SETOR ||
-            ""
-        );
-
-
-    const match =
-        texto.match(
-            /(Piso\s*\d+|PISO\s*\d+)/i
-        );
-
-
-    return match
-        ? match[0]
-            .toUpperCase()
-            .replace(
-                "PISO",
-                "Piso "
-            )
-        : (
-            pisoRaw ||
-            "Piso Principal"
-        );
-
+    if(!vaga) return "Piso Principal";
+    let pisoRaw = String(vaga.PISO ?? vaga.piso ?? vaga.VAG_PISO ?? "").trim();
+    if(pisoRaw && pisoRaw.toLowerCase() !== "setor principal") { return pisoRaw; }
+    const texto = String(vaga.VAG_LOCALIZACAO || vaga.localizacao || vaga.VAG_SETOR || "");
+    const match = texto.match(/(Piso\s*\d+|PISO\s*\d+)/i);
+    return match ? match[0].toUpperCase().replace("PISO", "Piso ") : (pisoRaw || "Piso Principal");
 }
 
-
-/* =========================================================
-   DESENHAR MAPA
-========================================================= */
-
-function desenharMapaEstacionamento(
-    dados
-) {
-
-    const mainContainer =
-        document.getElementById(
-            'parkingLot'
-        );
-
-
-    if(!mainContainer)
-        return;
-
-
+function desenharMapaEstacionamento(dados) {
+    const mainContainer = document.getElementById('parkingLot');
+    if(!mainContainer) return;
     mainContainer.innerHTML = '';
 
+    const vagasPorPiso = dados.reduce((acc, vaga) => {
+        let pisoNome = extrairNomeDoPiso(vaga);
+        if(!acc[pisoNome]) acc[pisoNome] = [];
+        acc[pisoNome].push(vaga);
+        return acc;
+    }, {});
 
-    const vagasPorPiso =
-        dados.reduce(
-            (acc, vaga) => {
+    const pisosOrdenados = Object.keys(vagasPorPiso).sort((a, b) => {
+        const numA = parseInt(a.replace(/\D/g, '')) || 0;
+        const numB = parseInt(b.replace(/\D/g, '')) || 0;
+        return numA - numB;
+    });
 
-                let pisoNome =
-                    extrairNomeDoPiso(
-                        vaga
-                    );
+    pisosOrdenados.forEach(nomeDoPiso => {
+        const vagasDestePiso = vagasPorPiso[nomeDoPiso];
+        const metade = Math.ceil(vagasDestePiso.length / 2);
 
+        const floorSection = document.createElement('div');
+        floorSection.className = 'floor-section';
 
-                if(!acc[pisoNome])
-                    acc[pisoNome] = [];
+        const floorTitle = document.createElement('h3');
+        floorTitle.className = 'floor-title';
+        floorTitle.innerHTML = `<span><i class="fa-solid fa-layer-group" aria-hidden="true"></i> SETOR DE ESTACIONAMENTO</span> ${nomeDoPiso}`;
+        floorSection.appendChild(floorTitle);
 
+        const parkingContainer = document.createElement('div');
+        parkingContainer.className = 'parking-container';
 
-                acc[pisoNome].push(
-                    vaga
-                );
+        const parkingAisle = document.createElement('div');
+        parkingAisle.className = 'parking-aisle';
 
+        const filaSuperiorDiv = document.createElement('div');
+        filaSuperiorDiv.className = 'spots-row row-top';
 
-                return acc;
+        const drivewayDiv = document.createElement('div');
+        drivewayDiv.className = 'driveway';
+        drivewayDiv.innerHTML = `
+            <div class="traffic-indicator"><i class="fa-solid fa-circle-arrow-right" style="color: #22c55e;" aria-hidden="true"></i> ENTRADA</div>
+            <div class="traffic-indicator"><i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i> SENTIDO ÚNICO</div>
+            <div class="traffic-indicator">SAÍDA <i class="fa-solid fa-circle-arrow-right" style="color: #ef4444;" aria-hidden="true"></i></div>
+        `;
 
-            },
-            {}
-        );
+        const filaInferiorDiv = document.createElement('div');
+        filaInferiorDiv.className = 'spots-row row-bottom';
 
+        vagasDestePiso.forEach((vagaReal, index) => {
+            const statusCalculado = obterStatusVaga(vagaReal);
+            let isOcupado = statusCalculado === 'ocupado';
+            let isIndisponivel = statusCalculado === 'indisponivel';
+            let isPcd = Boolean(vagaReal.pcd || vagaReal.VAG_PCD || vagaReal.PCD);
+            let labelVaga = obterLabelVaga(vagaReal, index);
 
-    const pisosOrdenados =
-        Object.keys(
-            vagasPorPiso
-        ).sort(
-            (a, b) => {
+            let statusText = 'Livre';
+            let statusColor = '#22c55e';
+            let carImgName = '/images/CarroVerde.png';
+            let ledClass = 'led-green';
 
-                const numA =
-                    parseInt(
-                        a.replace(/\D/g, '')
-                    ) || 0;
-
-
-                const numB =
-                    parseInt(
-                        b.replace(/\D/g, '')
-                    ) || 0;
-
-
-                return numA - numB;
-
+            if(isOcupado) {
+                statusText = 'Ocupado';
+                statusColor = '#ef4444';
+                carImgName = '/images/CarroVermelho.png';
+                ledClass = 'led-red';
+            } else if(isIndisponivel) {
+                statusText = 'Indisponível';
+                statusColor = '#64748b';
+                carImgName = '/images/CarroCinza.png';
+                ledClass = 'led-gray';
             }
-        );
 
-
-    pisosOrdenados.forEach(
-        nomeDoPiso => {
-
-            const vagasDestePiso =
-                vagasPorPiso[
-                    nomeDoPiso
-                ];
-
-
-            const metade =
-                Math.ceil(
-                    vagasDestePiso.length / 2
-                );
-
-
-            const floorSection =
-                document.createElement(
-                    'div'
-                );
-
-            floorSection.className =
-                'floor-section';
-
-
-            const floorTitle =
-                document.createElement(
-                    'h3'
-                );
-
-            floorTitle.className =
-                'floor-title';
-
-
-            floorTitle.innerHTML =
-                `<span>
-                    <i
-                        class="fa-solid fa-layer-group"
-                        aria-hidden="true">
-                    </i>
-                    SETOR DE ESTACIONAMENTO
-                </span>
-                ${nomeDoPiso}`;
-
-
-            floorSection.appendChild(
-                floorTitle
-            );
-
-
-            const parkingContainer =
-                document.createElement(
-                    'div'
-                );
-
-            parkingContainer.className =
-                'parking-container';
-
-
-            const parkingAisle =
-                document.createElement(
-                    'div'
-                );
-
-            parkingAisle.className =
-                'parking-aisle';
-
-
-            const filaSuperiorDiv =
-                document.createElement(
-                    'div'
-                );
-
-            filaSuperiorDiv.className =
-                'spots-row row-top';
-
-
-            const drivewayDiv =
-                document.createElement(
-                    'div'
-                );
-
-            drivewayDiv.className =
-                'driveway';
-
-
-            drivewayDiv.innerHTML = `
-                <div class="traffic-indicator">
-                    <i
-                        class="fa-solid fa-circle-arrow-right"
-                        style="color: #22c55e;"
-                        aria-hidden="true">
-                    </i>
-                    ENTRADA
-                </div>
-
-                <div class="traffic-indicator">
-                    <i
-                        class="fa-solid fa-arrow-right-long"
-                        aria-hidden="true">
-                    </i>
-                    SENTIDO ÚNICO
-                </div>
-
-                <div class="traffic-indicator">
-                    SAÍDA
-                    <i
-                        class="fa-solid fa-circle-arrow-right"
-                        style="color: #ef4444;"
-                        aria-hidden="true">
-                    </i>
-                </div>
-            `;
-
-
-            const filaInferiorDiv =
-                document.createElement(
-                    'div'
-                );
-
-            filaInferiorDiv.className =
-                'spots-row row-bottom';
-
-
-            vagasDestePiso.forEach(
-                (vagaReal, index) => {
-
-                    const statusCalculado =
-                        obterStatusVaga(
-                            vagaReal
-                        );
-
-
-                    let isOcupado =
-                        statusCalculado ===
-                        'ocupado';
-
-
-                    let isIndisponivel =
-                        statusCalculado ===
-                        'indisponivel';
-
-
-                    let isPcd =
-                        Boolean(
-                            vagaReal.pcd ||
-                            vagaReal.VAG_PCD ||
-                            vagaReal.PCD
-                        );
-
-
-                    let labelVaga =
-                        obterLabelVaga(
-                            vagaReal,
-                            index
-                        );
-
-
-                    let statusText =
-                        'Livre';
-
-
-                    let statusColor =
-                        '#22c55e';
-
-
-                    let carImgName =
-                        '/images/CarroVerde.png';
-
-
-                    let ledClass =
-                        'led-green';
-
-
-                    if(isOcupado) {
-
-                        statusText =
-                            'Ocupado';
-
-                        statusColor =
-                            '#ef4444';
-
-                        carImgName =
-                            '/images/CarroVermelho.png';
-
-                        ledClass =
-                            'led-red';
-
-                    }
-
-                    else if(isIndisponivel) {
-
-                        statusText =
-                            'Indisponível';
-
-                        statusColor =
-                            '#64748b';
-
-                        carImgName =
-                            '/images/CarroCinza.png';
-
-                        ledClass =
-                            'led-gray';
-
-                    }
-
-
-                    const vagaDiv =
-                        document.createElement(
-                            'div'
-                        );
-
-
-                    vagaDiv.className =
-                        `spot ${
-                            isPcd
-                                ? 'pcd'
-                                : ''
-                        }`;
-
-
-                    vagaDiv.setAttribute(
-                        'tabindex',
-                        '0'
-                    );
-
-
-                    vagaDiv.setAttribute(
-                        'aria-label',
-                        `${labelVaga}: ${statusText}${
-                            isPcd
-                                ? ', vaga PCD'
-                                : ''
-                        }`
-                    );
-
-
-                    const sensorLed =
-                        document.createElement(
-                            'div'
-                        );
-
-
-                    sensorLed.className =
-                        `sensor-led ${
-                            isPcd &&
-                            !isOcupado &&
-                            !isIndisponivel
-                                ? 'led-blue'
-                                : ledClass
-                        }`;
-
-
-                    vagaDiv.appendChild(
-                        sensorLed
-                    );
-
-
-                    if(isPcd) {
-
-                        const pcdGround =
-                            document.createElement(
-                                'i'
-                            );
-
-
-                        pcdGround.className =
-                            'fa-solid fa-wheelchair spot-pcd-ground';
-
-
-                        pcdGround.setAttribute(
-                            'aria-hidden',
-                            'true'
-                        );
-
-
-                        vagaDiv.appendChild(
-                            pcdGround
-                        );
-
-                    }
-
-
-                    const idSpan =
-                        document.createElement(
-                            'span'
-                        );
-
-
-                    idSpan.className =
-                        'spot-id-paint';
-
-
-                    idSpan.innerText =
-                        labelVaga;
-
-
-                    vagaDiv.appendChild(
-                        idSpan
-                    );
-
-
-                    const statusSpan =
-                        document.createElement(
-                            'span'
-                        );
-
-
-                    statusSpan.className =
-                        'spot-status-tag';
-
-
-                    statusSpan.innerText =
-                        statusText;
-
-
-                    statusSpan.style.color =
-                        statusColor;
-
-
-                    vagaDiv.appendChild(
-                        statusSpan
-                    );
-
-
-                    const carroImg =
-                        document.createElement(
-                            'img'
-                        );
-
-
-                    carroImg.src =
-                        imgBaseUrl +
-                        carImgName;
-
-
-                    carroImg.className =
-                        'car-body';
-
-
-                    carroImg.alt = '';
-
-
-                    carroImg.setAttribute(
-                        'aria-hidden',
-                        'true'
-                    );
-
-
-                    vagaDiv.appendChild(
-                        carroImg
-                    );
-
-
-                    if(index < metade) {
-
-                        filaSuperiorDiv.appendChild(
-                            vagaDiv
-                        );
-
-                    } else {
-
-                        filaInferiorDiv.appendChild(
-                            vagaDiv
-                        );
-
-                    }
-
-                }
-            );
-
-
-            parkingAisle.appendChild(
-                filaSuperiorDiv
-            );
-
-            parkingAisle.appendChild(
-                drivewayDiv
-            );
-
-            parkingAisle.appendChild(
-                filaInferiorDiv
-            );
-
-
-            parkingContainer.appendChild(
-                parkingAisle
-            );
-
-
-            floorSection.appendChild(
-                parkingContainer
-            );
-
-
-            mainContainer.appendChild(
-                floorSection
-            );
-
-        }
-    );
-
+            const vagaDiv = document.createElement('div');
+            vagaDiv.className = `spot ${isPcd ? 'pcd' : ''}`;
+            vagaDiv.setAttribute('tabindex', '0');
+            vagaDiv.setAttribute('aria-label', `${labelVaga}: ${statusText}${isPcd ? ', vaga PCD' : ''}`);
+
+            const sensorLed = document.createElement('div');
+            sensorLed.className = `sensor-led ${isPcd && !isOcupado && !isIndisponivel ? 'led-blue' : ledClass}`;
+            vagaDiv.appendChild(sensorLed);
+
+            if(isPcd) {
+                const pcdGround = document.createElement('i');
+                pcdGround.className = 'fa-solid fa-wheelchair spot-pcd-ground';
+                pcdGround.setAttribute('aria-hidden', 'true');
+                vagaDiv.appendChild(pcdGround);
+            }
+
+            const idSpan = document.createElement('span');
+            idSpan.className = 'spot-id-paint';
+            idSpan.innerText = labelVaga;
+            vagaDiv.appendChild(idSpan);
+
+            const statusSpan = document.createElement('span');
+            statusSpan.className = 'spot-status-tag';
+            statusSpan.innerText = statusText;
+            statusSpan.style.color = statusColor;
+            vagaDiv.appendChild(statusSpan);
+
+            const carroImg = document.createElement('img');
+            carroImg.src = imgBaseUrl + carImgName;
+            carroImg.className = 'car-body';
+            carroImg.alt = '';
+            carroImg.setAttribute('aria-hidden', 'true');
+            vagaDiv.appendChild(carroImg);
+
+            if(index < metade) {
+                filaSuperiorDiv.appendChild(vagaDiv);
+            } else {
+                filaInferiorDiv.appendChild(vagaDiv);
+            }
+        });
+
+        parkingAisle.appendChild(filaSuperiorDiv);
+        parkingAisle.appendChild(drivewayDiv);
+        parkingAisle.appendChild(filaInferiorDiv);
+        parkingContainer.appendChild(parkingAisle);
+        floorSection.appendChild(parkingContainer);
+        mainContainer.appendChild(floorSection);
+    });
 }
 
+desenharMapaEstacionamento(spotsValidos);
 
-/* =========================================================
-   INICIALIZAÇÃO DO MAPA
-========================================================= */
+document.getElementById("vlibrasBtn").addEventListener("click", () => {
+    const vLibrasBtn = document.querySelector('[vw-access-button]');
+    if(vLibrasBtn) { vLibrasBtn.click(); }
+});
 
-desenharMapaEstacionamento(
-    spotsValidos
-);
+function atualizarDashboardDinamicamente() {
+    const urlJson = '<?= base_url("dashboard/getDadosJson") ?>';
 
+    fetch(urlJson)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                if (data.vagasMapa && Array.isArray(data.vagasMapa)) {
+                    desenharMapaEstacionamento(data.vagasMapa);
+                }
 
-/* =========================================================
-   VLIBRAS
-========================================================= */
-
-document
-    .getElementById("vlibrasBtn")
-    .addEventListener(
-        "click",
-        () => {
-
-            const vLibrasBtn =
-                document.querySelector(
-                    '[vw-access-button]'
-                );
-
-
-            if(vLibrasBtn) {
-
-                vLibrasBtn.click();
-
+                const cardsValores = document.querySelectorAll('.container .card .value');
+                if (cardsValores.length >= 4) {
+                    if (data.totalVagas !== undefined) cardsValores[0].innerText = data.totalVagas;
+                    if (data.livres !== undefined) cardsValores[1].innerText = data.livres;
+                    if (data.ocupadas !== undefined) cardsValores[2].innerText = data.ocupadas;
+                    if (data.taxa !== undefined) cardsValores[3].innerText = data.taxa + '%';
+                }
             }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados atualizados do dashboard:', error);
+        });
+}
 
-        }
-    );
+setInterval(atualizarDashboardDinamicamente, 1000);
+
 </script>
-
-
-<!-- SWEET ALERT ENTRADA DE USUÁRIOS -->
-
 
 <script>
 (function () {
-
     const theme = localStorage.getItem('theme');
     const contrast = localStorage.getItem('contrast');
 
@@ -2856,19 +1878,12 @@ document
     document.body.classList.remove('high-contrast');
 
     if (contrast === 'high') {
-
         document.body.classList.add('high-contrast');
-
     } else if (theme === 'light') {
-
         document.body.classList.add('light');
-
     }
-
 })();
 </script>
 
-
 </body>
 </html>
-

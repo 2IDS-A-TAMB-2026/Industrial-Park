@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
 
 <title>Empresas | Industrial Park</title>
 
@@ -35,7 +36,8 @@ body {
 .menu a i { width:18px; text-align:center; }
 .menu a:hover { background:rgba(76,201,240,.12); color:#4CC9F0; transform:translateX(4px); }
 .menu a.active { background:linear-gradient(135deg,rgba(76,201,240,.25),rgba(76,201,240,.08)); color:#4CC9F0; border:1px solid rgba(76,201,240,.3); }
-/* BOTÃO LOGOUT (MODERNO EM AZUL) */
+
+/* BOTÃO LOGOUT */
 .logout {
     padding: 12px 20px;
     text-align: center;
@@ -69,7 +71,7 @@ body {
 }
 
 .logout:hover i {
-    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
+    transform: translateX(3px);
 }
 
 .logout:active {
@@ -147,6 +149,8 @@ body.light { background:#f1f5f9; color:#0f172a; background-image:none; }
 body.light .sidebar { background:rgba(255,255,255,.95); border-right:1px solid #cbd5e1; }
 body.light .logo { color:#0f172a; } body.light .user h3 { color:#0f172a; } body.light .user p { color:#475569; font-weight:500; }
 body.light .menu a { color:#475569; font-weight:600; } body.light .menu a:hover,body.light .menu a.active { background:rgba(15,23,42,.08); color:#0f172a; }
+body.light .logout { background: rgba(15, 23, 42, 0.05); border-color: #cbd5e1; color: #0f172a; }
+body.light .logout:hover { background: #0f172a; color: #fff; }
 body.light .page-title h1 { color:#0f172a; } body.light .page-title p { color:#475569; }
 body.light .card { background:#fff; border-color:#e2e8f0; box-shadow:0 10px 25px -5px rgba(0,0,0,.05); color:#0f172a; }
 body.light .card h2 { color:#64748b; } body.light label { color:#334155; }
@@ -159,104 +163,61 @@ body.light .acc-btn { background:#f1f5f9; border-color:#cbd5e1; color:#0f172a !i
 body.light .acc-btn:hover { background:#0f172a; color:#fff !important; } body.light .acc-btn:hover i { color:#fff !important; }
 
 /* ========================= ALTO CONTRASTE ========================= */
-
 body.high-contrast {
     background:#000 !important;
     color:#ffff00 !important;
     background-image:none !important;
 }
-
-/* SIDEBAR */
 body.high-contrast .sidebar {
     background:#000 !important;
     border-right:2px solid #ffff00 !important;
     box-shadow:none !important;
 }
-
-/* LOGO */
 body.high-contrast .logo,
 body.high-contrast .logo span {
     color:#ffff00 !important;
 }
-
-/* USUÁRIO */
 body.high-contrast .user {
     border-bottom:2px solid #ffff00 !important;
 }
-
 body.high-contrast .user h3,
 body.high-contrast .user p {
     color:#ffff00 !important;
 }
-
-/* =========================
-   MENU - ALTO CONTRASTE
-   ========================= */
-
 body.high-contrast .menu a {
     background:#000 !important;
     color:#ffff00 !important;
     border:2px solid transparent !important;
 }
-
-body.high-contrast .menu a i {
-    color:#ffff00 !important;
-}
-
-/* HOVER */
+body.high-contrast .menu a i { color:#ffff00 !important; }
 body.high-contrast .menu a:hover {
     background:#ffff00 !important;
     color:#000 !important;
     border:2px solid #ffff00 !important;
     transform:translateX(4px);
 }
-
-body.high-contrast .menu a:hover i {
-    color:#000 !important;
-}
-
-/* ITEM ATIVO */
+body.high-contrast .menu a:hover i { color:#000 !important; }
 body.high-contrast .menu a.active {
     background:#ffff00 !important;
     color:#000 !important;
     border:2px solid #ffff00 !important;
     box-shadow:none !important;
 }
-
-body.high-contrast .menu a.active i {
-    color:#000 !important;
-}
-
-/* =========================
-   LOGOUT
-   ========================= */
-
+body.high-contrast .menu a.active i { color:#000 !important; }
 body.high-contrast .logout {
     background:#ffff00 !important;
     color:#000 !important;
     border:2px solid #ffff00 !important;
     box-shadow:none !important;
 }
-
-body.high-contrast .logout i {
-    color:#000 !important;
-}
-
+body.high-contrast .logout i { color:#000 !important; }
 body.high-contrast .logout:hover {
     background:#000 !important;
     color:#ffff00 !important;
     border:2px solid #ffff00 !important;
     box-shadow:none !important;
 }
-
-body.high-contrast .logout:hover i {
-    color:#ffff00 !important;
-}
-
-/* =========================
-   CONTEÚDO
-   ========================= */
-
+body.high-contrast .logout:hover i { color:#ffff00 !important; }
 body.high-contrast .page-title h1,
 body.high-contrast .page-title p,
 body.high-contrast .card h2,
@@ -266,8 +227,6 @@ body.high-contrast td,
 body.high-contrast span {
     color:#ffff00 !important;
 }
-
-/* CARDS / TABELA / PAINEL */
 body.high-contrast .card,
 body.high-contrast .accessibility-panel,
 body.high-contrast thead,
@@ -277,8 +236,6 @@ body.high-contrast .table-responsive {
     color:#ffff00 !important;
     box-shadow:none !important;
 }
-
-/* INPUTS */
 body.high-contrast input,
 body.high-contrast select,
 body.high-contrast tbody tr {
@@ -286,18 +243,8 @@ body.high-contrast tbody tr {
     color:#ffff00 !important;
     border:1px solid #ffff00 !important;
 }
-
-body.high-contrast input::placeholder {
-    color:#ffff00 !important;
-    opacity:.8;
-}
-
-body.high-contrast select option {
-    background:#000 !important;
-    color:#ffff00 !important;
-}
-
-/* BOTÕES */
+body.high-contrast input::placeholder { color:#ffff00 !important; opacity:.8; }
+body.high-contrast select option { background:#000 !important; color:#ffff00 !important; }
 body.high-contrast button,
 body.high-contrast .btn,
 body.high-contrast .acc-btn,
@@ -306,15 +253,12 @@ body.high-contrast .main-acc-btn {
     color:#000 !important;
     border:2px solid #ffff00 !important;
 }
-
 body.high-contrast button i,
 body.high-contrast .btn i,
 body.high-contrast .acc-btn i,
 body.high-contrast .main-acc-btn i {
     color:#000 !important;
 }
-
-/* HOVER DOS BOTÕES */
 body.high-contrast button:hover,
 body.high-contrast .btn:hover,
 body.high-contrast .acc-btn:hover {
@@ -322,84 +266,50 @@ body.high-contrast .acc-btn:hover {
     color:#ffff00 !important;
     border:2px solid #ffff00 !important;
 }
-
 body.high-contrast button:hover i,
 body.high-contrast .btn:hover i,
 body.high-contrast .acc-btn:hover i {
     color:#ffff00 !important;
 }
-
-/* PAINEL DE ACESSIBILIDADE */
 body.high-contrast .accessibility-panel h3,
-body.high-contrast .panel-row span {
-    color:#ffff00 !important;
-}
-
-body.high-contrast .accessibility-panel h3 {
-    border-bottom-color:#ffff00 !important;
-}
-
-/* LINHAS DA TABELA */
-body.high-contrast tbody tr:hover {
-    background:#ffff00 !important;
-}
-
+body.high-contrast .panel-row span { color:#ffff00 !important; }
+body.high-contrast .accessibility-panel h3 { border-bottom-color:#ffff00 !important; }
+body.high-contrast tbody tr:hover { background:#ffff00 !important; }
 body.high-contrast tbody tr:hover td,
-body.high-contrast tbody tr:hover td strong {
-    color:#000 !important;
-}
-
-/* STATUS */
+body.high-contrast tbody tr:hover td strong { color:#000 !important; }
 body.high-contrast .ativa,
-body.high-contrast .inativa {
-    color:#ffff00 !important;
-}
-
-/* BOTÃO DE ÁUDIO ATIVO */
-body.high-contrast .acc-btn.audio-active {
-    background:#ffff00 !important;
-    color:#000 !important;
-}
-
-body.high-contrast .acc-btn.audio-active i {
-    color:#000 !important;
-}
+body.high-contrast .inativa { color:#ffff00 !important; }
+body.high-contrast .acc-btn.audio-active { background:#ffff00 !important; color:#000 !important; }
+body.high-contrast .acc-btn.audio-active i { color:#000 !important; }
 
 .acc-btn.audio-active { background:#10b981 !important; color:#fff !important; } .acc-btn.audio-active i { color:#fff !important; }
 .img-fade { opacity:0; transform:scale(.98); } img { transition:opacity .4s ease,transform .3s ease; } [vw] { z-index:9995 !important; }
 
 @media(max-width:1200px){ .grid{grid-template-columns:1fr;} .card{grid-column:span 1;} .form-grid{grid-template-columns:1fr;} .main{margin-left:0;width:100%;padding:1.5rem;} .sidebar{display:none;} .page-title h1{font-size:1.8rem;} }
 
-<!-- LOGOUTT -->
-
 /* ==========================================
    SWEETALERT - ALTO CONTRASTE
    ========================================== */
-
 .swal-high-contrast {
     border: 2px solid #ffff00 !important;
     border-radius: 16px !important;
 }
-
 .swal-high-contrast-title,
 .swal-high-contrast-text {
     color: #ffff00 !important;
 }
-
 .swal-high-contrast-confirm {
     background: #ffff00 !important;
     color: #000000 !important;
     border: 2px solid #ffff00 !important;
     font-weight: 700 !important;
 }
-
 .swal-high-contrast-cancel {
     background: #000000 !important;
     color: #ffff00 !important;
     border: 2px solid #ffff00 !important;
     font-weight: 700 !important;
 }
-
 </style>
 </head>
 
@@ -463,8 +373,8 @@ body.high-contrast .acc-btn.audio-active i {
     </div>
   </div>
 
-  <a href="<?= base_url('logout') ?>" class="logout" id="logoutBtn">
-    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  <a href="<?= base_url('logout') ?>" class="logout" id="logoutBtn" aria-label="Sair da conta">
+    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Logout</span>
   </a>
 </div>
 
@@ -780,74 +690,59 @@ body.high-contrast .acc-btn.audio-active i {
         });
     });
 
-    // 6. LOGOUT
-    // ==========================================
-// CONFIRMAÇÃO DE LOGOUT - SWEETALERT
-// ==========================================
+    // 6. CONFIRMAÇÃO DE LOGOUT - SWEETALERT
+    const logoutBtn = document.getElementById('logoutBtn');
 
-const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
 
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+            const logoutUrl = this.getAttribute('href');
+            const isHighContrast = document.body.classList.contains('high-contrast');
+            const isLight = document.body.classList.contains('light');
 
-        const logoutUrl = this.getAttribute('href');
-
-        // Detecta o modo atual da tela
-        const isHighContrast = document.body.classList.contains('high-contrast');
-        const isLight = document.body.classList.contains('light');
-
-        let config = {
-            title: 'Deseja sair?',
-            text: 'Você será desconectado do sistema.',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Sim, sair',
-            cancelButtonText: 'Cancelar',
-            reverseButtons: true,
-            focusCancel: true
-        };
-
-        // 🌙 MODO ESCURO
-        if (!isLight && !isHighContrast) {
-            config.background = '#1e293b';
-            config.color = '#f8fafc';
-            config.confirmButtonColor = '#4CC9F0';
-            config.cancelButtonColor = '#475569';
-        }
-
-        // ☀️ MODO CLARO
-        else if (isLight && !isHighContrast) {
-            config.background = '#ffffff';
-            config.color = '#0f172a';
-            config.confirmButtonColor = '#0284c7';
-            config.cancelButtonColor = '#64748b';
-        }
-
-        // ⚠️ ALTO CONTRASTE
-        else if (isHighContrast) {
-            config.background = '#000000';
-            config.color = '#ffff00';
-            config.confirmButtonColor = '#ffff00';
-            config.cancelButtonColor = '#000000';
-
-            // CSS específico para manter o padrão do alto contraste
-            config.customClass = {
-                popup: 'swal-high-contrast',
-                title: 'swal-high-contrast-title',
-                htmlContainer: 'swal-high-contrast-text',
-                confirmButton: 'swal-high-contrast-confirm',
-                cancelButton: 'swal-high-contrast-cancel'
+            let config = {
+                title: 'Deseja sair?',
+                text: 'Você será desconectado do sistema.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, sair',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                focusCancel: true
             };
-        }
 
-        Swal.fire(config).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = logoutUrl;
+            if (!isLight && !isHighContrast) {
+                config.background = '#1e293b';
+                config.color = '#f8fafc';
+                config.confirmButtonColor = '#4CC9F0';
+                config.cancelButtonColor = '#475569';
+            } else if (isLight && !isHighContrast) {
+                config.background = '#ffffff';
+                config.color = '#0f172a';
+                config.confirmButtonColor = '#0284c7';
+                config.cancelButtonColor = '#64748b';
+            } else if (isHighContrast) {
+                config.background = '#000000';
+                config.color = '#ffff00';
+                config.confirmButtonColor = '#ffff00';
+                config.cancelButtonColor = '#000000';
+                config.customClass = {
+                    popup: 'swal-high-contrast',
+                    title: 'swal-high-contrast-title',
+                    htmlContainer: 'swal-high-contrast-text',
+                    confirmButton: 'swal-high-contrast-confirm',
+                    cancelButton: 'swal-high-contrast-cancel'
+                };
             }
+
+            Swal.fire(config).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = logoutUrl;
+                }
+            });
         });
-    });
-}
+    }
 
     // 7. PAINEL DE ACESSIBILIDADE
     const mainAccBtn = document.getElementById("mainAccBtn");
@@ -972,7 +867,8 @@ if (logoutBtn) {
 
     // 14. FLASHDATA DO CODEIGNITER
     <?php
-        $sucesso = session()->getFlashdata('sucesso');$erro = session()->getFlashdata('error');
+        $sucesso = session()->getFlashdata('sucesso');
+        $erro = session()->getFlashdata('error');
     ?>
 
     <?php if ($sucesso): ?>

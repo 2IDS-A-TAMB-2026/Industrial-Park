@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
 
 <title>Gerenciamento de Sensores IoT</title>
 
@@ -447,6 +448,8 @@ select option {
 
 button[type=submit],
 .btn-submit {
+    grid-column: 1 / -1;
+
     width: 100%;
 
     padding: 13px 16px;
@@ -896,6 +899,17 @@ body.light .menu a.active {
     color: #0f172a;
 }
 
+body.light .logout {
+    background: rgba(15, 23, 42, 0.05);
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+body.light .logout:hover {
+    background: #0f172a;
+    color: #fff;
+}
+
 body.light .page-title h1 {
     color: #0f172a;
 }
@@ -1028,12 +1042,14 @@ body.light .acc-btn:hover i {
 
 
 /* =========================================================
-   MÓDULO DE ALTO CONTRASTE (ATUALIZADO)
+   ALTO CONTRASTE
 ========================================================= */
 
-body.high-contrast { 
-    background: #000000 !important; 
-    color: #FFFF00 !important; 
+body.high-contrast {
+    background: #000000 !important;
+
+    color: #FFFF00 !important;
+
     background-image: none !important;
 }
 
@@ -1043,8 +1059,11 @@ body.high-contrast .accessibility-panel,
 body.high-contrast thead,
 body.high-contrast .table-responsive {
     background: #000000 !important;
+
     border: 2px solid #FFFF00 !important;
+
     color: #FFFF00 !important;
+
     box-shadow: none !important;
 }
 
@@ -1061,27 +1080,25 @@ body.high-contrast span {
     color: #FFFF00 !important;
 }
 
-body.high-contrast .menu a { 
-    color: #FFFF00 !important; 
+body.high-contrast .menu a {
+    color: #FFFF00 !important;
 }
 
-body.high-contrast .menu a:hover, 
-body.high-contrast .menu a.active { 
-    background: #FFFF00 !important; 
-    color: #000000 !important; 
+body.high-contrast .menu a:hover,
+body.high-contrast .menu a.active {
+    background: #FFFF00 !important;
+
+    color: #000000 !important;
 }
 
 body.high-contrast input,
 body.high-contrast select,
 body.high-contrast tbody tr {
     background: #000000 !important;
-    color: #FFFF00 !important;
-    border: 1px solid #FFFF00 !important;
-}
 
-body.high-contrast select option {
-    background: #000000 !important;
     color: #FFFF00 !important;
+
+    border: 1px solid #FFFF00 !important;
 }
 
 body.high-contrast button,
@@ -1090,13 +1107,14 @@ body.high-contrast .logout,
 body.high-contrast .acc-btn,
 body.high-contrast .main-acc-btn {
     background: #FFFF00 !important;
+
     color: #000000 !important;
+
     border: 2px solid #FFFF00 !important;
 }
 
-body.high-contrast .acc-btn i,
-body.high-contrast .logout i { 
-    color: #000000 !important; 
+body.high-contrast .acc-btn i {
+    color: #000000 !important;
 }
 
 
@@ -1150,7 +1168,7 @@ img {
     }
 
     .form-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .main {
@@ -1170,8 +1188,15 @@ img {
     }
 }
 
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 /* ==========================================
-   SWEETALERT - ALTO CONTRASTE
+   SWEETALERT - TEMAS ADAPTÁVEIS
    ========================================== */
 
 .swal-high-contrast {
@@ -1197,293 +1222,735 @@ img {
     border: 2px solid #ffff00 !important;
     font-weight: 700 !important;
 }
+
+/* Estilos dinâmicos para campos internos do SweetAlert */
+body.light .swal2-popup .swal2-input,
+body.light .swal2-popup .swal2-select {
+    color: #0f172a !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+body.light .swal2-popup label {
+    color: #334155 !important;
+}
+
+body:not(.light):not(.high-contrast) .swal2-popup .swal2-input,
+body:not(.light):not(.high-contrast) .swal2-popup .swal2-select {
+    color: #f8fafc !important;
+    background-color: #0f172a !important;
+    border: 1px solid #475569 !important;
+}
+
+body:not(.light):not(.high-contrast) .swal2-popup label {
+    color: #cbd5e1 !important;
+}
+
+body.high-contrast .swal2-popup .swal2-input,
+body.high-contrast .swal2-popup .swal2-select {
+    color: #ffff00 !important;
+    background-color: #000000 !important;
+    border: 1px solid #ffff00 !important;
+}
+
+body.high-contrast .swal2-popup label {
+    color: #ffff00 !important;
+}
 </style>
 </head>
 
 <body>
 
-<!-- BOTÃO E PAINEL DE ACESSIBILIDADE -->
-<button class="main-acc-btn" id="mainAccBtn" title="Opções de Acessibilidade">
-  <i class="fa-solid fa-universal-access"></i>
+
+<!-- =========================================================
+     BOTÃO E PAINEL DE ACESSIBILIDADE
+========================================================= -->
+
+<button
+    class="main-acc-btn"
+    id="mainAccBtn"
+    title="Opções de Acessibilidade"
+>
+    <i class="fa-solid fa-universal-access"></i>
 </button>
 
-<div class="accessibility-panel" id="accPanel">
-  <h3>Acessibilidade</h3>
-  
-  <div class="panel-row">
-    <span>Tamanho da Letra:</span>
-    <div style="display:flex; gap:6px;">
-      <button class="acc-btn" id="decreaseText" title="Diminuir">-</button>
-      <button class="acc-btn" id="increaseText" title="Aumentar">+</button>
-    </div>
-  </div>
 
-  <div class="panel-row">
-    <span>Alto Contraste:</span>
-    <button class="acc-btn" id="contrastBtn" title="Alto Contraste"><i class="fa-solid fa-circle-half-stroke"></i></button>
-  </div>
+<div
+    class="accessibility-panel"
+    id="accPanel"
+>
 
-  <div class="panel-row">
-    <span>Ouvir Texto:</span>
-    <button class="acc-btn" id="audioBtn" title="Ouvir Texto"><i class="fa-solid fa-volume-high"></i></button>
-  </div>
+    <h3>Acessibilidade</h3>
 
-  <div class="panel-row">
-    <span>Tema Claro/Escuro:</span>
-    <button class="acc-btn" id="themeBtn" title="Alternar Tema"><i class="fa-solid fa-moon"></i></button>
-  </div>
 
-  <div class="panel-row">
-    <span>Tradutor VLibras:</span>
-    <button class="acc-btn" id="vlibrasBtn" aria-label="Ativar ou abrir tradutor VLibras">
-      <i class="fa-solid fa-hands-asl-interpreting" aria-hidden="true"></i> Libras
-    </button>
-  </div>
-</div>
+    <!-- TAMANHO DA LETRA -->
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div>
-    <div class="logo">
-      <img src="<?= base_url('/images/LogoModoEscuro.png') ?>" data-light="<?= base_url('/images/LogoModoClaro.png') ?>" class="logo-img" alt="Logo">
-      <span>Industrial Park</span>
-    </div>
+    <div class="panel-row">
 
-    <div class="user">
-      <h3><?= session()->get('nome') ?? 'Admin Master' ?></h3>
-      <p>Perfil: Administrador</p>
-    </div>
+        <span>
+            Tamanho da Letra:
+        </span>
 
-    <div class="menu">
-      <a href="<?= base_url('/dashboard-admin') ?>"><i class="fa-solid fa-house"></i> Dashboard</a>
-      <a href="<?= base_url('/vagas') ?>"><i class="fa-solid fa-car"></i> Cadastro de Vagas</a>
-      <a href="<?= base_url('/sensores') ?>" class="active"><i class="fa-solid fa-microchip"></i> Cadastro de Sensor</a>
-      <a href="<?= base_url('/porteiros') ?>"><i class="fa-solid fa-id-badge"></i> Cadastro de Porteiro</a>
-      <a href="<?= base_url('/perfil-admin') ?>"><i class="fa-solid fa-user-pen"></i> Perfil</a>
-    </div>
-  </div>
+        <div style="display:flex; gap:6px;">
 
-  <a href="<?= base_url('/logout') ?>" class="logout" id="logoutBtn">
-    <i class="fa-solid fa-right-from-bracket"></i> Logout
-  </a>
-</div>
+            <button
+                class="acc-btn"
+                id="decreaseText"
+                title="Diminuir"
+            >
+                -
+            </button>
 
-<!-- CONTEÚDO PRINCIPAL -->
-<div class="main">
-  <div class="grid">
-
-    <!-- TÍTULO DA PÁGINA -->
-    <div class="page-title">
-      <h1>Cadastro de Sensores</h1>
-      <p>Gerencie os sensores IoT associados às vagas do seu estacionamento.</p>
-    </div> 
-
-    <!-- CARD FORMULÁRIO -->
-    <div class="card">
-      <h2>Adicionar Novo Sensor IoT</h2>
-
-      <form id="formSensor" action="<?= base_url('/sensores/inserir') ?>" method="POST">
-        <div class="form-grid">
-          
-          <div class="form-group">
-            <label for="vaga">Vaga Vinculada</label>
-            <select id="vaga" name="vaga">
-              <option value="">Selecione uma vaga disponível</option>
-              <?php if(!empty($vagasDisponiveis)) : ?>
-                <?php foreach($vagasDisponiveis as $vaga) : ?>
-                  <option value="<?= $vaga['VAG_ID'] ?>">
-                    Vaga <?= $vaga['VAG_ID'] ?> — Setor <?= $vaga['VAG_SETOR'] ?>
-                  </option>
-                <?php endforeach; ?>
-              <?php endif; ?>
-            </select>
-            <span id="erroVaga" class="erro"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="status">Status Inicial do Sensor</label>
-            <select id="status" name="status">
-              <option value="">Selecione o status</option>
-              <option value="Ativo">Ativo</option>
-              <option value="Inativo">Inativo</option>
-            </select>
-            <span id="erroStatus" class="erro"></span>
-          </div>
+            <button
+                class="acc-btn"
+                id="increaseText"
+                title="Aumentar"
+            >
+                +
+            </button>
 
         </div>
 
-        <button type="submit" class="btn-submit">
-          <i class="fa-solid fa-plus" style="margin-right: 6px;"></i> Cadastrar Sensor
+    </div>
+
+
+    <!-- CONTRASTE -->
+
+    <div class="panel-row">
+
+        <span>
+            Alto Contraste:
+        </span>
+
+        <button
+            class="acc-btn"
+            id="contrastBtn"
+            title="Alto Contraste"
+        >
+            <i class="fa-solid fa-circle-half-stroke"></i>
         </button>
-      </form>
+
     </div>
 
-    <!-- CARD TABELA -->
-    <div class="card">
-      <h2>Sensores Cadastrados</h2>
 
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Vaga</th>
-              <th>Status</th>
-              <th>Conectividade</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-          <?php if(!empty($sensores)) : ?>
-            <?php foreach($sensores as $sensor) : ?>
-            <tr>
-              <td><strong>#<?= $sensor['SEN_ID'] ?></strong></td>
-              <td>Vaga <?= $sensor['FK_VAG_ID'] ?></td>
-              <td>
-                <span class="status-pill <?= strtolower($sensor['SEN_STATUS']) ?>">
-                  <?= $sensor['SEN_STATUS'] ?>
-                </span>
-              </td>
-              <td>
-                <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
-                  <div class="status-bolinha <?= $sensor['SEN_STATUS'] == 'Ativo' ? 'online' : 'offline' ?>"></div>
-                  <span><?= $sensor['SEN_STATUS'] == 'Ativo' ? 'Online' : 'Offline' ?></span>
-                </div>
-              </td>
-              <td>
-                <div class="acoes">
-                  <button type="button" class="btn btn-visualizar btnVisualizar"
-                    data-id="<?= $sensor['SEN_ID'] ?>"
-                    data-vaga="<?= $sensor['FK_VAG_ID'] ?>"
-                    data-status="<?= $sensor['SEN_STATUS'] ?>"
-                    title="Visualizar">
-                    <i class="fa-regular fa-eye"></i>
-                  </button>
+    <!-- ÁUDIO -->
 
-                  <button type="button" class="btn btn-editar btnEditar"
-                    data-id="<?= $sensor['SEN_ID'] ?>"
-                    data-vaga="<?= $sensor['FK_VAG_ID'] ?>"
-                    data-status="<?= $sensor['SEN_STATUS'] ?>"
-                    title="Editar">
-                    <i class="fa-solid fa-pencil"></i>
-                  </button>
+    <div class="panel-row">
 
-                  <a href="<?= base_url('sensores/excluir/'.$sensor['SEN_ID']) ?>" class="btn btn-excluir btnExcluir" title="Excluir">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <?php endforeach; ?>
-          <?php else : ?>
-            <tr>
-              <td colspan="5" style="padding: 25px; color: #94a3b8; font-weight: 500;">Nenhum sensor encontrado.</td>
-            </tr>
-          <?php endif; ?>
-          </tbody>
-        </table>
-      </div>
+        <span>
+            Ouvir Texto:
+        </span>
+
+        <button
+            class="acc-btn"
+            id="audioBtn"
+            title="Ouvir Texto"
+        >
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+
     </div>
 
-  </div>
+
+    <!-- TEMA -->
+
+    <div class="panel-row">
+
+        <span>
+            Tema Claro/Escuro:
+        </span>
+
+        <button
+            class="acc-btn"
+            id="themeBtn"
+            title="Alternar Tema"
+        >
+            <i class="fa-solid fa-moon"></i>
+        </button>
+
+    </div>
+
+
+    <!-- VLIBRAS -->
+
+    <div class="panel-row">
+
+        <span>
+            Tradutor VLibras:
+        </span>
+
+        <button
+            class="acc-btn"
+            id="vlibrasBtn"
+            aria-label="Ativar ou abrir tradutor VLibras"
+        >
+            <i class="fa-solid fa-hands-asl-interpreting"></i>
+            Libras
+        </button>
+
+    </div>
+
 </div>
 
-<!-- INTEGRAÇÃO WIDGET VLIBRAS -->
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div class="sidebar">
+
+    <div>
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <img
+                src="<?= base_url('/images/LogoModoEscuro.png') ?>"
+                data-light="<?= base_url('/images/LogoModoClaro.png') ?>"
+                class="logo-img"
+                alt="Logo"
+            >
+
+            <span>
+                Industrial Park
+            </span>
+
+        </div>
+
+
+        <!-- USUÁRIO -->
+
+        <div class="user">
+
+            <h3>
+                <?= session()->get('nome') ?? 'Admin Master' ?>
+            </h3>
+
+            <p>
+                Perfil: Administrador
+            </p>
+
+        </div>
+
+
+        <!-- MENU -->
+
+        <div class="menu">
+
+            <a href="<?= base_url('/dashboard-admin') ?>">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="<?= base_url('/vagas') ?>">
+
+                <i class="fa-solid fa-car"></i>
+
+                Cadastro de Vagas
+
+            </a>
+
+
+            <a
+                href="<?= base_url('/sensores') ?>"
+                class="active"
+            >
+
+                <i class="fa-solid fa-microchip"></i>
+
+                Cadastro de Sensor
+
+            </a>
+
+
+            <a href="<?= base_url('/porteiros') ?>">
+
+                <i class="fa-solid fa-id-badge"></i>
+
+                Cadastro de Porteiro
+
+            </a>
+
+
+            <a href="<?= base_url('/perfil-admin') ?>">
+
+                <i class="fa-solid fa-user-pen"></i>
+
+                Perfil
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <a
+        href="<?= base_url('/logout') ?>"
+        class="logout"
+        id="logoutBtn"
+    >
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Logout
+
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     CONTEÚDO PRINCIPAL
+========================================================= -->
+
+<div class="main">
+
+    <div class="grid">
+
+
+        <!-- TÍTULO -->
+
+        <div class="page-title">
+
+            <h1>
+                Cadastro de Sensores
+            </h1>
+
+            <p>
+                Gerencie os sensores IoT associados às vagas do seu estacionamento.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             CARD FORMULÁRIO
+        ================================================= -->
+
+        <div class="card">
+
+            <h2>
+                Adicionar Novo Sensor IoT
+            </h2>
+
+
+            <form
+                id="formSensor"
+                action="<?= base_url('/sensores/inserir') ?>"
+                method="POST"
+            >
+
+
+                <div class="form-grid">
+
+
+                    <!-- VAGA VINCULADA -->
+
+                    <div class="form-group">
+
+                        <label for="vaga">
+                            Vaga Vinculada
+                        </label>
+
+                        <select
+                            id="vaga"
+                            name="vaga"
+                        >
+
+                            <option value="">
+                                Selecione uma vaga disponível
+                            </option>
+
+                            <?php if(!empty($vagasDisponiveis)) : ?>
+
+                                <?php foreach($vagasDisponiveis as $vaga) : ?>
+
+                                    <option value="<?= $vaga['VAG_ID'] ?>">
+                                        Vaga <?= $vaga['VAG_ID'] ?> — Setor <?= $vaga['VAG_SETOR'] ?>
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            <?php endif; ?>
+
+                        </select>
+
+                        <span
+                            id="erroVaga"
+                            class="erro"
+                        ></span>
+
+                    </div>
+
+
+                    <!-- STATUS INICIAL -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Status Inicial do Sensor
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                        >
+
+                            <option value="">
+                                Selecione o status
+                            </option>
+
+                            <option value="Ativo">
+                                Ativo
+                            </option>
+
+                            <option value="Inativo">
+                                Inativo
+                            </option>
+
+                        </select>
+
+                        <span
+                            id="erroStatus"
+                            class="erro"
+                        ></span>
+
+                    </div>
+
+
+                <!-- BOTÃO -->
+
+                <button
+                    type="submit"
+                    class="btn-submit"
+                >
+
+                    <i
+                        class="fa-solid fa-plus"
+                        style="margin-right:6px;"
+                    ></i>
+
+                    Cadastrar Sensor
+
+                </button>
+
+                </div><!-- Fim do form-grid -->
+
+
+            </form>
+
+        </div>
+        <br>
+
+        <!-- =================================================
+             CARD TABELA
+        ================================================= -->
+
+        <div class="card">
+
+            <h2>
+                Sensores Cadastrados
+            </h2>
+
+
+            <div class="table-responsive">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Vaga
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Conectividade
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <?php if(!empty($sensores)) : ?>
+
+
+                        <?php foreach($sensores as $sensor) : ?>
+
+
+                            <tr>
+
+
+                                <!-- ID -->
+
+                                <td>
+
+                                    <strong>
+                                        #<?= $sensor['SEN_ID'] ?>
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- VAGA -->
+
+                                <td>
+                                    Vaga <?= $sensor['FK_VAG_ID'] ?>
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    <span
+                                        class="status-pill <?= strtolower($sensor['SEN_STATUS']) ?>"
+                                    >
+
+                                        <?= $sensor['SEN_STATUS'] ?>
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- CONECTIVIDADE -->
+
+                                <td>
+
+                                    <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+
+                                        <div class="status-bolinha <?= $sensor['SEN_STATUS'] == 'Ativo' ? 'online' : 'offline' ?>"></div>
+
+                                        <span><?= $sensor['SEN_STATUS'] == 'Ativo' ? 'Online' : 'Offline' ?></span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- AÇÕES -->
+
+                                <td>
+
+                                    <div class="acoes">
+
+
+                                        <!-- VISUALIZAR -->
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-visualizar btnVisualizar"
+                                            data-id="<?= $sensor['SEN_ID'] ?>"
+                                            data-vaga="<?= $sensor['FK_VAG_ID'] ?>"
+                                            data-status="<?= $sensor['SEN_STATUS'] ?>"
+                                            title="Visualizar"
+                                        >
+
+                                            <i class="fa-regular fa-eye"></i>
+
+                                        </button>
+
+
+                                        <!-- EDITAR -->
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-editar btnEditar"
+                                            data-id="<?= $sensor['SEN_ID'] ?>"
+                                            data-vaga="<?= $sensor['FK_VAG_ID'] ?>"
+                                            data-status="<?= $sensor['SEN_STATUS'] ?>"
+                                            title="Editar"
+                                        >
+
+                                            <i class="fa-solid fa-pencil"></i>
+
+                                        </button>
+
+
+                                        <!-- EXCLUIR -->
+
+                                        <a
+                                            href="<?= base_url('sensores/excluir/'.$sensor['SEN_ID']) ?>"
+                                            class="btn btn-excluir btnExcluir"
+                                            data-id="<?= $sensor['SEN_ID'] ?>"
+                                            title="Excluir"
+                                        >
+
+                                            <i class="fa-solid fa-trash-can"></i>
+
+                                        </a>
+
+
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+
+
+                        <?php endforeach; ?>
+
+
+                    <?php else : ?>
+
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                style="
+                                    padding:25px;
+                                    color:#94a3b8;
+                                    font-weight:500;
+                                "
+                            >
+
+                                Nenhum sensor encontrado.
+
+                            </td>
+
+                        </tr>
+
+
+                    <?php endif; ?>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     VLIBRAS
+========================================================= -->
+
 <div vw class="enabled">
-  <div vw-access-button class="active"></div>
-  <div vw-plugin-wrapper>
-    <div class="vw-plugin-top-wrapper"></div>
-  </div>
+
+    <div
+        vw-access-button
+        class="active"
+    ></div>
+
+    <div vw-plugin-wrapper>
+
+        <div class="vw-plugin-top-wrapper"></div>
+
+    </div>
+
 </div>
+
+
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
 <script>
-  new window.VLibras.Widget('https://vlibras.gov.br/app');
+
+    new window.VLibras.Widget(
+        'https://vlibras.gov.br/app'
+    );
+
 </script>
 
+
 <script>
-// 1. CADASTRAR SENSOR VIA API (POST)
-const form = document.getElementById("formSensor");
-if (form) {
-  form.addEventListener("submit", function(e){
-    e.preventDefault();
 
-    const vagaInput = document.getElementById("vaga");
-    const statusInput = document.getElementById("status");
-    const erroVaga = document.getElementById("erroVaga");
-    const erroStatus = document.getElementById("erroStatus");
+/* =========================================================
+   FUNÇÃO AUXILIAR PARA SWEETALERT ADAPTÁVEL
+========================================================= */
 
-    let valido = true;
-    erroVaga.innerText = "";
-    erroStatus.innerText = "";
-    vagaInput.classList.remove("bordaVermelha", "bordaVerde");
-    statusInput.classList.remove("bordaVermelha", "bordaVerde");
+function getSwalThemeConfig() {
+    const isHighContrast = document.body.classList.contains('high-contrast');
+    const isLight = document.body.classList.contains('light');
 
-    if(vagaInput.value === ""){
-      erroVaga.innerText = "Selecione uma vaga válida";
-      vagaInput.classList.add("bordaVermelha");
-      valido = false;
+    if (isHighContrast) {
+        return {
+            background: '#000000',
+            color: '#ffff00',
+            confirmButtonColor: '#ffff00',
+            cancelButtonColor: '#000000',
+            customClass: {
+                popup: 'swal-high-contrast',
+                title: 'swal-high-contrast-title',
+                htmlContainer: 'swal-high-contrast-text',
+                confirmButton: 'swal-high-contrast-confirm',
+                cancelButton: 'swal-high-contrast-cancel'
+            }
+        };
+    } else if (isLight) {
+        return {
+            background: '#ffffff',
+            color: '#0f172a',
+            confirmButtonColor: '#0284c7',
+            cancelButtonColor: '#64748b'
+        };
     } else {
-      vagaInput.classList.add("bordaVerde");
+        // Modo escuro por padrão
+        return {
+            background: '#1e293b',
+            color: '#f8fafc',
+            confirmButtonColor: '#0284c7',
+            cancelButtonColor: '#475569'
+        };
     }
-
-    if(statusInput.value === ""){
-      erroStatus.innerText = "Selecione o status do sensor";
-      statusInput.classList.add("bordaVermelha");
-      valido = false;
-    } else {
-      statusInput.classList.add("bordaVerde");
-    }
-
-    if(valido){
-      fetch("<?= base_url('api/sensores') ?>", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          vaga: vagaInput.value,
-          status: statusInput.value
-        })
-      })
-      .then(async response => {
-        const res = await response.json();
-        if (response.ok) {
-          Swal.fire({
-            title: "Sucesso!",
-            text: res.mensagem || "Sensor cadastrado com sucesso",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#0284c7",
-            background: "#1e293b",
-            color: "#fff",
-            scrollbarPadding: false,
-            heightAuto: false
-          }).then(() => location.reload());
-        } else {
-          Swal.fire({
-            title: "Erro!",
-            text: res.messages?.error || res.messages || "Falha ao cadastrar sensor.",
-            icon: "error",
-            confirmButtonColor: "#0284c7",
-            background: "#1e293b",
-            color: "#fff"
-          });
-        }
-      })
-      .catch(() => {
-        Swal.fire({
-          title: "Erro de Conexão", 
-          text: "Não foi possível se comunicar com o servidor.", 
-          icon: "error",
-          background: "#1e293b",
-          color: "#fff"
-        });
-      });
-    }
-  });
 }
 
-// ==========================================
-// CONFIRMAÇÃO DE LOGOUT - SWEETALERT
-// ==========================================
+function fireCustomSwal(options) {
+    const themeConfig = getSwalThemeConfig();
+
+    if (document.body.classList.contains('high-contrast')) {
+        delete options.confirmButtonColor;
+        delete options.cancelButtonColor;
+    }
+
+    return Swal.fire({
+        ...themeConfig,
+        ...options,
+        customClass: {
+            ...(themeConfig.customClass || {}),
+            ...(options.customClass || {})
+        }
+    });
+}
+
+
+/* =========================================================
+   CONFIRMAÇÃO DE LOGOUT
+========================================================= */
 
 const logoutBtn = document.getElementById('logoutBtn');
 
@@ -1493,10 +1960,7 @@ if (logoutBtn) {
 
         const logoutUrl = this.getAttribute('href');
 
-        const isHighContrast = document.body.classList.contains('high-contrast');
-        const isLight = document.body.classList.contains('light');
-
-        let config = {
+        fireCustomSwal({
             title: 'Deseja sair?',
             text: 'Você será desconectado do sistema.',
             icon: 'question',
@@ -1505,36 +1969,7 @@ if (logoutBtn) {
             cancelButtonText: 'Cancelar',
             reverseButtons: true,
             focusCancel: true
-        };
-
-        if (!isLight && !isHighContrast) {
-            config.background = '#1e293b';
-            config.color = '#f8fafc';
-            config.confirmButtonColor = '#4CC9F0';
-            config.cancelButtonColor = '#475569';
-        }
-        else if (isLight && !isHighContrast) {
-            config.background = '#ffffff';
-            config.color = '#0f172a';
-            config.confirmButtonColor = '#0284c7';
-            config.cancelButtonColor = '#64748b';
-        }
-        else if (isHighContrast) {
-            config.background = '#000000';
-            config.color = '#ffff00';
-            config.confirmButtonColor = '#ffff00';
-            config.cancelButtonColor = '#000000';
-
-            config.customClass = {
-                popup: 'swal-high-contrast',
-                title: 'swal-high-contrast-title',
-                htmlContainer: 'swal-high-contrast-text',
-                confirmButton: 'swal-high-contrast-confirm',
-                cancelButton: 'swal-high-contrast-cancel'
-            };
-        }
-
-        Swal.fire(config).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = logoutUrl;
             }
@@ -1542,269 +1977,1222 @@ if (logoutBtn) {
     });
 }
 
-// 3. EXCLUIR SENSOR VIA API (DELETE)
-document.querySelectorAll(".btnExcluir").forEach((botao)=>{
-  botao.addEventListener("click", function(e){
-    e.preventDefault();
-    const id = this.dataset.id || this.href.split('/').pop();
 
-    Swal.fire({
-      title: "Excluir sensor?",
-      text: "Essa ação não poderá ser desfeita.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sim, excluir",
-      cancelButtonText: "Cancelar",
-      confirmButtonColor: "#ef4444",
-      background: "#1e293b",
-      color: "#fff",
-      reverseButtons: true,
-      scrollbarPadding: false,
-      heightAuto: false
-    }).then((result)=>{
-      if(result.isConfirmed){
-        fetch("<?= base_url('api/sensores') ?>/" + id, {
-          method: "DELETE"
-        })
-        .then(async response => {
-          const res = await response.json();
-          if(response.ok){
-            Swal.fire({
-              title: "Excluído!",
-              text: res.mensagem || "Sensor excluído com sucesso.",
-              icon: "success",
-              confirmButtonColor: "#0284c7",
-              background: "#1e293b",
-              color: "#fff"
-            }).then(() => location.reload());
-          } else {
-            Swal.fire({
-              title: "Erro!", 
-              text: res.messages?.error || "Erro ao excluir o sensor.", 
-              icon: "error",
-              background: "#1e293b",
-              color: "#fff"
-            });
-          }
-        })
-        .catch(() => Swal.fire({title: "Erro", text: "Erro ao conectar com o servidor.", icon: "error", background: "#1e293b", color: "#fff"}));
-      }
-    });
-  });
-});
+/* =========================================================
+   FORMULÁRIO - VALIDAÇÃO E CADASTRO
+========================================================= */
 
-// 4. VISUALIZAR SENSOR
-document.querySelectorAll(".btnVisualizar").forEach((botao)=>{
-  botao.addEventListener("click", function(){
-    const id = this.dataset.id;
-    const vaga = this.dataset.vaga;
-    const status = this.dataset.status;
+const form =
+    document.getElementById("formSensor");
 
-    Swal.fire({
-      title: "Detalhes do Sensor",
-      html: `
-        <div style="text-align:left; font-size: 0.95rem; display: flex; flex-direction: column; gap: 8px;">
-          <p><strong>ID do Sensor:</strong> #${id}</p>
-          <p><strong>Vaga Associada:</strong> Vaga ${vaga}</p>
-          <p><strong>Status:</strong> ${status}</p>
-        </div>
-      `,
-      icon: "info",
-      confirmButtonText: "Fechar",
-      confirmButtonColor: "#0284c7",
-      background: "#1e293b",
-      color: "#fff",
-      scrollbarPadding: false,
-      heightAuto: false
-    });
-  });
-});
 
-// 5. EDITAR SENSOR VIA API (PUT)
-document.querySelectorAll(".btnEditar").forEach((botao)=>{
-  botao.addEventListener("click", async function(){
-    const id = this.dataset.id;
-    const vagaAtual = this.dataset.vaga;
-    const statusAtual = this.dataset.status;
+if (form) {
 
-    const { value: formValues } = await Swal.fire({
-      title: "Editar Sensor",
-      background: "#1e293b",
-      color: "#fff",
-      html: `
-        <input id="swal-vaga" class="swal2-input" placeholder="Código da vaga" value="${vagaAtual}">
-        <select id="swal-status" class="swal2-input">
-          <option value="Ativo" ${statusAtual === 'Ativo' ? 'selected' : ''}>Ativo</option>
-          <option value="Inativo" ${statusAtual === 'Inativo' ? 'selected' : ''}>Inativo</option>
-        </select>
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: "Salvar Alterações",
-      cancelButtonText: "Cancelar",
-      confirmButtonColor: "#0284c7",
-      scrollbarPadding: false,
-      heightAuto: false,
-      preConfirm: ()=>{
-        return {
-          vaga: document.getElementById("swal-vaga").value,
-          status: document.getElementById("swal-status").value
-        };
-      }
-    });
+    form.addEventListener(
+        "submit",
+        function(e) {
 
-    if(formValues){
-      fetch("<?= base_url('api/sensores') ?>/" + id, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          vaga: formValues.vaga,
-          status: formValues.status
-        })
-      })
-      .then(async response => {
-        const res = await response.json();
-        if (response.ok) {
-          Swal.fire({
-            title: "Atualizado!",
-            text: res.mensagem || "Dados do sensor atualizados.",
-            icon: "success",
-            confirmButtonColor: "#0284c7",
-            background: "#1e293b",
-            color: "#fff",
-            scrollbarPadding: false,
-            heightAuto: false
-          }).then(() => location.reload());
-        } else {
-          Swal.fire({title: "Erro!", text: res.messages?.error || "Não foi possível atualizar o sensor.", icon: "error", background: "#1e293b", color: "#fff"});
+            e.preventDefault();
+
+
+            const vagaInput =
+                document.getElementById("vaga");
+
+            const statusInput =
+                document.getElementById("status");
+
+
+            const erroVaga =
+                document.getElementById("erroVaga");
+
+            const erroStatus =
+                document.getElementById("erroStatus");
+
+
+            let valido = true;
+
+
+            /* LIMPAR ERROS */
+
+            erroVaga.innerText = "";
+
+            erroStatus.innerText = "";
+
+
+            vagaInput.classList.remove(
+                "bordaVermelha",
+                "bordaVerde"
+            );
+
+            statusInput.classList.remove(
+                "bordaVermelha",
+                "bordaVerde"
+            );
+
+
+            /* VAGA */
+
+            if (
+                vagaInput.value === ""
+            ) {
+
+                erroVaga.innerText =
+                    "Selecione uma vaga válida";
+
+                vagaInput.classList.add(
+                    "bordaVermelha"
+                );
+
+                valido = false;
+
+            } else {
+
+                vagaInput.classList.add(
+                    "bordaVerde"
+                );
+
+            }
+
+
+            /* STATUS */
+
+            if (
+                statusInput.value === ""
+            ) {
+
+                erroStatus.innerText =
+                    "Selecione o status do sensor";
+
+                statusInput.classList.add(
+                    "bordaVermelha"
+                );
+
+                valido = false;
+
+            } else {
+
+                statusInput.classList.add(
+                    "bordaVerde"
+                );
+
+            }
+
+
+            /* ENVIO VIA API */
+
+            if (valido) {
+
+                fetch(
+                    "<?= base_url('api/sensores') ?>",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            vaga: vagaInput.value,
+                            status: statusInput.value
+                        })
+                    }
+                )
+
+                .then(
+                    async response => {
+
+                        const res =
+                            await response.json();
+
+                        if (response.ok) {
+
+                            fireCustomSwal({
+
+                                title:
+                                    "Sucesso!",
+
+                                text:
+                                    res.mensagem ||
+                                    "Sensor cadastrado com sucesso",
+
+                                icon:
+                                    "success",
+
+                                scrollbarPadding:
+                                    false,
+
+                                heightAuto:
+                                    false
+
+                            }).then(
+                                () => {
+
+                                    location.reload();
+
+                                }
+                            );
+
+                        } else {
+
+                            fireCustomSwal({
+
+                                title:
+                                    "Erro!",
+
+                                text:
+                                    res.messages?.error ||
+                                    res.messages ||
+                                    "Falha ao cadastrar sensor.",
+
+                                icon:
+                                    "error",
+
+                                confirmButtonColor:
+                                    "#dc2626"
+
+                            });
+
+                        }
+
+                    }
+                )
+
+                .catch(
+                    () => {
+
+                        fireCustomSwal({
+
+                            title:
+                                "Erro de Conexão",
+
+                            text:
+                                "Não foi possível se comunicar com o servidor.",
+
+                            icon:
+                                "error",
+
+                            confirmButtonColor:
+                                "#dc2626"
+
+                        });
+
+                    }
+                );
+
+            }
+
         }
-      })
-      .catch(() => Swal.fire({title: "Erro", text: "Erro ao conectar com o servidor.", icon: "error", background: "#1e293b", color: "#fff"}));
-    }
-  });
-});
+    );
 
-// 6. LÓGICA DO PAINEL DE ACESSIBILIDADE E RECURSOS
-const mainAccBtn = document.getElementById("mainAccBtn");
-const accPanel = document.getElementById("accPanel");
-
-mainAccBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  accPanel.classList.toggle("open");
-});
-
-document.addEventListener("click", (e) => {
-  if (!accPanel.contains(e.target) && e.target !== mainAccBtn) {
-    accPanel.classList.remove("open");
-  }
-});
-
-let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
-const updateFontSize = (size) => {
-  document.documentElement.style.fontSize = size + "px";
-  localStorage.setItem("fontSize", size);
-};
-updateFontSize(currentFontSize);
-
-document.getElementById("increaseText").addEventListener("click", () => {
-  if(currentFontSize < 22) { currentFontSize += 1; updateFontSize(currentFontSize); }
-});
-document.getElementById("decreaseText").addEventListener("click", () => {
-  if(currentFontSize > 13) { currentFontSize -= 1; updateFontSize(currentFontSize); }
-});
-
-const themeBtn = document.getElementById("themeBtn");
-const themeIcon = themeBtn.querySelector("i");
-
-if(localStorage.getItem("theme") === "light"){
-  document.body.classList.add("light");
-  themeIcon.classList.replace("fa-moon", "fa-sun");
-  trocarImagens("light");
 }
 
-themeBtn.addEventListener("click", () => {
-  document.body.classList.remove("high-contrast");
-  document.body.classList.toggle("light");
-  if(document.body.classList.contains("light")){
-    themeIcon.classList.replace("fa-moon", "fa-sun");
-    localStorage.setItem("theme", "light");
-    trocarImagens("light");
-  } else {
-    themeIcon.classList.replace("fa-sun", "fa-moon");
-    localStorage.setItem("theme", "dark");
-    trocarImagens("dark");
-  }
-});
 
-const contrastBtn = document.getElementById("contrastBtn");
-if(localStorage.getItem("contrast") === "high"){
-  document.body.classList.add("high-contrast");
+
+/* =========================================================
+   EXCLUIR SENSOR
+========================================================= */
+
+document
+    .querySelectorAll(".btnExcluir")
+    .forEach(
+        (botao) => {
+
+            botao.addEventListener(
+                "click",
+                function(e) {
+
+                    e.preventDefault();
+
+
+                    const id =
+                        this.dataset.id ||
+                        this.href.split('/').pop();
+
+
+                    fireCustomSwal({
+
+                        title: "Excluir sensor?",
+
+                        text:
+                            "Essa ação não poderá ser desfeita.",
+
+                        icon: "warning",
+
+                        showCancelButton: true,
+
+                        confirmButtonText:
+                            "Sim, excluir",
+
+                        cancelButtonText:
+                            "Cancelar",
+
+                        confirmButtonColor:
+                            "#ef4444",
+
+                        reverseButtons: true,
+
+                        scrollbarPadding: false,
+
+                        heightAuto: false
+
+                    }).then(
+                        (result) => {
+
+                            if (result.isConfirmed) {
+
+                                fetch(
+                                    "<?= base_url('api/sensores') ?>/" +
+                                    id,
+                                    {
+                                        method: "DELETE"
+                                    }
+                                )
+
+                                .then(
+                                    async response => {
+
+                                        const res =
+                                            await response.json();
+
+                                        if (response.ok) {
+
+                                            fireCustomSwal({
+
+                                                title:
+                                                    "Excluído!",
+
+                                                text:
+                                                    res.mensagem ||
+                                                    "Sensor excluído com sucesso.",
+
+                                                icon:
+                                                    "success",
+
+                                                scrollbarPadding:
+                                                    false,
+
+                                                heightAuto:
+                                                    false
+
+                                            }).then(
+                                                () => {
+
+                                                    location.reload();
+
+                                                }
+                                            );
+
+                                        } else {
+
+                                            fireCustomSwal({
+
+                                                title:
+                                                    "Erro!",
+
+                                                text:
+                                                    res.messages?.error ||
+                                                    "Erro ao excluir o sensor.",
+
+                                                icon:
+                                                    "error",
+
+                                                confirmButtonColor:
+                                                    "#dc2626"
+
+                                            });
+
+                                        }
+
+                                    }
+                                )
+
+                                .catch(
+                                    () => {
+
+                                        fireCustomSwal({
+
+                                            title:
+                                                "Erro",
+
+                                            text:
+                                                "Erro ao conectar com o servidor.",
+
+                                            icon:
+                                                "error",
+
+                                            confirmButtonColor:
+                                                "#dc2626"
+
+                                        });
+
+                                    }
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   VISUALIZAR SENSOR
+========================================================= */
+
+document
+    .querySelectorAll(".btnVisualizar")
+    .forEach(
+        (botao) => {
+
+            botao.addEventListener(
+                "click",
+                function() {
+
+                    const id =
+                        this.dataset.id;
+
+                    const vaga =
+                        this.dataset.vaga;
+
+                    const status =
+                        this.dataset.status;
+
+
+                    fireCustomSwal({
+
+                        title: "Detalhes do Sensor",
+
+                        html: `
+
+                            <div
+                                style="
+                                    text-align:left;
+                                    font-size:.95rem;
+                                    display:flex;
+                                    flex-direction:column;
+                                    gap:8px;
+                                "
+                            >
+
+                                <p>
+                                    <strong>
+                                        ID do Sensor:
+                                    </strong>
+
+                                    #${id}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Vaga Associada:
+                                    </strong>
+
+                                    Vaga ${vaga}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Status:
+                                    </strong>
+
+                                    ${status}
+                                </p>
+
+                            </div>
+
+                        `,
+
+                        icon: "info",
+
+                        confirmButtonText:
+                            "Fechar",
+
+                        scrollbarPadding: false,
+
+                        heightAuto: false
+
+                    });
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   EDITAR SENSOR
+========================================================= */
+
+document
+    .querySelectorAll(".btnEditar")
+    .forEach(
+        (botao) => {
+
+            botao.addEventListener(
+                "click",
+                async function() {
+
+                    const id =
+                        this.dataset.id;
+
+                    const vagaAtual =
+                        this.dataset.vaga;
+
+                    const statusAtual =
+                        this.dataset.status;
+
+
+                    const {
+                        value: formValues
+                    } = await fireCustomSwal({
+
+                        title:
+                            "Editar Sensor",
+
+                        html: `
+
+                            <div
+                                style="
+                                    text-align:left;
+                                    display:flex;
+                                    flex-direction:column;
+                                    gap:12px;
+                                    margin-top:10px;
+                                "
+                            >
+
+                                <div>
+
+                                    <label
+                                        style="
+                                            font-size:.85rem;
+                                            font-weight:600;
+                                        "
+                                    >
+                                        Código da Vaga
+                                    </label>
+
+                                    <input
+                                        id="swal-vaga"
+                                        class="swal2-input"
+                                        placeholder="Código da vaga"
+                                        value="${vagaAtual}"
+                                        style="
+                                            margin:4px 0 0 0;
+                                            width:100%;
+                                        "
+                                    >
+
+                                </div>
+
+
+                                <div>
+
+                                    <label
+                                        style="
+                                            font-size:.85rem;
+                                            font-weight:600;
+                                        "
+                                    >
+                                        Status
+                                    </label>
+
+                                    <select
+                                        id="swal-status"
+                                        class="swal2-input"
+                                        style="
+                                            margin:4px 0 0 0;
+                                            width:100%;
+                                        "
+                                    >
+
+                                        <option
+                                            value="Ativo"
+                                            ${
+                                                statusAtual === 'Ativo'
+                                                    ? 'selected'
+                                                    : ''
+                                            }
+                                        >
+                                            Ativo
+                                        </option>
+
+                                        <option
+                                            value="Inativo"
+                                            ${
+                                                statusAtual === 'Inativo'
+                                                    ? 'selected'
+                                                    : ''
+                                            }
+                                        >
+                                            Inativo
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        `,
+
+                        focusConfirm: false,
+
+                        showCancelButton: true,
+
+                        confirmButtonText:
+                            "Salvar Alterações",
+
+                        cancelButtonText:
+                            "Cancelar",
+
+                        scrollbarPadding: false,
+
+                        heightAuto: false,
+
+
+                        preConfirm: () => {
+
+                            return {
+                                vaga: document.getElementById("swal-vaga").value,
+                                status: document.getElementById("swal-status").value
+                            };
+
+                        }
+
+                    });
+
+
+                    if (formValues) {
+
+                        fetch(
+                            "<?= base_url('api/sensores') ?>/" +
+                            id,
+                            {
+                                method: "PUT",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    vaga: formValues.vaga,
+                                    status: formValues.status
+                                })
+                            }
+                        )
+
+                        .then(
+                            async response => {
+
+                                const res =
+                                    await response.json();
+
+                                if (response.ok) {
+
+                                    fireCustomSwal({
+
+                                        title:
+                                            "Atualizado!",
+
+                                        text:
+                                            res.mensagem ||
+                                            "Dados do sensor atualizados.",
+
+                                        icon:
+                                            "success",
+
+                                        scrollbarPadding:
+                                            false,
+
+                                        heightAuto:
+                                            false
+
+                                    }).then(
+                                        () => {
+
+                                            location.reload();
+
+                                        }
+                                    );
+
+                                } else {
+
+                                    fireCustomSwal({
+
+                                        title:
+                                            "Erro!",
+
+                                        text:
+                                            res.messages?.error ||
+                                            "Não foi possível atualizar o sensor.",
+
+                                        icon:
+                                            "error",
+
+                                        confirmButtonColor:
+                                            "#dc2626"
+
+                                    });
+
+                                }
+
+                            }
+                        )
+
+                        .catch(
+                            () => {
+
+                                fireCustomSwal({
+
+                                    title:
+                                        "Erro",
+
+                                    text:
+                                        "Erro ao conectar com o servidor.",
+
+                                    icon:
+                                        "error",
+
+                                    confirmButtonColor:
+                                        "#dc2626"
+
+                                });
+
+                            }
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   PAINEL DE ACESSIBILIDADE
+========================================================= */
+
+const mainAccBtn =
+    document.getElementById(
+        "mainAccBtn"
+    );
+
+const accPanel =
+    document.getElementById(
+        "accPanel"
+    );
+
+
+mainAccBtn.addEventListener(
+    "click",
+    (e) => {
+
+        e.stopPropagation();
+
+        accPanel.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    (e) => {
+
+        if (
+            !accPanel.contains(e.target) &&
+            e.target !== mainAccBtn
+        ) {
+
+            accPanel.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TAMANHO DA FONTE
+========================================================= */
+
+let currentFontSize =
+    parseFloat(
+        localStorage.getItem(
+            "fontSize"
+        )
+    ) || 16;
+
+
+const updateFontSize =
+    (size) => {
+
+        document.documentElement.style.fontSize =
+            size + "px";
+
+        localStorage.setItem(
+            "fontSize",
+            size
+        );
+
+    };
+
+
+updateFontSize(
+    currentFontSize
+);
+
+
+document
+    .getElementById("increaseText")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (
+                currentFontSize < 22
+            ) {
+
+                currentFontSize += 1;
+
+                updateFontSize(
+                    currentFontSize
+                );
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("decreaseText")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (
+                currentFontSize > 13
+            ) {
+
+                currentFontSize -= 1;
+
+                updateFontSize(
+                    currentFontSize
+                );
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   TEMA
+========================================================= */
+
+const themeBtn =
+    document.getElementById(
+        "themeBtn"
+    );
+
+const themeIcon =
+    themeBtn.querySelector("i");
+
+
+if (
+    localStorage.getItem("theme")
+    === "light"
+) {
+
+    document.body.classList.add(
+        "light"
+    );
+
+    themeIcon.classList.replace(
+        "fa-moon",
+        "fa-sun"
+    );
+
+    trocarImagens(
+        "light"
+    );
+
 }
 
-contrastBtn.addEventListener("click", () => {
-  document.body.classList.remove("light");
-  document.body.classList.toggle("high-contrast");
-  localStorage.setItem("contrast", document.body.classList.contains("high-contrast") ? "high" : "normal");
-});
 
-const audioBtn = document.getElementById("audioBtn");
-let synth = window.speechSynthesis;
-let isSpeaking = false;
+themeBtn.addEventListener(
+    "click",
+    () => {
 
-audioBtn.addEventListener("click", () => {
-  if (isSpeaking) {
-    synth.cancel();
-    isSpeaking = false;
-    audioBtn.classList.remove("audio-active");
-  } else {
-    let textoParaLer = "";
-    const elementos = document.querySelectorAll(".page-title h1, .page-title p, .card h2, label, select, th, td:not(:last-child)");
-    
-    elementos.forEach(el => {
-      textoParaLer += (el.tagName.toLowerCase() === 'select' ? "Caixa de seleção. " : el.innerText + ". ");
-    });
+        document.body.classList.remove("high-contrast");
+        document.body.classList.toggle(
+            "light"
+        );
 
-    if(textoParaLer.trim() !== "") {
-      const utterance = new SpeechSynthesisUtterance(textoParaLer);
-      utterance.lang = "pt-BR";
-      utterance.onend = () => {
-        audioBtn.classList.remove("audio-active");
-        isSpeaking = false;
-      };
 
-      synth.speak(utterance);
-      audioBtn.classList.add("audio-active");
-      isSpeaking = true;
+        if (
+            document.body.classList.contains(
+                "light"
+            )
+        ) {
+
+            themeIcon.classList.replace(
+                "fa-moon",
+                "fa-sun"
+            );
+
+            localStorage.setItem(
+                "theme",
+                "light"
+            );
+
+            trocarImagens(
+                "light"
+            );
+
+        }
+
+        else {
+
+            themeIcon.classList.replace(
+                "fa-sun",
+                "fa-moon"
+            );
+
+            localStorage.setItem(
+                "theme",
+                "dark"
+            );
+
+            trocarImagens(
+                "dark"
+            );
+
+        }
+
     }
-  }
-});
+);
 
-// Ativador direto para VLibras
-document.getElementById("vlibrasBtn").addEventListener("click", () => {
-    const vLibrasBtn = document.querySelector('[vw-access-button]');
-    if (vLibrasBtn) {
-        vLibrasBtn.click();
-    }
-});
 
-window.addEventListener('beforeunload', () => { synth.cancel(); });
+/* =========================================================
+   ALTO CONTRASTE
+========================================================= */
 
-function trocarImagens(modo){
-  const imagens = document.querySelectorAll("img.logo-img");
-  imagens.forEach(img => {
-    if(!img.getAttribute("data-dark")){ img.setAttribute("data-dark", img.src); }
-    const lightSrc = img.getAttribute("data-light");
-    let novaSrc = modo === "light" ? lightSrc : img.getAttribute("data-dark");
+const contrastBtn =
+    document.getElementById(
+        "contrastBtn"
+    );
 
-    if(novaSrc && img.src !== novaSrc){
-      img.classList.add("img-fade");
-      setTimeout(() => {
-        img.src = novaSrc;
-        img.onload = () => { img.classList.remove("img-fade"); };
-      }, 200);
-    }
-  });
+
+if (
+    localStorage.getItem(
+        "contrast"
+    ) === "high"
+) {
+
+    document.body.classList.add(
+        "high-contrast"
+    );
+
 }
+
+
+contrastBtn.addEventListener(
+    "click",
+    () => {
+
+        document.body.classList.remove("light");
+        document.body.classList.toggle(
+            "high-contrast"
+        );
+
+
+        localStorage.setItem(
+
+            "contrast",
+
+            document.body.classList.contains(
+                "high-contrast"
+            )
+                ? "high"
+                : "normal"
+
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LEITOR DE TEXTO
+========================================================= */
+
+const audioBtn =
+    document.getElementById(
+        "audioBtn"
+    );
+
+let synth =
+    window.speechSynthesis;
+
+let isSpeaking =
+    false;
+
+
+audioBtn.addEventListener(
+    "click",
+    () => {
+
+
+        if (isSpeaking) {
+
+            synth.cancel();
+
+            isSpeaking =
+                false;
+
+            audioBtn.classList.remove(
+                "audio-active"
+            );
+
+        }
+
+        else {
+
+
+            let textoParaLer =
+                "";
+
+
+            const elementos =
+                document.querySelectorAll(
+                    ".page-title h1, " +
+                    ".page-title p, " +
+                    ".card h2, " +
+                    "label, " +
+                    "select, " +
+                    "th, " +
+                    "td:not(:last-child)"
+                );
+
+
+            elementos.forEach(
+                el => {
+
+                    textoParaLer +=
+                        (
+                            el.tagName
+                                .toLowerCase()
+                                ===
+                                'select'
+                        )
+
+                        ?
+
+                        "Caixa de seleção. "
+
+                        :
+
+                        el.innerText +
+                        ". ";
+
+                }
+            );
+
+
+            if (
+                textoParaLer.trim()
+                !== ""
+            ) {
+
+
+                const utterance =
+                    new SpeechSynthesisUtterance(
+                        textoParaLer
+                    );
+
+
+                utterance.lang =
+                    "pt-BR";
+
+
+                utterance.onend =
+                    () => {
+
+                        audioBtn.classList.remove(
+                            "audio-active"
+                        );
+
+                        isSpeaking =
+                            false;
+
+                    };
+
+
+                synth.speak(
+                    utterance
+                );
+
+
+                audioBtn.classList.add(
+                    "audio-active"
+                );
+
+
+                isSpeaking =
+                    true;
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   VLIBRAS
+========================================================= */
+
+document
+    .getElementById("vlibrasBtn")
+    ?.addEventListener(
+        "click",
+        () => {
+
+            const vLibrasBtn =
+                document.querySelector(
+                    "[vw-access-button]"
+                );
+
+
+            if (vLibrasBtn) {
+
+                vLibrasBtn.click();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   PARAR ÁUDIO AO SAIR
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        synth.cancel();
+
+    }
+);
+
+
+/* =========================================================
+   TROCA DE LOGO
+========================================================= */
+
+function trocarImagens(
+    modo
+) {
+
+    const imagens =
+        document.querySelectorAll(
+            "img.logo-img"
+        );
+
+
+    imagens.forEach(
+        img => {
+
+
+            if (
+                !img.getAttribute(
+                    "data-dark"
+                )
+            ) {
+
+                img.setAttribute(
+                    "data-dark",
+                    img.src
+                );
+
+            }
+
+
+            const lightSrc =
+                img.getAttribute(
+                    "data-light"
+                );
+
+
+            const novaSrc =
+                modo === "light"
+
+                    ? lightSrc
+
+                    : img.getAttribute(
+                        "data-dark"
+                    );
+
+
+            if (
+                novaSrc &&
+                img.src !== novaSrc
+            ) {
+
+
+                img.classList.add(
+                    "img-fade"
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        img.src =
+                            novaSrc;
+
+
+                        img.onload =
+                            () => {
+
+                                img.classList.remove(
+                                    "img-fade"
+                                );
+
+                            };
+
+                    },
+                    200
+                );
+
+            }
+
+        }
+    );
+
+}
+
 </script>
+
 </body>
 </html>

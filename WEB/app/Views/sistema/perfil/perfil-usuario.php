@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="icon" type="image/png" href="<?= base_url('images/LogoModoClaro.png') ?>">
     <title>Perfil do Usuário - Usuário Comum</title>
 
     <style>
@@ -112,48 +113,46 @@
             border: 1px solid rgba(76, 201, 240, 0.3);
         }
 
-        
-       /* BOTÃO LOGOUT (MODERNO EM AZUL) */
-.logout {
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    color: #4CC9F0;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
-}
+        /* BOTÃO LOGOUT */
+        .logout {
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.15) 0%, rgba(76, 201, 240, 0.05) 100%);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            color: #4CC9F0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(76, 201, 240, 0.08);
+        }
 
-.logout i {
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-}
+        .logout i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
 
-.logout:hover {
-    background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
-    color: #070b16;
-    border-color: #4CC9F0;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
-}
+        .logout:hover {
+            background: linear-gradient(135deg, #4CC9F0 0%, #4361EE 100%);
+            color: #070b16;
+            border-color: #4CC9F0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.35);
+        }
 
-.logout:hover i {
-    transform: translateX(3px); /* Desloca o ícone ligeiramente para a direita no hover */
-}
+        .logout:hover i {
+            transform: translateX(3px);
+        }
 
-.logout:active {
-    transform: translateY(0);
-}
-
+        .logout:active {
+            transform: translateY(0);
+        }
 
         /* CONTEÚDO PRINCIPAL */
         .main {
@@ -853,10 +852,6 @@ $u_nome  = $usuario['USU_NOME']  ?? session()->get('USR_NOME')  ?? session()->ge
 
 $u_tipo  = $usuario['USU_TIPO']  ?? session()->get('USU_TIPO')  ?? session()->get('tipo') ?? 'USUARIO';
 
-/*
- * O valor original continua sendo usado internamente.
- * Aqui criamos apenas o nome amigável para exibição.
- */
 $u_tipo_exibicao = match (strtoupper(trim($u_tipo))) {
     'USUARIO'  => 'Usuário Comum',
     'ADMIN'    => 'Administrador',
@@ -965,8 +960,6 @@ $u_cnpj  = $usuario['FK_EMP_CNPJ'] ?? 'Não associado';
 
         <div class="user">
             <h2><?= esc($u_nome) ?></h2>
-
-            <!-- AQUI É EXIBIDO "Usuário Comum" -->
             <p>Perfil: <?= esc($u_tipo_exibicao) ?></p>
         </div>
 
@@ -993,7 +986,6 @@ $u_cnpj  = $usuario['FK_EMP_CNPJ'] ?? 'Não associado';
         class="logout"
         id="logoutBtn"
         aria-label="Sair da conta">
-
         <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
         <span>Logout</span>
     </a>
@@ -1185,7 +1177,6 @@ $u_cnpj  = $usuario['FK_EMP_CNPJ'] ?? 'Não associado';
                         Tipo de Conta
                     </label>
 
-                    <!-- EXIBE "Usuário Comum", MAS NÃO ALTERA O VALOR DO BANCO -->
                     <input
                         class="input input-blocked"
                         type="text"
@@ -1239,613 +1230,258 @@ $u_cnpj  = $usuario['FK_EMP_CNPJ'] ?? 'Não associado';
 
 <!-- INTEGRACÃO WIDGET VLIBRAS -->
 <div vw class="enabled">
-
     <div vw-access-button class="active"></div>
-
     <div vw-plugin-wrapper>
         <div class="vw-plugin-top-wrapper"></div>
     </div>
-
 </div>
 
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-
 <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
 
 <script>
-
-// ==========================================
-// PRÉ-VISUALIZAÇÃO DA FOTO
-// ==========================================
-
 const fotoInput = document.getElementById('foto');
 const fileNameDisplay = document.getElementById('fileNameDisplay');
 
 if (fotoInput) {
-
     fotoInput.addEventListener('change', function(e) {
-
         const file = e.target.files[0];
-
         if (file) {
-
             if (fileNameDisplay) {
                 fileNameDisplay.innerText = file.name;
             }
-
             const reader = new FileReader();
-
             reader.onload = function(ev) {
-
                 document.getElementById('previewFoto').src = ev.target.result;
-
             };
-
             reader.readAsDataURL(file);
-
         } else {
-
             if (fileNameDisplay) {
                 fileNameDisplay.innerText = 'Escolher imagem de perfil';
             }
-
         }
-
     });
-
 }
-
-
-// ==========================================
-// CONFIRMAÇÃO DE LOGOUT - SWEETALERT
-// ==========================================
 
 const logoutBtn = document.getElementById('logoutBtn');
 
 if (logoutBtn) {
-
     logoutBtn.addEventListener('click', function(e) {
-
         e.preventDefault();
-
         const logoutUrl = this.getAttribute('href');
-
-        const isHighContrast =
-            document.body.classList.contains('high-contrast');
-
-        const isLight =
-            document.body.classList.contains('light');
+        const isHighContrast = document.body.classList.contains('high-contrast');
+        const isLight = document.body.classList.contains('light');
 
         let config = {
-
             title: 'Deseja sair?',
             text: 'Você será desconectado do sistema.',
             icon: 'question',
-
             showCancelButton: true,
-
             confirmButtonText: 'Sim, sair',
             cancelButtonText: 'Cancelar',
-
             reverseButtons: true,
             focusCancel: true
-
         };
 
-
-        // 🌙 MODO ESCURO
-
         if (!isLight && !isHighContrast) {
-
             config.background = '#1e293b';
             config.color = '#f8fafc';
-
             config.confirmButtonColor = '#4CC9F0';
             config.cancelButtonColor = '#475569';
-
-        }
-
-
-        // ☀️ MODO CLARO
-
-        else if (isLight && !isHighContrast) {
-
+        } else if (isLight && !isHighContrast) {
             config.background = '#ffffff';
             config.color = '#0f172a';
-
             config.confirmButtonColor = '#0284c7';
             config.cancelButtonColor = '#64748b';
-
-        }
-
-
-        // ⚠️ ALTO CONTRASTE
-
-        else if (isHighContrast) {
-
+        } else if (isHighContrast) {
             config.background = '#000000';
             config.color = '#ffff00';
-
             config.confirmButtonColor = '#ffff00';
             config.cancelButtonColor = '#000000';
-
             config.customClass = {
-
                 popup: 'swal-high-contrast',
                 title: 'swal-high-contrast-title',
                 htmlContainer: 'swal-high-contrast-text',
-
                 confirmButton: 'swal-high-contrast-confirm',
                 cancelButton: 'swal-high-contrast-cancel'
-
             };
-
         }
 
-
         Swal.fire(config).then((result) => {
-
             if (result.isConfirmed) {
-
                 window.location.href = logoutUrl;
-
             }
-
         });
-
     });
-
 }
-
-
-// ==========================================
-// ACESSIBILIDADE
-// ==========================================
 
 const mainAccBtn = document.getElementById("mainAccBtn");
 const accPanel = document.getElementById("accPanel");
 const body = document.body;
 
 function togglePanel(open) {
-
-    const isOpen =
-        open !== undefined
-            ? open
-            : !accPanel.classList.contains("open");
-
+    const isOpen = open !== undefined ? open : !accPanel.classList.contains("open");
     accPanel.classList.toggle("open", isOpen);
-
-    accPanel.setAttribute(
-        "aria-hidden",
-        !isOpen
-    );
-
-    mainAccBtn.setAttribute(
-        "aria-expanded",
-        isOpen
-    );
-
+    accPanel.setAttribute("aria-hidden", !isOpen);
+    mainAccBtn.setAttribute("aria-expanded", isOpen);
 }
 
-mainAccBtn.addEventListener(
-    "click",
-    (e) => {
+mainAccBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    togglePanel();
+});
 
-        e.stopPropagation();
-
-        togglePanel();
-
+document.addEventListener("click", (e) => {
+    if (!accPanel.contains(e.target) && e.target !== mainAccBtn) {
+        togglePanel(false);
     }
-);
+});
 
-document.addEventListener(
-    "click",
-    (e) => {
-
-        if (
-            !accPanel.contains(e.target) &&
-            e.target !== mainAccBtn
-        ) {
-
-            togglePanel(false);
-
-        }
-
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && accPanel.classList.contains("open")) {
+        togglePanel(false);
     }
-);
+});
 
-document.addEventListener(
-    "keydown",
-    (e) => {
-
-        if (
-            e.key === "Escape" &&
-            accPanel.classList.contains("open")
-        ) {
-
-            togglePanel(false);
-
-        }
-
-    }
-);
-
-
-// ==========================================
-// REDIMENSIONAMENTO DE FONTE
-// ==========================================
-
-let currentFontSize =
-    parseFloat(localStorage.getItem("fontSize")) || 16;
+let currentFontSize = parseFloat(localStorage.getItem("fontSize")) || 16;
 
 const updateFontSize = (size) => {
-
-    document.documentElement.style.fontSize =
-        size + "px";
-
-    localStorage.setItem(
-        "fontSize",
-        size
-    );
-
+    document.documentElement.style.fontSize = size + "px";
+    localStorage.setItem("fontSize", size);
 };
 
 updateFontSize(currentFontSize);
 
+document.getElementById("increaseText").addEventListener("click", () => {
+    if (currentFontSize < 22) {
+        currentFontSize += 1;
+        updateFontSize(currentFontSize);
+    }
+});
 
-document.getElementById("increaseText")
-    .addEventListener("click", () => {
+document.getElementById("decreaseText").addEventListener("click", () => {
+    if (currentFontSize > 13) {
+        currentFontSize -= 1;
+        updateFontSize(currentFontSize);
+    }
+});
 
-        if (currentFontSize < 22) {
-
-            currentFontSize += 1;
-
-            updateFontSize(currentFontSize);
-
-        }
-
-    });
-
-
-document.getElementById("decreaseText")
-    .addEventListener("click", () => {
-
-        if (currentFontSize > 13) {
-
-            currentFontSize -= 1;
-
-            updateFontSize(currentFontSize);
-
-        }
-
-    });
-
-
-// ==========================================
-// TEMA CLARO / ESCURO
-// ==========================================
-
-const themeBtn =
-    document.getElementById("themeBtn");
-
-const themeIcon =
-    themeBtn.querySelector("i");
-
+const themeBtn = document.getElementById("themeBtn");
+const themeIcon = themeBtn.querySelector("i");
 
 if (localStorage.getItem("theme") === "light") {
-
     body.classList.add("light");
-
-    themeIcon.classList.replace(
-        "fa-moon",
-        "fa-sun"
-    );
-
+    themeIcon.classList.replace("fa-moon", "fa-sun");
     trocarImagens("light");
-
 }
-
 
 themeBtn.addEventListener("click", () => {
-
     body.classList.remove("high-contrast");
-
     body.classList.toggle("light");
 
-
     if (body.classList.contains("light")) {
-
-        themeIcon.classList.replace(
-            "fa-moon",
-            "fa-sun"
-        );
-
-        localStorage.setItem(
-            "theme",
-            "light"
-        );
-
+        themeIcon.classList.replace("fa-moon", "fa-sun");
+        localStorage.setItem("theme", "light");
         trocarImagens("light");
-
     } else {
-
-        themeIcon.classList.replace(
-            "fa-sun",
-            "fa-moon"
-        );
-
-        localStorage.setItem(
-            "theme",
-            "dark"
-        );
-
+        themeIcon.classList.replace("fa-sun", "fa-moon");
+        localStorage.setItem("theme", "dark");
         trocarImagens("dark");
-
     }
-
 });
 
+const contrastBtn = document.getElementById("contrastBtn");
 
-// ==========================================
-// ALTO CONTRASTE
-// ==========================================
-
-const contrastBtn =
-    document.getElementById("contrastBtn");
-
-
-if (
-    localStorage.getItem("contrast") === "high"
-) {
-
+if (localStorage.getItem("contrast") === "high") {
     body.classList.add("high-contrast");
-
 }
-
 
 contrastBtn.addEventListener("click", () => {
-
     body.classList.remove("light");
-
     body.classList.toggle("high-contrast");
-
-    localStorage.setItem(
-        "contrast",
-        body.classList.contains("high-contrast")
-            ? "high"
-            : "normal"
-    );
-
+    localStorage.setItem("contrast", body.classList.contains("high-contrast") ? "high" : "normal");
 });
 
-
-// ==========================================
-// LEITURA DE TELA
-// ==========================================
-
-const audioBtn =
-    document.getElementById("audioBtn");
-
-let synth =
-    window.speechSynthesis;
-
+const audioBtn = document.getElementById("audioBtn");
+let synth = window.speechSynthesis;
 let isSpeaking = false;
 
-
 audioBtn.addEventListener("click", () => {
-
     if (isSpeaking) {
-
         synth.cancel();
-
         isSpeaking = false;
-
-        audioBtn.classList.remove(
-            "audio-active"
-        );
-
+        audioBtn.classList.remove("audio-active");
     } else {
-
         let textoParaLer = "";
-
-
-        const titulo =
-            document.querySelector(".page-title h1");
-
-        const subtitulo =
-            document.querySelector(".page-title p");
-
+        const titulo = document.querySelector(".page-title h1");
+        const subtitulo = document.querySelector(".page-title p");
 
         if (titulo) {
-
-            textoParaLer +=
-                titulo.innerText +
-                ". " +
-                (subtitulo
-                    ? subtitulo.innerText
-                    : "") +
-                ". ";
-
+            textoParaLer += titulo.innerText + ". " + (subtitulo ? subtitulo.innerText : "") + ". ";
         }
 
-
-        const nome =
-            document.querySelector(".user-data h2");
-
-        const email =
-            document.querySelector(".user-data p");
-
+        const nome = document.querySelector(".user-data h2");
+        const email = document.querySelector(".user-data p");
 
         if (nome) {
-
-            textoParaLer +=
-                "Usuário: " +
-                nome.innerText +
-                ". E-mail: " +
-                (email
-                    ? email.innerText
-                    : "") +
-                ". ";
-
+            textoParaLer += "Usuário: " + nome.innerText + ". E-mail: " + (email ? email.innerText : "") + ". ";
         }
 
-
-        const campos =
-            document.querySelectorAll(
-                ".form-section-header, .field"
-            );
-
+        const campos = document.querySelectorAll(".form-section-header, .field");
 
         campos.forEach(el => {
-
-            if (
-                el.classList.contains(
-                    "form-section-header"
-                )
-            ) {
-
-                textoParaLer +=
-                    "Seção " +
-                    el.innerText +
-                    ". ";
-
+            if (el.classList.contains("form-section-header")) {
+                textoParaLer += "Seção " + el.innerText + ". ";
             } else {
-
-                const label =
-                    el.querySelector("label");
-
-                const input =
-                    el.querySelector("input");
-
-
+                const label = el.querySelector("label");
+                const input = el.querySelector("input");
                 if (label && input) {
-
-                    const valor =
-                        input.value
-                            ? input.value
-                            : "não preenchido";
-
-
-                    textoParaLer +=
-                        label.innerText +
-                        ": " +
-                        valor +
-                        ". ";
-
+                    const valor = input.value ? input.value : "não preenchido";
+                    textoParaLer += label.innerText + ": " + valor + ". ";
                 }
-
             }
-
         });
 
-
         if (textoParaLer.trim() !== "") {
-
-            const utterance =
-                new SpeechSynthesisUtterance(
-                    textoParaLer
-                );
-
+            const utterance = new SpeechSynthesisUtterance(textoParaLer);
             utterance.lang = "pt-BR";
-
-
             utterance.onend = () => {
-
-                audioBtn.classList.remove(
-                    "audio-active"
-                );
-
+                audioBtn.classList.remove("audio-active");
                 isSpeaking = false;
-
             };
-
-
             synth.speak(utterance);
-
-            audioBtn.classList.add(
-                "audio-active"
-            );
-
+            audioBtn.classList.add("audio-active");
             isSpeaking = true;
-
         }
-
     }
-
 });
 
-
-window.addEventListener(
-    'beforeunload',
-    () => {
-        synth.cancel();
-    }
-);
-
-
-// ==========================================
-// TROCA DE IMAGENS DO TEMA
-// ==========================================
+window.addEventListener('beforeunload', () => {
+    synth.cancel();
+});
 
 function trocarImagens(modo) {
-
-    const imagens =
-        document.querySelectorAll(
-            "img.logo-img, #logoImg"
-        );
-
-
+    const imagens = document.querySelectorAll("img.logo-img, #logoImg");
     imagens.forEach(img => {
-
         if (!img.getAttribute("data-dark")) {
-
-            img.setAttribute(
-                "data-dark",
-                img.src
-            );
-
+            img.setAttribute("data-dark", img.src);
         }
+        const lightSrc = img.getAttribute("data-light");
+        let novaSrc = modo === "light" ? lightSrc : img.getAttribute("data-dark");
 
-
-        const lightSrc =
-            img.getAttribute("data-light");
-
-        let novaSrc =
-            modo === "light"
-                ? lightSrc
-                : img.getAttribute("data-dark");
-
-
-        if (
-            novaSrc &&
-            img.src !== novaSrc
-        ) {
-
+        if (novaSrc && img.src !== novaSrc) {
             img.classList.add("img-fade");
-
-
             setTimeout(() => {
-
                 img.src = novaSrc;
-
                 img.onload = () => {
-
-                    img.classList.remove(
-                        "img-fade"
-                    );
-
+                    img.classList.remove("img-fade");
                 };
-
             }, 200);
-
         }
-
     });
-
 }
-
 </script>
 
 </body>
